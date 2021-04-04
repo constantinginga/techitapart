@@ -44,7 +44,7 @@ public class AddProductViewController extends ViewController
 
   @FXML public void  handleAddProductButton()
   {
-
+    super.getViewModelFactory().getAddProductViewModel().addProduct();
   }
 
   @FXML public void returnMain()
@@ -54,11 +54,11 @@ public class AddProductViewController extends ViewController
 
   @FXML public void addPhoto()
   {
-    super.getViewModelFactory().getAddProductViewController().reset();
+    super.getViewModelFactory().getAddProductViewModel().reset();
   }
 
   @Override public void reset() throws InterruptedException
   {
-
+super.getViewModelFactory().getAddProductViewModel().reset();
   }
 }

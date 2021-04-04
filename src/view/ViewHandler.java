@@ -3,6 +3,7 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import viewmodel.ViewModelFactory;
 
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ public class ViewHandler extends ViewCreator
   public void start(Stage primaryStage) throws IOException
   {
     this.primaryStage = primaryStage;
-    openView("MainView.fxml");
+    openView("MarketAdminView.fxml");
   }
 
   public void openView(String id) throws IOException {

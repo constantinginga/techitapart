@@ -1,55 +1,52 @@
 package view;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-
-import javax.script.Bindings;
-import javax.swing.text.html.ImageView;
-import java.awt.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 
 public class DetailedProductViewController extends ViewController
 {
- @FXML private Label productName;
- @FXML private ImageView productImage;
- @FXML private Label productPrice;
- @FXML private Label productQuantity;
- @FXML private Label errorLabel;
- @FXML private TextArea descriptionTextArea;
- private int quantity;
+  @FXML private Label productName;
+  @FXML private ImageView productImage;
+  @FXML private Label productPrice;
+  @FXML private Label productQuantity;
+  @FXML private Label errorLabel;
+  @FXML private TextArea descriptionTextArea;
+  private int quantity;
 
- @Override protected void init() throws InterruptedException
- {
-  quantity = 0;
-  productName.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel.);
-  Bindings.bindBidirectional(this.productImage.imageProperty(), GlobalModel.getInstance().getProject().getImageProperty());
-  productPrice.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel.);
-  Bindings
-  productQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel.);
-  errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel.);
-  descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel.);
- }
+  @Override protected void init() throws InterruptedException
+  {
+    quantity = 0;
+    productName.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getProductName());
+    //  Bindings.bindBidirectional(this.productImage.imageProperty(), GlobalModel.getInstance().getProject().getImageProperty());
+    productPrice.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getProductPrice());
+    //  Bindings
+    productQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getProductQuantity());
+    errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getErrorLabel());
+    descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getDescription());
+  }
 
- @Override public void reset() throws InterruptedException
- {
-  super.getViewModelFactory().getDetailedProductViewModel.reset();
- }
+  @Override public void reset() throws InterruptedException
+  {
+    //  super.getViewModelFactory().getDetailedProductViewModel.reset();
+  }
 
   public void handleRemoveQuantity()
   {
-   quantity--;
-   String newValue = Integer.toString(quantity);
-   productQuantity.setText(newValue);
+    super.getViewModelFactory().getDetailedProductViewModel().removeQuantity();
+
   }
 
   public void handleAddQuantity()
   {
-    quantity++;
-    String newValue = Integer.toString(quantity);
-    productQuantity.setText(newValue);
+    super.getViewModelFactory().getDetailedProductViewModel().addQuantity();
   }
 
   public void handleOrderButton()
   {
-    super.getViewModelFactory().getDetailedProductViewModel.;
+        super.getViewModelFactory().getDetailedProductViewModel().orderProduct();
   }
 
   public void handleBackButton()

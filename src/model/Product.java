@@ -1,11 +1,15 @@
 package model;
 
+import java.time.LocalTime;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Product {
     private String name;
     private int total_quantity;
     private String description;
     private double price;
     private String id;
+    private String imgSrc;
 
     public Product(String name, String description){
         if (name.equals("") || description.equals("")){
@@ -26,6 +30,8 @@ public class Product {
         this.description = description;
         this.total_quantity = total_quantity;
         this.price = price;
+        this.id = String.valueOf(LocalTime.now().getNano() + ThreadLocalRandom
+            .current().nextInt(1, 100 + 1));
 
     }
 
@@ -61,6 +67,16 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImgSrc()
+    {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc)
+    {
+        this.imgSrc = imgSrc;
     }
 
     public double getPrice() {

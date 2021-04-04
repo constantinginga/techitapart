@@ -84,4 +84,9 @@ public class CategoryList {
             }
         }
     }
+
+    public ArrayList<Category> getCategories()
+    {
+        return categories;
+    }
 }
