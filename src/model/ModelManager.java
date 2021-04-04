@@ -47,7 +47,8 @@ public class ModelManager implements Model{
     @Override
     public void buyProduct(String productName, int quantity, String categoryName, String username) {
             categoryList.buyProduct(productName,quantity,categoryName);
-            users.getUserByName(username).addOrder(new Order(username));
+      System.out.println(categoryList.getProductByName(productName,categoryName).getTotal_quantity());
+//            users.getUserByName(username).addOrder(new Order(username));
     }
 
 }

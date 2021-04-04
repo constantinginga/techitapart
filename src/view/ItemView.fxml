@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="215.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
+<AnchorPane onMouseClicked="#clicked" prefHeight="215.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
     <children>
         <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -35,7 +35,7 @@
                 </HBox>
                 <ImageView fx:id="img" fitHeight="166.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../default.jpg" />
+                        <Image url="@../default.png" />
                     </image></ImageView>
             </children>
         </VBox>

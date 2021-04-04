@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,18 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MarketAdminViewController  extends ViewController
+public class MarketAdminViewController extends ViewController
 {
-  @FXML
-  private ScrollPane scroll;
+  @FXML private ScrollPane scroll;
 
-  @FXML
-  private GridPane grid;
+  @FXML private GridPane grid;
 
-  @FXML
-  private Button photo;
-
-
+  @FXML private Button photo;
 
   //  private List<Product> getData(){
   //    List<Product> Products = new ArrayList<>();
@@ -46,21 +42,31 @@ public class MarketAdminViewController  extends ViewController
   @Override protected void init()
   {
     super.getViewModelFactory().getMarketUserViewModel().getData();
-    System.out.println(super.getViewModelFactory().getMarketAdminViewModel().getProducts().size());
+    System.out.println(
+        super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+            .size());
     int column = 0;
     int row = 1;
-    try {
-      for(int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel().getProducts().size(); i++) {
+    try
+    {
+      for (int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel()
+          .getProducts().size(); i++)
+      {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/ItemView.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
 
         ItemViewController itemController = fxmlLoader.getController();
         super.getViewModelFactory().getViewState().setCategoryID("General");
-        super.getViewModelFactory().getViewState().setProductID(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i).getId());
-        itemController.init(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i));
+        super.getViewModelFactory().getViewState().setProductID(
+            super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+                .get(i).getId());
+        itemController.init(
+            super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+                .get(i), this);
 
-        if(column == 3){
+        if (column == 3)
+        {
           column = 0;
           row++;
         }
@@ -88,21 +94,29 @@ public class MarketAdminViewController  extends ViewController
 
   @Override public void reset() throws InterruptedException
   {
-
+    super.getViewModelFactory().getMarketAdminViewModel().reset();
     int column = 0;
     int row = 1;
-    try {
-      for(int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel().getProducts().size(); i++) {
+    try
+    {
+      for (int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel()
+          .getProducts().size(); i++)
+      {
         super.getViewModelFactory().getViewState().setCategoryID("General");
-        super.getViewModelFactory().getViewState().setProductID(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i).getId());
+        super.getViewModelFactory().getViewState().setProductID(
+            super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+                .get(i).getId());
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("ItemView.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
 
         ItemViewController itemController = fxmlLoader.getController();
-        itemController.init();
+        itemController.init(
+            super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+                .get(i), this);
 
-        if(column == 3){
+        if (column == 3)
+        {
           column = 0;
           row++;
         }
@@ -121,10 +135,15 @@ public class MarketAdminViewController  extends ViewController
         GridPane.setMargin(anchorPane, new Insets(10));
       }
     }
-    catch (IOException | InterruptedException e)
+    catch (IOException e)
     {
       e.printStackTrace();
     }
 
+  }
+
+  public void addProduct(ActionEvent actionEvent) throws IOException
+  {
+    super.getViewHandler().openView("AddProductView.fxml");
   }
 }

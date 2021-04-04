@@ -58,7 +58,8 @@ public class MarketUserViewController  extends ViewController
         ItemViewController itemController = fxmlLoader.getController();
         super.getViewModelFactory().getViewState().setCategoryID("General");
         super.getViewModelFactory().getViewState().setProductID(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i).getId());
-        itemController.init();
+        itemController.init(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i),this);
+
 
         if(column == 3){
           column = 0;
@@ -79,7 +80,7 @@ public class MarketUserViewController  extends ViewController
         GridPane.setMargin(anchorPane, new Insets(10));
       }
     }
-    catch (IOException | InterruptedException e)
+    catch (IOException  e)
     {
       e.printStackTrace();
     }
@@ -100,7 +101,8 @@ public class MarketUserViewController  extends ViewController
         ItemViewController itemController = fxmlLoader.getController();
         super.getViewModelFactory().getViewState().setCategoryID("General");
         super.getViewModelFactory().getViewState().setProductID(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i).getId());
-        itemController.init();
+        itemController.init(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i),this);
+
 
         if(column == 3){
           column = 0;
@@ -121,7 +123,7 @@ public class MarketUserViewController  extends ViewController
         GridPane.setMargin(anchorPane, new Insets(10));
       }
     }
-    catch (IOException | InterruptedException e)
+    catch (IOException  e)
     {
       e.printStackTrace();
     }

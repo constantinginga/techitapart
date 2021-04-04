@@ -50,7 +50,7 @@ public class AddProductViewModel
 
   }
   public void addProduct(){
-    model.addProduct(new Product(name.getName(),description.get(),Integer.valueOf(quantity.get()),Double.valueOf(price.get())),"General");
+    model.addProduct(new Product(name.get(),description.get(),Integer.parseInt(quantity.get()),Double.parseDouble(price.get())),"General");
 
   }
 }

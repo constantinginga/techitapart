@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
+
 public class DetailedProductViewController extends ViewController
 {
   @FXML private Label productName;
@@ -30,7 +32,7 @@ public class DetailedProductViewController extends ViewController
 
   @Override public void reset() throws InterruptedException
   {
-    //  super.getViewModelFactory().getDetailedProductViewModel.reset();
+ super.getViewModelFactory().getDetailedProductViewModel().reset();
   }
 
   public void handleRemoveQuantity()
@@ -46,11 +48,12 @@ public class DetailedProductViewController extends ViewController
 
   public void handleOrderButton()
   {
-        super.getViewModelFactory().getDetailedProductViewModel().orderProduct();
+    super.getViewModelFactory().getDetailedProductViewModel().orderProduct();
+
   }
 
-  public void handleBackButton()
+  public void handleBackButton() throws IOException
   {
-    super.getViewHandler().closeView();
+    super.getViewHandler().openView("MarketAdminView.fxml");
   }
 }

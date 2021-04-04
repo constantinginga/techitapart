@@ -28,6 +28,7 @@ public class MarketAdminViewModel
 
   public void reset()
   {
+    System.out.println("Called reset");
     getData();
   }
 

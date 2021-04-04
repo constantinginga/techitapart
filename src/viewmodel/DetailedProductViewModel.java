@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
+import model.Product;
 
 public class DetailedProductViewModel
 {
@@ -12,7 +13,7 @@ public class DetailedProductViewModel
   private ViewState state;
   private StringProperty productName, productPrice, productQuantity, errorLabel, description;
 
-  public DetailedProductViewModel(Model model,ViewState viewState)
+  public DetailedProductViewModel(Model model, ViewState viewState)
   {
     this.model = model;
     this.state = viewState;
@@ -22,6 +23,15 @@ public class DetailedProductViewModel
     errorLabel = new SimpleStringProperty();
     description = new SimpleStringProperty();
 
+  }
+
+  public void reset()
+  {
+    Product product = model.getProduct(state.getProductID(),"General");
+    productName.set(product.getName());
+    productPrice.set(String.valueOf(product.getPrice()));
+    productQuantity.set(String.valueOf(product.getTotal_quantity()));
+    description.set(product.getDescription());
   }
 
   public StringProperty getProductName()
@@ -51,13 +61,22 @@ public class DetailedProductViewModel
 
   public void addQuantity()
   {
-    productQuantity.set(String.valueOf(Integer.parseInt(productQuantity.get())+1));
+    productQuantity
+        .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
   }
+
   public void removeQuantity()
   {
-    productQuantity.set(String.valueOf(Integer.parseInt(productQuantity.get())-1));
+    productQuantity
+        .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
   }
-  public void orderProduct(){
-    model.buyProduct(model.getProduct(state.getProductID(),state.getCategoryName()).getName(),Integer.parseInt(productQuantity.get()),state.getCategoryName(),"Bob");
+
+  public void orderProduct()
+  {
+    model.buyProduct(
+        model.getProduct(state.getProductID(), state.getCategoryName())
+            .getName(), Integer.parseInt(productQuantity.get()),
+        state.getCategoryName(), "Bob");
+    errorLabel.set("Item ordered... I think :D");
   }
 }
