@@ -19,7 +19,7 @@ public class ItemViewModel
 
     productName = new SimpleStringProperty();
     price = new SimpleStringProperty();
-    System.out.println("Got called + " + viewState.getCategoryName());
+
   }
 
 
@@ -36,6 +36,7 @@ public class ItemViewModel
 
   public void reset(){
     productName.set(model.getProduct(state.productID,"General").getName());
-    productName.set(String.valueOf(model.getProduct(state.productID,"General").getPrice()));
+    price.set(String.valueOf(model.getProduct(state.productID,"General").getPrice()));
+
   }
 }

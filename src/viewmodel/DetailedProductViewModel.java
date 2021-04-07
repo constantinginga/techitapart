@@ -32,6 +32,7 @@ public class DetailedProductViewModel
     productPrice.set(String.valueOf(product.getPrice()));
     productQuantity.set("0");
     description.set(product.getDescription());
+    errorLabel.set("");
   }
 
   public StringProperty getProductName()
