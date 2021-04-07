@@ -30,7 +30,7 @@ public class DetailedProductViewModel
     Product product = model.getProduct(state.getProductID(),"General");
     productName.set(product.getName());
     productPrice.set(String.valueOf(product.getPrice()));
-    productQuantity.set(String.valueOf(product.getTotal_quantity()));
+    productQuantity.set("0");
     description.set(product.getDescription());
   }
 

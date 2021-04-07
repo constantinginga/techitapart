@@ -88,7 +88,7 @@ public class Product {
     }
 
     public void buyProduct(int quantity){
-        if (quantity < total_quantity){
+        if (quantity > total_quantity){
             throw new IllegalArgumentException("quantity is not available in the stock");
         }
         total_quantity -= quantity;

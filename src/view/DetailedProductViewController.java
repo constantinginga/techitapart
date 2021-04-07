@@ -32,7 +32,7 @@ public class DetailedProductViewController extends ViewController
 
   @Override public void reset() throws InterruptedException
   {
- super.getViewModelFactory().getDetailedProductViewModel().reset();
+    super.getViewModelFactory().getDetailedProductViewModel().reset();
   }
 
   public void handleRemoveQuantity()

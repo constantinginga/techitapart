@@ -46,9 +46,8 @@ public class AddProductViewController extends ViewController
     super.getViewHandler().openView("MarketAdminView.fxml");
   }
 
-  @FXML public void returnMain()
-  {
-
+  @FXML public void returnMain() throws IOException {
+    super.getViewHandler().openView("MarketAdminView.fxml");
   }
 
   @FXML public void addPhoto()
