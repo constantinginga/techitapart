@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import javax.naming.Binding;
 import javax.script.Bindings;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,7 +37,12 @@ public class ItemViewController
     price.setText("$" + selectedProduct.getPrice());
     Platform.runLater(() -> {
     try {
-      img.setImage(new Image(products.getImgSrc()));
+
+      File file = new File("resources\\images\\"+products.getImgSrc());
+      BufferedImage bufferedImage = ImageIO.read(file);
+      Image image = SwingFXUtils.toFXImage(bufferedImage,null);
+      img.setImage(image);
+
     } catch (Exception e){
       e.printStackTrace();
     }});

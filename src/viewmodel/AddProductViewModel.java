@@ -66,7 +66,7 @@ public class AddProductViewModel {
         try {
             BufferedImage bufferedImage = ImageIO.read(filePath);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            filePath = Files.copy(filePath.toPath(), new File("src\\images\\" + filePath.getName()).toPath()).toFile();
+            filePath = Files.copy(filePath.toPath(), new File("resources\\images\\" + filePath.getName()).toPath()).toFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,7 +75,8 @@ public class AddProductViewModel {
     public void addProduct() {
         Product product = new Product(name.get(), description.get(), Integer.parseInt(quantity.get()), Double.parseDouble(price.get()));
         if (filePath != null) {
-            product.setImgSrc("/images/" + filePath.getName());
+            product.setImgSrc(filePath.getName());
+//            product.setImgSrc("/images/" + filePath.getName());
         }
         model.addProduct(product, "General");
 
