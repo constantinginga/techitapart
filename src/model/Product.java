@@ -19,6 +19,7 @@ public class Product {
         this.description = description;
         this.total_quantity = 0;
         this.price = 0.00;
+        this.imgSrc = "/images/default.png";
 
     }
 
@@ -33,6 +34,7 @@ public class Product {
         this.id = String.valueOf(LocalTime.now().getNano() + ThreadLocalRandom
             .current().nextInt(1, 100 + 1));
 
+        this.imgSrc = "/images/default.png";
     }
 
 

@@ -124,7 +124,7 @@
                                         <Insets left="200.0" right="20.0" top="5.0" />
                                     </HBox.margin>
                                 </Text>
-                                <Button fx:id="addPhotoButton" mnemonicParsing="false" onAction="#addPhoto" prefHeight="30.0" prefWidth="69.0" text="Add">
+                                <Button mnemonicParsing="false" onAction="#addPhotoButton" prefHeight="30.0" prefWidth="69.0" text="Add">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
