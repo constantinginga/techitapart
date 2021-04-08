@@ -10,15 +10,10 @@ import javafx.scene.input.MouseEvent;
 import model.Product;
 
 import javax.imageio.ImageIO;
-import javax.naming.Binding;
-import javax.script.Bindings;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+
 
 public class ItemViewController
 {

@@ -27,7 +27,7 @@ public class DetailedProductViewModel
 
   public void reset()
   {
-    Product product = model.getProduct(state.getProductID(),"General");
+    Product product = model.getProduct(state.getProductID(), "General");
     productName.set(product.getName());
     productPrice.set(String.valueOf(product.getPrice()));
     productQuantity.set("0");
@@ -79,5 +79,11 @@ public class DetailedProductViewModel
             .getName(), Integer.parseInt(productQuantity.get()),
         state.getCategoryName(), "Bob");
     errorLabel.set("Item ordered... I think :D");
+  }
+
+  public String getImage()
+  {
+    return model.getProduct(state.getProductID(), state.getCategoryName())
+        .getImgSrc();
   }
 }
