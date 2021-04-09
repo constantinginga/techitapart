@@ -22,14 +22,13 @@ import java.time.LocalTime;
 public class AddProductViewModel {
     private Model model;
     private ViewState state;
-    private StringProperty name, description;
+    private StringProperty name, description, errorLabel;
     private IntegerProperty quantity;
     private DoubleProperty price;
     private FileChooser fileChooser;
     private File filePath;
     private String fileName;
     private ObjectProperty<javafx.scene.image.Image> imageProperty;
-
 
 
     public AddProductViewModel(Model model, ViewState viewState) {
@@ -39,7 +38,8 @@ public class AddProductViewModel {
         this.description = new SimpleStringProperty();
         this.quantity = new SimpleIntegerProperty();
         this.price = new SimpleDoubleProperty();
-        imageProperty = new SimpleObjectProperty<>();
+        this.imageProperty = new SimpleObjectProperty<>();
+        this.errorLabel = new SimpleStringProperty();
     }
 
     public StringProperty getName() {
@@ -48,6 +48,10 @@ public class AddProductViewModel {
 
     public StringProperty getDescription() {
         return description;
+    }
+
+    public StringProperty getErrorLabel() {
+        return errorLabel;
     }
 
     public IntegerProperty getQuantity() {
@@ -67,7 +71,9 @@ public class AddProductViewModel {
         name.set("");
         description.set("");
         quantity.set(1);
-        price.set(0);
+        price.set(1);
+        errorLabel.set("");
+        imageProperty.set(null);
 
     }
 
@@ -84,30 +90,37 @@ public class AddProductViewModel {
 
         int i = filePath.getName().lastIndexOf('.');
         if (i > 0) {
-            extension = filePath.getName().substring(i+1);
+            extension = filePath.getName().substring(i + 1);
         }
 
-        fileName =   LocalTime.now().getNano()+ "." + extension;
+        fileName = LocalTime.now().getNano() + "." + extension;
         filePath.renameTo(new File("resources\\images\\" + fileName));
         Platform.runLater(() -> {
             try {
-                BufferedImage bufferedImage = ImageIO.read(new File("resources\\images\\"+fileName));
-                Image image = SwingFXUtils.toFXImage(bufferedImage,null);
+                BufferedImage bufferedImage = ImageIO.read(new File("resources\\images\\" + fileName));
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 imageProperty.set(image);
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-            }});
+            }
+        });
 
     }
 
-    public void addProduct() {
-        Product product = new Product(name.get(), description.get(), quantity.get(), price.get());
-        if (filePath != null) {
-            product.setImgSrc(fileName);
-//            product.setImgSrc("/images/" + filePath.getName());
-        }
+    public boolean addProduct() {
 
-        model.addProduct(product, "General");
+        try {
+            Product product = new Product(name.get(), description.get(), quantity.get(), price.get());
+            if (filePath != null) {
+                product.setImgSrc(fileName);
+//            product.setImgSrc("/images/" + filePath.getName());}
+            }
+                model.addProduct(product, "General");
+            } catch (Exception e) {
+            errorLabel.set(e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

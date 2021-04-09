@@ -49,7 +49,7 @@ public class AddProductViewController extends ViewController {
         decriptionTextArea.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getDescription());
         Bindings.bindBidirectional(this.image.imageProperty(), super.getViewModelFactory().getAddProductViewModel().getImageProperty());
-
+        errorLabel.textProperty().bind(super.getViewModelFactory().getAddProductViewModel().getErrorLabel());
         priceTextfield.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -71,8 +71,9 @@ public class AddProductViewController extends ViewController {
     }
 
     public void handleAddProductButton() throws IOException {
-        super.getViewModelFactory().getAddProductViewModel().addProduct();
-        super.getViewHandler().openView("MarketAdminView.fxml");
+        if (super.getViewModelFactory().getAddProductViewModel().addProduct()) {
+            super.getViewHandler().openView("MarketAdminView.fxml");
+        }
     }
 
     public void returnMain() throws IOException {
