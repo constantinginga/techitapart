@@ -1,8 +1,8 @@
 package viewmodel;
 
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -17,13 +17,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalTime;
 
 public class AddProductViewModel {
     private Model model;
     private ViewState state;
-    private StringProperty name, description, quantity, price;
+    private StringProperty name, description;
+    private IntegerProperty quantity;
+    private DoubleProperty price;
     private FileChooser fileChooser;
     private File filePath;
+    private String fileName;
+    private ObjectProperty<javafx.scene.image.Image> imageProperty;
+
 
 
     public AddProductViewModel(Model model, ViewState viewState) {
@@ -31,8 +37,9 @@ public class AddProductViewModel {
         this.state = viewState;
         this.name = new SimpleStringProperty();
         this.description = new SimpleStringProperty();
-        this.quantity = new SimpleStringProperty();
-        this.price = new SimpleStringProperty();
+        this.quantity = new SimpleIntegerProperty();
+        this.price = new SimpleDoubleProperty();
+        imageProperty = new SimpleObjectProperty<>();
     }
 
     public StringProperty getName() {
@@ -43,19 +50,24 @@ public class AddProductViewModel {
         return description;
     }
 
-    public StringProperty getQuantity() {
+    public IntegerProperty getQuantity() {
         return quantity;
     }
 
-    public StringProperty getPrice() {
+    public ObjectProperty<Image> getImageProperty() {
+        return imageProperty;
+    }
+
+
+    public DoubleProperty getPrice() {
         return price;
     }
 
     public void reset() {
         name.set("");
         description.set("");
-        quantity.set("");
-        price.set("");
+        quantity.set(1);
+        price.set(0);
 
     }
 
@@ -64,21 +76,38 @@ public class AddProductViewModel {
         fileChooser.setTitle("Open image");
         filePath = fileChooser.showOpenDialog(stage);
         try {
-            BufferedImage bufferedImage = ImageIO.read(filePath);
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             filePath = Files.copy(filePath.toPath(), new File("resources\\images\\" + filePath.getName()).toPath()).toFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String extension = "";
+
+        int i = filePath.getName().lastIndexOf('.');
+        if (i > 0) {
+            extension = filePath.getName().substring(i+1);
+        }
+
+        fileName =   LocalTime.now().getNano()+ "." + extension;
+        filePath.renameTo(new File("resources\\images\\" + fileName));
+        Platform.runLater(() -> {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(new File("resources\\images\\"+fileName));
+                Image image = SwingFXUtils.toFXImage(bufferedImage,null);
+                imageProperty.set(image);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }});
+
     }
 
     public void addProduct() {
-        Product product = new Product(name.get(), description.get(), Integer.parseInt(quantity.get()), Double.parseDouble(price.get()));
+        Product product = new Product(name.get(), description.get(), quantity.get(), price.get());
         if (filePath != null) {
-            product.setImgSrc(filePath.getName());
+            product.setImgSrc(fileName);
 //            product.setImgSrc("/images/" + filePath.getName());
         }
-        model.addProduct(product, "General");
 
+        model.addProduct(product, "General");
     }
 }

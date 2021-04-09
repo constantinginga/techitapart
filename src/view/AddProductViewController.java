@@ -1,15 +1,19 @@
 package view;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class AddProductViewController extends ViewController {
 
@@ -27,6 +31,10 @@ public class AddProductViewController extends ViewController {
 
     @FXML
     private TextArea decriptionTextArea;
+    @FXML
+    private ImageView image;
+    @FXML
+    private Label errorLabel;
 
 
     @Override
@@ -34,12 +42,32 @@ public class AddProductViewController extends ViewController {
         nameTextfield.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getName());
         priceTextfield.textProperty().bindBidirectional(
-                super.getViewModelFactory().getAddProductViewModel().getPrice());
+                super.getViewModelFactory().getAddProductViewModel().getPrice(), new NumberStringConverter());
         quantityTextfield.textProperty().bindBidirectional(
-                super.getViewModelFactory().getAddProductViewModel().getQuantity());
+                super.getViewModelFactory().getAddProductViewModel().getQuantity(), new NumberStringConverter());
         //categoryChoicebox.
         decriptionTextArea.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getDescription());
+        Bindings.bindBidirectional(this.image.imageProperty(), super.getViewModelFactory().getAddProductViewModel().getImageProperty());
+
+        priceTextfield.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,10})?")) {
+                    priceTextfield.setText(oldValue);
+                }
+            }
+        });
+        quantityTextfield.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    quantityTextfield.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+
     }
 
     public void handleAddProductButton() throws IOException {
