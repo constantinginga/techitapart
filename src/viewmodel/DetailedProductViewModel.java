@@ -30,7 +30,7 @@ public class DetailedProductViewModel
     Product product = model.getProduct(state.getProductID(), "General");
     productName.set(product.getName());
     productPrice.set(String.valueOf(product.getPrice()));
-    productQuantity.set("0");
+    productQuantity.set("1");
     description.set(product.getDescription());
     errorLabel.set("");
   }
@@ -62,14 +62,26 @@ public class DetailedProductViewModel
 
   public void addQuantity()
   {
-    productQuantity
-        .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
+    if (Integer.parseInt(productQuantity.get()) >= model.getProduct(state.getProductID(), state.getCategoryName()).getTotal_quantity()){
+      productQuantity.set(String.valueOf(model.getProduct(state.getProductID(), state.getCategoryName()).getTotal_quantity()));
+    }
+    else{
+      productQuantity
+          .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
+    }
   }
 
   public void removeQuantity()
   {
-    productQuantity
-        .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
+    if (Integer.parseInt(productQuantity.get()) <= 1)
+    {
+      productQuantity.set(String.valueOf(1));
+    }
+    else
+    {
+      productQuantity
+          .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
+    }
   }
 
   public void orderProduct()

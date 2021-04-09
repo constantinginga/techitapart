@@ -29,7 +29,7 @@ public class ItemViewController
     this.viewController = viewController;
     selectedProduct = products;
     productName.setText(selectedProduct.getName());
-    price.setText("$" + selectedProduct.getPrice());
+    price.setText(selectedProduct.getPrice() + " kr.");
     Platform.runLater(() -> {
     try {
 

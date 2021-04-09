@@ -24,7 +24,7 @@
                             <children>
                                 <Label alignment="CENTER" text="TechItApart">
                                     <font>
-                                        <Font name="Arial Black" size="24.0" />
+                                        <Font name="Arial Black" size="36.0" />
                                     </font>
                                 </Label>
                             </children>

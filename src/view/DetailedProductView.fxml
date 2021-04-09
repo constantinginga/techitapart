@@ -16,7 +16,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Label fx:id="productName" text="Products name">
+                  <Label fx:id="productName" alignment="TOP_LEFT" prefHeight="77.0" prefWidth="429.0" text="Products name" wrapText="true">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -149,10 +149,13 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TextArea fx:id="descriptionTextArea" maxHeight="291.0" maxWidth="580.0" minHeight="291.0" minWidth="580.0" prefHeight="291.0" prefWidth="580.0">
+                  <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="291.0" maxWidth="580.0" minHeight="291.0" minWidth="580.0" prefHeight="291.0" prefWidth="580.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </TextArea>
                </children>
             </VBox>

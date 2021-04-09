@@ -12,14 +12,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProductViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.AddProductViewController">
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <Region prefHeight="51.0" prefWidth="427.0" />
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add product">
                     <font>
-                        <Font size="24.0" />
+                        <Font size="36.0" />
                     </font>
                 </Text>
             </children>
@@ -41,63 +41,66 @@
                     <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
                             </font>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="33.0" />
+                                <Insets top="40.0" />
                             </VBox.margin>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="30.0" />
+                                <Insets top="35.0" />
                             </VBox.margin>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category:">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="30.0" />
+                                <Insets top="40.0" />
                             </VBox.margin>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="18.0" />
                             </font>
                             <VBox.margin>
-                                <Insets top="30.0" />
+                                <Insets top="45.0" />
                             </VBox.margin>
                         </Text>
                     </children>
                 </VBox>
                 <VBox prefHeight="490.0" prefWidth="277.0">
                     <children>
-                        <TextField fx:id="nameTextfield" prefHeight="40.0" prefWidth="277.0" />
-                        <TextField fx:id="priceTextfield" prefHeight="40.0" prefWidth="277.0">
-                            <padding>
-                                <Insets top="20.0" />
-                            </padding>
+                        <TextField fx:id="nameTextfield" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="277.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font></TextField>
+                        <TextField fx:id="priceTextfield" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="277.0">
                             <VBox.margin>
                                 <Insets top="20.0" />
                             </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                         </TextField>
-                        <TextField fx:id="quantityTextfield" prefHeight="40.0" prefWidth="277.0">
-                            <padding>
-                                <Insets top="20.0" />
-                            </padding>
+                        <TextField fx:id="quantityTextfield" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="277.0">
                             <VBox.margin>
                                 <Insets top="20.0" />
                             </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                         </TextField>
-                        <ChoiceBox fx:id="categoryChoicebox" prefHeight="41.0" prefWidth="277.0">
+                        <ChoiceBox fx:id="categoryChoicebox" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="277.0">
                             <VBox.margin>
                                 <Insets top="20.0" />
                             </VBox.margin>
@@ -118,10 +121,10 @@
                             <children>
                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add a photo:">
                                     <font>
-                                        <Font size="24.0" />
+                                        <Font size="18.0" />
                                     </font>
                                     <HBox.margin>
-                                        <Insets left="200.0" right="20.0" top="5.0" />
+                                        <Insets left="200.0" right="20.0" />
                                     </HBox.margin>
                                 </Text>
                                 <Button mnemonicParsing="false" onAction="#addPhotoButton" prefHeight="30.0" prefWidth="69.0" text="Add">

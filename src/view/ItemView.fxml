@@ -9,26 +9,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseClicked="#clicked" prefHeight="215.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
+<AnchorPane onMouseClicked="#clicked" prefHeight="260.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
     <children>
-        <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="260.0" prefWidth="225.0" AnchorPane.bottomAnchor="-47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox prefHeight="47.0" prefWidth="225.0">
                     <children>
-                        <Label fx:id="productName" text="Name">
+                        <Label fx:id="productName" text="Name" wrapText="true">
                             <font>
                                 <Font size="24.0" />
                             </font>
                             <HBox.margin>
                                 <Insets left="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="price" text="\$99">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="50.0" top="10.0" />
                             </HBox.margin>
                         </Label>
                     </children>
@@ -37,6 +29,23 @@
                     <image>
                         <Image url="@../default.png" />
                     </image></ImageView>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Price:">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" right="30.0" />
+                     </HBox.margin>
+                  </Label>
+                        <Label fx:id="price" text="99 kr.">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Label>
+               </children>
+            </HBox>
             </children>
         </VBox>
     </children>
