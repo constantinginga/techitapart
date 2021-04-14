@@ -7,13 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import model.Product;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.List;
 
 public class ItemViewController
 {
@@ -63,9 +66,10 @@ public class ItemViewController
     Platform.runLater(() -> {
       try
       {
+
         viewController.getViewModelFactory().getViewState().setProductID(selectedProduct.getId());
         viewController.getViewHandler()
-            .openView("DetailedProductView.fxml");
+            .openView("DetailedProductAdminView.fxml");
       }
       catch (IOException e)
       {

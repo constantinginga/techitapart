@@ -94,6 +94,7 @@ public class MarketAdminViewController extends ViewController
 
   @Override public void reset() throws InterruptedException
   {
+    grid.getChildren().clear();
     super.getViewModelFactory().getMarketAdminViewModel().reset();
     int column = 0;
     int row = 1;

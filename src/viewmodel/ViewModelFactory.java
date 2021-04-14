@@ -9,6 +9,7 @@ public class ViewModelFactory
   private ItemViewModel itemViewModel;
   private MarketAdminViewModel marketAdminViewModel;
   private MarketUserViewModel marketUserViewModel;
+  private DetailedProductAdminViewModel detailedProductAdminViewModel;
   private ViewState viewState;
   public ViewModelFactory(Model model)
   {
@@ -18,6 +19,7 @@ public class ViewModelFactory
     marketAdminViewModel = new MarketAdminViewModel(model, viewState);
     marketUserViewModel = new MarketUserViewModel(model, viewState);
     itemViewModel = new ItemViewModel(model, viewState);
+    detailedProductAdminViewModel = new DetailedProductAdminViewModel(model, viewState);
   }
 
   public AddProductViewModel getAddProductViewModel()
@@ -43,6 +45,11 @@ public class ViewModelFactory
   public MarketUserViewModel getMarketUserViewModel()
   {
     return marketUserViewModel;
+  }
+
+  public DetailedProductAdminViewModel getDetailedProductAdminViewModel()
+  {
+    return detailedProductAdminViewModel;
   }
 
   public ViewState getViewState()

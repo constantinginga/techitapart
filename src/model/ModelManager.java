@@ -43,7 +43,14 @@ public class ModelManager implements Model{
 
      return products;
     }
-    @Override
+
+  @Override public void removeProduct(String id, String categoryName)
+  {
+    //TODO
+    categoryList.getCategory(categoryName).removeProduct(id);
+  }
+
+  @Override
     public void buyProduct(String productName, int quantity, String categoryName, String username) {
             categoryList.buyProduct(productName,quantity,categoryName);
 //            users.getUserByName(username).addOrder(new Order(username));

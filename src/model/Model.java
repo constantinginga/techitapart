@@ -9,5 +9,6 @@ public interface Model {
     Product getProduct(String id, String categoryName);
     void buyProduct(String productName, int quantity, String categoryName, String username);
     ArrayList<Product> getAllProducts();
+    void removeProduct(String id, String categoryName);
 
 }
