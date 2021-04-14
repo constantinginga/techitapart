@@ -1,7 +1,6 @@
 package model;
 
-import java.time.LocalTime;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Product {
     private String name;
@@ -30,9 +29,17 @@ public class Product {
         this.description = description;
         this.total_quantity = total_quantity;
         this.price = price;
-        this.id = String.valueOf(LocalTime.now().getNano() + ThreadLocalRandom
-            .current().nextInt(1, 100 + 1));
+    }
 
+    public Product(String name, String description, int total_quantity, double price, String id){
+        if (name.equals("") || description.equals("")){
+            throw new IllegalArgumentException("Product name or description is  empty");
+        }
+        this.name = name;
+        this.description = description;
+        this.total_quantity = total_quantity;
+        this.price = price;
+        this.id = id;
     }
 
 
@@ -88,7 +95,7 @@ public class Product {
     }
 
     public void buyProduct(int quantity){
-        if (quantity < total_quantity){
+        if (quantity > total_quantity){
             throw new IllegalArgumentException("quantity is not available in the stock");
         }
         total_quantity -= quantity;

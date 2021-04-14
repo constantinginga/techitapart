@@ -1,22 +1,37 @@
 package model;
 
+import persistence.ProductDB;
+import persistence.ProductPersistence;
+
 import java.util.ArrayList;
 
 public class Category {
     private String name;
     private ProductList productList;
+    private ProductPersistence productDB;
 
     public Category(String name){
+        productDB = new ProductDB();
         this.name = name;
         productList = new ProductList();
+
+        productList.set(productDB.getAllProductDB(name));
+
     }
 
     public void buyProduct(String productName, int quantity){
         productList.buyProduct(productName, quantity);
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
+
         productList.addProduct(product);
+    }
+
+    public void addProductList(ArrayList<Product> products){
+        for (Product product: products){
+            productList.addProduct(product);
+        }
     }
 
     public Product getProductByName(String name){
@@ -31,8 +46,8 @@ public class Category {
         return productList.getProductById(id);
     }
 
-    public void removeProduct(int index){
-        productList.removeProduct(index);
+    public void removeProduct(String id){
+        productList.removeProduct(id);
     }
 
     public String getName() {

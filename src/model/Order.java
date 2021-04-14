@@ -6,9 +6,8 @@ public class Order {
     private String order_id;
     private String username;
     private DateTime date;
-    public Order(String user_id, String order_id, DateTime date){
-        this.username = user_id;
-        this.order_id = order_id;
+    public Order(String username,  DateTime date){
+        this.username = username;
         this.date = date;
     }
     public Order(String username){

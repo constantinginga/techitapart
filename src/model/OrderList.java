@@ -1,12 +1,18 @@
 package model;
 
+import persistence.OrderDB;
+import persistence.OrderPersistence;
+
 import java.util.ArrayList;
 
 public class OrderList {
     private ArrayList<Order> orders;
+    private OrderPersistence orderDB;
 
     public OrderList(){
         orders = new ArrayList<>();
+        orderDB = new OrderDB();
+        orders = orderDB.getAllOrderDB();
     }
 
 

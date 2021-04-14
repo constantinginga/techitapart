@@ -9,7 +9,12 @@ public class ProductList {
         this.products = new ArrayList<>();
     }
 
+    public void set(ArrayList<Product> products) {
+        this.products = products;
+    }
+
     public void addProduct(Product product){
+
         products.add(product);
     }
 
@@ -19,17 +24,15 @@ public class ProductList {
         }
     }
 
-    public void removeProduct(int index){
-        if (products.size() < 1){
-            throw new IllegalArgumentException("Product list is empty");
+    public void removeProduct(String id){
+        for (Product product: products){
+            products.remove(product);
         }
-
-        products.remove(index);
     }
 
     public Product getProductById(String id){
         for (Product product: products){
-            if (product.getId().equals(id)) return product;
+            if (product.getId().equals(id) ) return product;
         }
         return null;
     }

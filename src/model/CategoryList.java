@@ -1,23 +1,37 @@
 package model;
 
+
+import persistence.CategoryDB;
+import persistence.CategoryPersistence;
+
 import java.util.ArrayList;
+
+
 
 public class CategoryList {
 
     private ArrayList<Category> categories;
+    private CategoryPersistence categoryDB;
 
     public CategoryList(){
         this.categories = new ArrayList<>();
+        categoryDB = new CategoryDB();
+       categories =  categoryDB.getAllCategoryDB();
+
     }
 
-    public void addCategory(Category category){
+    /*
+    public void addCategory(String  categoryName){
         for (Category category1: categories){
-            if (category1.getName().equals(category.getName())){
+            if (category1.getName().equals(categoryName)){
                 throw new IllegalArgumentException("Category is already exist");
             }
         }
-        categories.add(category);
+
+
+        categories.add(new Category(categoryName));
     }
+*/
 
     public Category getCategory(String name){
         for (Category category: categories){
@@ -27,16 +41,29 @@ public class CategoryList {
         return null;
     }
 
+
+
     public Category getCategory(int index){
         return categories.get(index);
     }
 
+    public void addProductList(ArrayList<Product> products, String categoryName)
+    {
+        for (Category category: categories){
+            if (categoryName.equals(category.getName())) category.addProductList(products);
+        }
+    }
+
     public void addProduct(Product product, String categoryName){
+
+
         for (Category category1: categories){
             if (categoryName.equals(category1.getName())){
                 category1.addProduct(product);
             }
         }
+
+
     }
 
     public void buyProduct(String productName, int quantity, String categoryName){
@@ -77,10 +104,11 @@ public class CategoryList {
         return null;
     }
 
-    public void removeProduct(int index, String categoryName){
+    public void removeProduct(String id, String categoryName){
+
         for (Category  category: categories){
             if (category.getName().equals(categoryName)){
-                category.removeProduct(index);
+                category.removeProduct(id);
             }
         }
     }
