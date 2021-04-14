@@ -10,24 +10,18 @@ public class ProductDB implements ProductPersistence {
     @Override
     public Product addProductToCategoryDB(Product product, String categoryName) {
         try(Connection connection = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement statement = connection.prepareStatement("SELECT category_id FROM Category WHERE category_name = ?");
-            statement.setString(1, categoryName);
-            ResultSet keys = statement.executeQuery();
-            if (!keys.next()) throw new IllegalArgumentException("Category does not exist");
-            else {
-                int categoryId = keys.getInt("category_id");
-                statement = connection.prepareStatement("INSERT INTO Product(category_id, description, price, image, total_quantity, name) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-                statement.setInt(1, categoryId);
-                statement.setString(2, product.getDescription());
-                statement.setDouble(3, product.getPrice());
-                statement.setString(4, product.getImgSrc());
-                statement.setInt(5, product.getTotal_quantity());
-                statement.setString(6, product.getName());
-                statement.executeUpdate();
-                keys = statement.getGeneratedKeys();
-                if (keys.next()){
-                    return  new Product(String.valueOf(keys.getInt(1)), product.getName(), product.getDescription(), product.getTotal_quantity(), product.getPrice());
-                }
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO Product(category_name, description,price, image, total_quantity,product_name) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1,categoryName);
+            statement.setString(2, product.getDescription());
+            statement.setDouble(3, product.getPrice());
+            statement.setString(4, product.getImgSrc());
+            statement.setInt(5, product.getTotal_quantity());
+            statement.setString(6, product.getName());
+            statement.executeUpdate();
+
+            ResultSet keys = statement.getGeneratedKeys();
+            if (keys.next()){
+                return  new Product(String.valueOf(keys.getInt(1)), product.getName(), product.getDescription(), product.getTotal_quantity(), product.getPrice());
             }
 
         }catch (SQLException e){
@@ -118,22 +112,21 @@ public class ProductDB implements ProductPersistence {
     @Override
     public ArrayList<Product> getAllProductDB(String categoryName) {
         try(Connection connection = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Product WHERE category_id = (SELECT category_id FROM Category WHERE category_name = ?)");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE category_name = ?");
             statement.setString(1,categoryName);
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Product> result = new ArrayList<>();
             while (resultSet.next()){
                 int productId = resultSet.getInt("product_id");
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("product_name");
                 String description = resultSet.getString("description");
                 int total_quantity = resultSet.getInt("total_quantity");
                 double price = resultSet.getDouble("price");
                 Product product =  new Product(String.valueOf(productId), name, description, total_quantity,price);
-                product.setImgSrc(resultSet.getString("image"));
                 result.add(product);
             }
-
             return result;
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new IllegalArgumentException("DB issue with connectivity");
