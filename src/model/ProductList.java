@@ -61,7 +61,7 @@ public class ProductList {
     public String toString(){
         String s ="";
         for (Product product: products){
-            s += product.toString();
+            s += product.toString() +"-----";
         }
 
         return s;

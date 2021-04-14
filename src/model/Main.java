@@ -34,11 +34,12 @@ public class Main {
         CategoryList cList = new CategoryList();
 
 
-        Product product = new Product("test id product", "New phone",123,123.3);
+      //  Product product = new Product("test id product", "New phone",123,123.3);
 
-        Product product1 =   productDB.addProductToCategoryDB(product, "General");
+     //   Product product1 =   productDB.addProductToCategoryDB(product, "General");
 
-        System.out.println(product1.toString());
+
+        System.out.println(productDB.getAllProductDB("General"));
        // categoryList.addProduct(product1, categoryName);
 
      /*   cList.addProduct(product, "General");
