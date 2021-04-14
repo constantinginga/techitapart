@@ -31,7 +31,7 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String description, int total_quantity, double price, String id){
+    public Product(String id, String name, String description, int total_quantity, double price){
         if (name.equals("") || description.equals("")){
             throw new IllegalArgumentException("Product name or description is  empty");
         }
@@ -104,7 +104,7 @@ public class Product {
 
     @Override
     public String toString(){
-       return "Product name: "+getName()+", Description: "+getDescription()+", Price: "+getPrice()+", total quantity: "+total_quantity;
+       return "ProductId: "+ getId()+", Product name: "+getName()+", Description: "+getDescription()+", Price: "+getPrice()+", total quantity: "+total_quantity;
 
     }
 }

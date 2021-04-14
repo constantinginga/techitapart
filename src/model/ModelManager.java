@@ -53,9 +53,8 @@ public class ModelManager implements Model{
     @Override
     public void addProduct(Product product, String categoryName)
     {
-         //   categoryList.addProduct(product, categoryName);
-        productDB.addProductToCategoryDB(product, categoryName);
-        categoryList.addProduct(productDB.getProduct(product), categoryName);
+        Product product1 =   productDB.addProductToCategoryDB(product, categoryName);
+        categoryList.addProduct(product1, categoryName);
     }
 
 
@@ -100,9 +99,6 @@ public class ModelManager implements Model{
         categoryList.buyProduct(product.getName(), quantity,categoryName);
         orderDB.addOrderDB(userName);
     }
-
-
-
 
 
 }

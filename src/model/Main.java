@@ -1,12 +1,15 @@
 package model;
 
 
+import persistence.ProductDB;
+
 import java.sql.SQLException;
 
 public class Main {
 
 
     public static void main(String[] args) throws SQLException {
+        ProductDB productDB = new ProductDB();
      /*   try {
             User user = new User("Farouk", " ", "farouk@gmail.com",new UserName("farouk"), new Password("Farouk_"));
         }catch (Exception e){
@@ -31,13 +34,18 @@ public class Main {
         CategoryList cList = new CategoryList();
 
 
-        Product product = new Product("new product", "New phone",123,123.3);
+        Product product = new Product("test id product", "New phone",123,123.3);
 
-        cList.addProduct(product, "General");
+        Product product1 =   productDB.addProductToCategoryDB(product, "General");
+
+        System.out.println(product1.toString());
+       // categoryList.addProduct(product1, categoryName);
+
+     /*   cList.addProduct(product, "General");
 
         System.out.println(cList.getProduct(product, "General")); //  cList.getProduct(product, "General");
 
-        System.out.println(cList.getCategories());
+        System.out.println(cList.getCategories());*/
 
     }
 }
