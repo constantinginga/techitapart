@@ -56,15 +56,25 @@ public class AccountDB implements AccountPersistence {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
 
 
     @Override
-    public void updateUserName(String currentUsername, String newUsername) {
-
+    public void updateUserName(String currentUsername, String newUsername)
+    {
+        try(Connection connection = ConnectionDB.getInstance().getConnection())
+        {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET username=? WHERE username=?");
+            statement.setString(2, currentUsername);
+            statement.setString(1, newUsername);
+            statement.executeUpdate();
+        }
+        catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package model;
 
 
+import persistence.CategoryDB;
 import persistence.ProductDB;
 
 import java.sql.SQLException;
@@ -10,6 +11,14 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         ProductDB productDB = new ProductDB();
+
+        CategoryDB categoryDB = new CategoryDB();
+        System.out.println(categoryDB.getAllCategoryDB());
+
+
+        //categoryDB.addCategoryDB("Laptop");
+        productDB.addProductToCategoryDB(new Product("Lenovo Ideapad", "Best laptop ever", 100, 650), "Laptop");
+        System.out.println(productDB.getAllProductDB("Laptop"));
      /*   try {
             User user = new User("Farouk", " ", "farouk@gmail.com",new UserName("farouk"), new Password("Farouk_"));
         }catch (Exception e){
@@ -31,7 +40,6 @@ public class Main {
 
       //  System.out.println("is logged: "+registry.login("john", "bigdick123"));
 
-        CategoryList cList = new CategoryList();
 
 
       //  Product product = new Product("test id product", "New phone",123,123.3);
@@ -39,7 +47,7 @@ public class Main {
      //   Product product1 =   productDB.addProductToCategoryDB(product, "General");
 
 
-        System.out.println(productDB.getAllProductDB("General"));
+      //  System.out.println(productDB.getAllProductDB("General"));
        // categoryList.addProduct(product1, categoryName);
 
      /*   cList.addProduct(product, "General");

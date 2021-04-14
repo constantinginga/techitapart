@@ -1,18 +1,19 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Order {
     private String order_id;
     private String username;
-    private DateTime date;
-    public Order(String username,  DateTime date){
+    private LocalDate date;
+    public Order(String username,  String date){
         this.username = username;
-        this.date = date;
+        this.date = LocalDate.parse(date);
     }
     public Order(String username){
         this.username = username;
-        this.date = new DateTime();
+        this.date = LocalDate.now();
     }
 
     public void setOrder_id(String orderId) {
@@ -24,7 +25,7 @@ public class Order {
     }
 
 
-    public void setDate(DateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -36,7 +37,7 @@ public class Order {
         return username;
     }
 
-    public DateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

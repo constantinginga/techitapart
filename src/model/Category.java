@@ -14,9 +14,7 @@ public class Category {
         productDB = new ProductDB();
         this.name = name;
         productList = new ProductList();
-
         productList.set(productDB.getAllProductDB(name));
-
     }
 
     public void buyProduct(String productName, int quantity){
@@ -70,5 +68,9 @@ public class Category {
         this.name = name;
     }
 
-
+    @Override public String toString()
+    {
+        return "Category{" + "name='" + name + '\'' + ", productList="
+            + productList + ", productDB=" + productDB + '}';
+    }
 }

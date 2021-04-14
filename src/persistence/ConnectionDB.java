@@ -23,6 +23,4 @@ public class ConnectionDB {
         String host = "jdbc:postgresql://ec2-99-80-200-225.eu-west-1.compute.amazonaws.com:5432/df75rrd5dikon6?currentSchema=techitapart";
         return DriverManager.getConnection(host,user, pass);
     }
-
-
 }
