@@ -82,12 +82,10 @@ public class ProductDB implements ProductPersistence {
                 int productId = resultSet.getInt("product_id");
                 String name = resultSet.getString("product_name");
                 String description = resultSet.getString("description");
-                String img = resultSet.getString("image");
                 int total_quantity = resultSet.getInt("total_quantity");
                 double price = resultSet.getDouble("price");
-                Product product = new Product(String.valueOf(productId), name, description, total_quantity,price);
-                product.setImgSrc(img);
-                return product;
+
+                return new Product(String.valueOf(productId), name, description, total_quantity,price);
             }else {
                 return null;
             }
@@ -122,11 +120,9 @@ public class ProductDB implements ProductPersistence {
                 int productId = resultSet.getInt("product_id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
-                String img = resultSet.getString("image");
                 int total_quantity = resultSet.getInt("total_quantity");
                 double price = resultSet.getDouble("price");
                 Product product =  new Product(String.valueOf(productId), name, description, total_quantity,price);
-                product.setImgSrc(img);
                 result.add(product);
             }
             return result;
