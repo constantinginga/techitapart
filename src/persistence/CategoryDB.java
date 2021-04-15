@@ -4,7 +4,6 @@ import model.Category;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -28,25 +27,8 @@ public class CategoryDB implements CategoryPersistence {
     }
 
     @Override
-    public ArrayList<Category> getAllCategoryDB()
-    {try(Connection connection = ConnectionDB.getInstance().getConnection())
-    {
-        PreparedStatement statement = connection.prepareStatement("SELECT category_name FROM category");
-        ResultSet resultSet = statement.executeQuery();
-        ArrayList<Category> result = new ArrayList<>();
-        while(resultSet.next())
-        {
-            String name = resultSet.getString("category_name");
-            Category category = new Category(name);
-            result.add(category);
-        }
-        return result;
-    }
-    catch (SQLException throwables)
-    {
-        throwables.printStackTrace();
-        throw new IllegalArgumentException(" connection issue");
-    }
+    public ArrayList<Category> getAllCategoryDB() {
+        return null;
     }
 
     @Override

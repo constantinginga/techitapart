@@ -10,15 +10,12 @@ public class Main {
 
 
     public static void main(String[] args) throws SQLException {
-        ProductDB productDB = new ProductDB();
 
-        CategoryDB categoryDB = new CategoryDB();
-        System.out.println(categoryDB.getAllCategoryDB());
+       // jdbc:postgresql://localhost:5432/postgres?currentSchema=techitapart","postgres", "farouk_12"
+        ProductDB productDB = new ProductDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","farouk_12");
+   //     CategoryDB categoryDB = new CategoryDB();
+     //   categoryDB.addCategoryDB("General");
 
-
-        //categoryDB.addCategoryDB("Laptop");
-        productDB.addProductToCategoryDB(new Product("Lenovo Ideapad", "Best laptop ever", 100, 650), "Laptop");
-        System.out.println(productDB.getAllProductDB("Laptop"));
      /*   try {
             User user = new User("Farouk", " ", "farouk@gmail.com",new UserName("farouk"), new Password("Farouk_"));
         }catch (Exception e){
@@ -40,14 +37,23 @@ public class Main {
 
       //  System.out.println("is logged: "+registry.login("john", "bigdick123"));
 
+      //  CategoryList cList = new CategoryList();
+
+        //System.out.println(productDB.getProductByIdDB("4"));
 
 
-      //  Product product = new Product("test id product", "New phone",123,123.3);
 
-     //   Product product1 =   productDB.addProductToCategoryDB(product, "General");
+        Product product = new Product(" new product  product", "New phone",123,123.3);
+        System.out.println(product);
+       // productDB.updateProductQuantityDB("3",200);
+      //  productDB.updateProductPriceDB(20, "3");
 
+     //   productDB.removeProductByIdDB("3");
 
-      //  System.out.println(productDB.getAllProductDB("General"));
+        Product product1 =   productDB.addProductToCategoryDB(product, "Computer");
+
+        System.out.println(product1);
+     //  System.out.println(productDB.getAllProductDB("General"));
        // categoryList.addProduct(product1, categoryName);
 
      /*   cList.addProduct(product, "General");
