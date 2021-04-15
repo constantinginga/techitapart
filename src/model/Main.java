@@ -12,12 +12,12 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         ProductDB productDB = new ProductDB();
 
-        CategoryDB categoryDB = new CategoryDB();
-        System.out.println(categoryDB.getAllCategoryDB());
-
+//        CategoryDB categoryDB = new CategoryDB();
+//        System.out.println(categoryDB.getAllCategoryDB());
+//
 
         //categoryDB.addCategoryDB("Laptop");
-        productDB.addProductToCategoryDB(new Product("Lenovo Ideapad", "Best laptop ever", 100, 650), "Laptop");
+        productDB.addProductToCategoryDB(new Product("123123123", "adfsafsdafsd", 100, 650), "Laptop");
         System.out.println(productDB.getAllProductDB("Laptop"));
      /*   try {
             User user = new User("Farouk", " ", "farouk@gmail.com",new UserName("farouk"), new Password("Farouk_"));

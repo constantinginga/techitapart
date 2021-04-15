@@ -10,7 +10,7 @@ public interface ProductPersistence {
     void updateProductQuantityDB(String productId, int quantity);
     void updateProductPriceDB(double price, String productId);
     void updateProductDescriptionDB(String description, String productId);
-
+    void updateProductImageDB(String productId, String image);
     Product getProductByIdDB(String id);
 
     void removeProductByIdDB(String id);

@@ -11,9 +11,28 @@ import java.util.ArrayList;
 
 public class CartDB implements CartPersistence {
 
+    private final Connection connection;
+
+    public CartDB() {
+        try {
+            connection = ConnectionDB.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+    public CartDB(String url, String schemaName, String username, String password) {
+        try {
+            connection = ConnectionDB.getInstance().getConnection(url, schemaName, username, password);
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+
     @Override
     public ArrayList<CartItem> getOrderedProducts(int orderId) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             // update cart items
             PreparedStatement statement = connection.prepareStatement("UPDATE CartItem SET order_id = ? WHERE order_id IS NULL");
             statement.setInt(1, orderId);
@@ -48,7 +67,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public void addProduct(int product_id, int quantity, String username) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?)");
             statement.setInt(1, quantity);
             statement.setInt(2, product_id);
@@ -61,7 +80,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public void removeProduct(int product_id, String username) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM CartItem WHERE product_id = ? AND username = ?");
             statement.setInt(1, product_id);
             statement.setString(2, username);
@@ -73,7 +92,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public void removeProduct(int cartItemId) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM CartItem WHERE cartitem_id = ?");
             statement.setInt(1, cartItemId);
             statement.executeUpdate();
@@ -84,7 +103,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public ArrayList<CartItem> getAllProducts(String username) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM CartItem JOIN Product USING (product_id) WHERE username = ? AND order_id IS NULL");
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
