@@ -120,11 +120,6 @@ public class ModelManager implements Model{
     }
 
     @Override
-    public void addOrder() {
-
-    }
-
-    @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName)
     {
         productDB.updateProductQuantityDB(product.getId(), quantity);

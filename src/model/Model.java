@@ -20,7 +20,10 @@ public interface Model {
     ArrayList<Product> getAllProducts();
     void buyProduct(Product product, int quantity, String categoryName, String userName);
     public void addProductToBuy(Product product);
-    public void removeProduct(String id, String categoryName);
+    public void removeProduct(String id);
+    public void removeProduct(String id,String categoryName);
+
     /** order **/
     void addOrder();
+
 }
