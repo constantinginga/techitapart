@@ -1,12 +1,11 @@
 package persistence;
 
 import model.Order;
+import model.Product;
 
 import java.util.ArrayList;
 
 public interface OrderPersistence {
     ArrayList<Order> getAllOrderDB();
-    void addOrderDB(String username);
-
-   // boolean removeOrderDB(String username);
+    int addOrderDB(String username);
 }
