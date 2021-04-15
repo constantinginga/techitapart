@@ -11,6 +11,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AccountDB implements AccountPersistence {
+
+    private Connection connection ;
+
+    public AccountDB() {
+        try {
+            connection = ConnectionDB.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+    public AccountDB(String url, String schemaName, String username, String password){
+        try {
+            connection = ConnectionDB.getInstance().getConnection(url, schemaName, username, password);
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
     @Override
     public User registerNewUserDB(String fName, String lName, String email, String username, String password, Role role) {
         User user = null;

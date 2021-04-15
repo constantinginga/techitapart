@@ -8,7 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CategoryDB implements CategoryPersistence {
+    private Connection connection ;
 
+    public CategoryDB() {
+        try {
+            connection = ConnectionDB.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+    public CategoryDB(String url, String schemaName, String username, String password){
+        try {
+            connection = ConnectionDB.getInstance().getConnection(url, schemaName, username, password);
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
 
     @Override
     public ArrayList<Category> getAllCategoryDB() {
