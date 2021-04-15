@@ -18,8 +18,24 @@ public class ModelManager implements Model{
    public ModelManager()  {
        categoryList = new CategoryList();
        categoryDB = new CategoryDB();
+       /**
+        if you want to connect to your local db
+         categoryDB = new ProductDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","password");
+
+        * **/
        productDB = new ProductDB();
+       /**
+        if you want to connect to your local db
+         productDB = new ProductDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","password");
+
+        * **/
        orderDB = new OrderDB();
+       /**
+        if you want to connect to your local db
+        orderDB  = new ProductDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","password");
+
+        * **/
+
        productListToBuy = new ArrayList<>();
        orderList = new OrderList();
 
@@ -65,9 +81,10 @@ public class ModelManager implements Model{
       return   categoryList.getProductById(id, categoryName);
     }
 
-
-
-
+    @Override
+    public ArrayList<Product> getAllProductsInCategory(String categoryName) {
+        return null;
+    }
 
 
     @Override
@@ -85,6 +102,16 @@ public class ModelManager implements Model{
     @Override
     public void addProductToBuy(Product product){
         productListToBuy.add(product);
+    }
+
+    @Override
+    public void removeProduct(String id) {
+
+    }
+
+    @Override
+    public void addOrder() {
+
     }
 
     @Override

@@ -16,9 +16,14 @@ public interface Model {
     void addProduct(Product product, String categoryName);
     Product getProduct(String id, String categoryName);
   //  void buyProduct(String productName, int quantity, String categoryName, String username);
+    ArrayList<Product> getAllProductsInCategory(String categoryName);
     ArrayList<Product> getAllProducts();
     void buyProduct(Product product, int quantity, String categoryName, String userName);
     public void addProductToBuy(Product product);
-    public void removeProduct(String id, String categoryName);
+    public void removeProduct(String id);
+    public void removeProduct(String id,String categoryName);
+
+    /** order **/
+    void addOrder();
 
 }
