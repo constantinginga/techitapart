@@ -22,7 +22,7 @@ public class AccountDB implements AccountPersistence {
             throw e;
         }
 
-        try( Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"User\"(first_name, last_name, email, username, password) VALUES (?, ?, ?, ?, ?); ");
             statement.setString(1, user.getfName());
             statement.setString(2, user.getlName());
@@ -37,15 +37,15 @@ public class AccountDB implements AccountPersistence {
 //           else throw new SQLException("No keys generated");
             return user;
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw  new IllegalArgumentException("Can't connect to db");
+            throw new IllegalArgumentException("Can't connect to db");
         }
     }
 
     @Override
     public boolean loginDB(String username, String password) {
-        try( Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("SELECT  * from \"User\" WHERE username = ? AND password = ?");
             statement.setString(1, username);
@@ -60,45 +60,79 @@ public class AccountDB implements AccountPersistence {
     }
 
 
-
     @Override
-    public void updateUserName(String currentUsername, String newUsername)
-    {
-        try(Connection connection = ConnectionDB.getInstance().getConnection())
-        {
+    public void updateUserName(String currentUsername, String newUsername) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET username=? WHERE username=?");
             statement.setString(2, currentUsername);
             statement.setString(1, newUsername);
             statement.executeUpdate();
-        }
-        catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
     @Override
-    public void updateEmail(String userName, String newEmail) {
-
+    public void updateEmail(String currentUsername, String newEmail) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET email=? WHERE username=?");
+            statement.setString(1, newEmail);
+            statement.setString(2, currentUsername);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public void updatePassword(String username, String newPassword) {
-
+    public void updatePassword(String currentUsername, String newPassword) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET password=? WHERE username=?");
+            statement.setString(1, newPassword);
+            statement.setString(2, currentUsername);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public void updateFName(String username, String newFName) {
-
+    public void updateFName(String currentUsername, String newFName) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET first_name=? WHERE username=?");
+            statement.setString(1, newFName);
+            statement.setString(2, currentUsername);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public void updateLName(String username, String newLName) {
-
+    public void updateLName(String currentUsername, String newLName) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET last_name=? WHERE username=?");
+            statement.setString(1, newLName);
+            statement.setString(2, currentUsername);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public void updateDetails(String username, String newUsername, String newPassword, String newFName, String newLName, String newEmail) {
-
+    public void updateDetails(String currentUsername, String newUsername, String newPassword, String newFName, String newLName, String newEmail) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET (first_name, last_name, email, username, password) = (?, ?, ?, ?, ?) WHERE username = ?");
+            statement.setString(1, newFName);
+            statement.setString(2, newLName);
+            statement.setString(3, newEmail);
+            statement.setString(4, newUsername);
+            statement.setString(5, newPassword);
+            statement.setString(6, currentUsername);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
