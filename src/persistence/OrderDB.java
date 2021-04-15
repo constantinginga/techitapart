@@ -12,9 +12,29 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OrderDB implements OrderPersistence {
+
+    private final Connection connection;
+
+    public OrderDB() {
+        try {
+            connection = ConnectionDB.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+    public OrderDB(String url, String schemaName, String username, String password) {
+        try {
+            connection = ConnectionDB.getInstance().getConnection(url, schemaName, username, password);
+        } catch (SQLException throwables) {
+            throw new IllegalArgumentException(throwables.getMessage());
+        }
+    }
+
+
     @Override
     public ArrayList<Order> getAllOrderDB() {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             PreparedStatement statement = connection.prepareStatement("SELECT order_id, username, date FROM \"Order\" JOIN \"User\" USING (user_id)");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Order> result = new ArrayList<>();
@@ -35,7 +55,7 @@ public class OrderDB implements OrderPersistence {
 
     @Override
     public int addOrderDB(String username) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (connection) {
             // create new order in db and get its id
             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Order\" VALUES(DEFAULT, ?, CURRENT_DATE) RETURNING order_id");
             statement.setString(1, username);

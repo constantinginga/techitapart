@@ -65,9 +65,10 @@ public class ModelManager implements Model{
       return   categoryList.getProductById(id, categoryName);
     }
 
-
-
-
+    @Override
+    public ArrayList<Product> getAllProductsInCategory(String categoryName) {
+        return null;
+    }
 
 
     @Override
@@ -90,6 +91,11 @@ public class ModelManager implements Model{
     @Override
     public void removeProduct(String id, String categoryName) {
         categoryList.getCategory(categoryName).removeProduct(id);
+    }
+
+    @Override
+    public void addOrder() {
+
     }
 
     @Override
