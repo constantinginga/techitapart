@@ -1,20 +1,16 @@
 package model;
 
-import persistence.ProductDB;
-import persistence.ProductPersistence;
 
 import java.util.ArrayList;
 
 public class Category {
     private String name;
     private ProductList productList;
-    private ProductPersistence productDB;
+
 
     public Category(String name){
-        productDB = new ProductDB();
         this.name = name;
         productList = new ProductList();
-        productList.set(productDB.getAllProductDB(name));
     }
 
     public void buyProduct(String productName, int quantity){
@@ -71,6 +67,6 @@ public class Category {
     @Override public String toString()
     {
         return "Category{" + "name='" + name + '\'' + ", productList="
-            + productList + ", productDB=" + productDB + '}';
+            + productList +  '}';
     }
 }

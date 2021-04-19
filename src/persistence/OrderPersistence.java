@@ -1,7 +1,6 @@
 package persistence;
 
 import model.Order;
-import model.Product;
 
 import java.util.ArrayList;
 

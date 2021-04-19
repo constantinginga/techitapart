@@ -7,9 +7,8 @@ import java.util.ArrayList;
 public class Cart {
     private ArrayList<CartItem> cartItems;
 
-    public Cart(String username) {
-        CartDB cartDB = new CartDB();
-        this.cartItems = cartDB.getAllProducts(username);
+    public Cart() {
+        this.cartItems = new ArrayList<>();
     }
 
     public CartItem getCartItem(int index){
@@ -18,5 +17,22 @@ public class Cart {
 
     public void set(ArrayList<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public void setCartItems(ArrayList<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public void addCartItem(CartItem cartItem) {
+    }
+
+    public void updateItemQuantity(CartItem cartItem, int quantity) {
+    }
+
+    public void removeCartItemById(int id) {
+    }
+
+    public ArrayList<CartItem> getCartItems() {
+        return null;
     }
 }

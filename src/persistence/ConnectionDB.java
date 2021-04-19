@@ -15,6 +15,9 @@ public class ConnectionDB {
     private final static String PASSWORD = "7f8b2ffb33886cbe57fdb0c360df3186e636ea082374d6b7bebdc1d33d075930";
 
 
+    //    categoryDB = new CategoryDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","password");
+
+
     private ConnectionDB() throws SQLException {
         DriverManager.registerDriver(new org.postgresql.Driver());
     }
@@ -28,16 +31,6 @@ public class ConnectionDB {
     }
 
 
-    public Connection getConnection(String url, String schemaName, String username, String password) throws SQLException {
-        this.url = url;
-        this.schemaName = schemaName;
-        this.username = username;
-        this.password = password;
-
-        return DriverManager.getConnection(url + schemaName, username, password);
-
-    }
-
     public Connection getConnection() throws SQLException {
         this.url = URL;
         this.schemaName = SCHEMA_NAME;
@@ -49,14 +42,6 @@ public class ConnectionDB {
     }
 
 
-    /*    public  Connection getConnection() throws SQLException {
-     *//**
-     String user = "xorpblocnixrey";
-     String pass = "7f8b2ffb33886cbe57fdb0c360df3186e636ea082374d6b7bebdc1d33d075930";
-     String host = "jdbc:postgresql://ec2-99-80-200-225.eu-west-1.compute.amazonaws.com:5432/df75rrd5dikon6?currentSchema=techitapart";
-     **//*
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=techitapart","postgres", "farouk_12");
-    }*/
 
 
 }

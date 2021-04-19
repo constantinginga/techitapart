@@ -10,27 +10,10 @@ import java.util.ArrayList;
 
 public class CategoryDB implements CategoryPersistence {
 
-    private final Connection connection;
-
-    public CategoryDB() {
-        try {
-            connection = ConnectionDB.getInstance().getConnection();
-        } catch (SQLException throwables) {
-            throw new IllegalArgumentException(throwables.getMessage());
-        }
-    }
-
-    public CategoryDB(String url, String schemaName, String username, String password) {
-        try {
-            connection = ConnectionDB.getInstance().getConnection(url, schemaName, username, password);
-        } catch (SQLException throwables) {
-            throw new IllegalArgumentException(throwables.getMessage());
-        }
-    }
 
     @Override
     public ArrayList<Category> getAllCategoryDB() {
-        try (connection) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT category_name FROM category");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Category> result = new ArrayList<>();
@@ -48,7 +31,7 @@ public class CategoryDB implements CategoryPersistence {
 
     @Override
     public void addCategoryDB(String categoryName) {
-        try (connection) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO Category(category_name) VALUES (?)");
             statement.setString(1, categoryName);
             statement.executeUpdate();

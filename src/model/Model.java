@@ -5,22 +5,31 @@ import java.util.ArrayList;
 public interface Model {
 
     /** Account **/
-    User registerUSer(String fName, String lName, String email, String username, String password, Role role );
+    UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role );
     boolean login(String username, String password);
 
     /** Category **/
     void addCategory(String categoryName);
 
     /** Product **/
-    void addProductList(ArrayList<Product> products, String categoryName);
     void addProduct(Product product, String categoryName);
     Product getProduct(String id, String categoryName);
-  //  void buyProduct(String productName, int quantity, String categoryName, String username);
+    void removeProduct(String id, String categoryName);
+    void updateProductQuantity(String id,int quantity, String categoryName);
+    void updateProductPrice(String id,double price, String categoryName);
     ArrayList<Product> getAllProductsInCategory(String categoryName);
     ArrayList<Product> getAllProducts();
+
+
+    /** update cart **/
+    void addProductToCart (Product product,int quantity);
+    void updateCartItemQuantity(CartItem cartItem, int quantity, String username);
+    void removeProductFromCart(CartItem cartItem, String username);
+    void buy(String username);
+
+    /** this method will be deleted after implementing the cart shop **/
     void buyProduct(Product product, int quantity, String categoryName, String userName);
-    public void addProductToBuy(Product product);
-    public void removeProduct(String id, String categoryName);
+
     /** order **/
     void addOrder();
 }

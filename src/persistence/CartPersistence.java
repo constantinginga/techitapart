@@ -1,14 +1,18 @@
 package persistence;
 
 import model.CartItem;
-import model.Product;
 
 import java.util.ArrayList;
 
 public interface CartPersistence {
     ArrayList<CartItem> getOrderedProducts(int orderId);
-    void addProduct(int cart_id, int quantity, String username);
-    void removeProduct(int product_id, String username);
-    void removeProduct(int cartItemId);
-    ArrayList<CartItem> getAllProducts(String username);
+   // CartItem addProduct(int product_id, int quantity, String username);
+
+    void addProductToCart(int product_id, int quantity, String username);
+    void updateCartItemQuantity(int product_id, int quantity, String username);
+
+    void removeCartItem(int product_id, String username);
+    void removeCartItem(int cartItemId);
+    ArrayList<CartItem> getAllProductsInCart(String username);
+    public void setOrderId(int orderId, String username);
 }

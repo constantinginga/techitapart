@@ -1,17 +1,19 @@
 package model;
 
-import persistence.CartDB;
 
 public class CartItem {
     private Product product;
     private int quantity;
     private int id;
 
-    public CartItem(Product product, int quantity, String username) {
+    public CartItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
-        CartDB cartDB = new CartDB();
-        cartDB.addProduct(Integer.parseInt(product.getId()), quantity, username);
+    }
+
+    public CartItem(int id, Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
     }
 
     public void setId(int id) {

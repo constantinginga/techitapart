@@ -11,27 +11,16 @@ import java.util.ArrayList;
 public class CategoryList {
 
     private ArrayList<Category> categories;
-    private CategoryPersistence categoryDB;
 
     public CategoryList(){
         this.categories = new ArrayList<>();
-        categoryDB = new CategoryDB();
-       categories =  categoryDB.getAllCategoryDB();
 
     }
 
-    /*
-    public void addCategory(String  categoryName){
-        for (Category category1: categories){
-            if (category1.getName().equals(categoryName)){
-                throw new IllegalArgumentException("Category is already exist");
-            }
-        }
 
-
-        categories.add(new Category(categoryName));
+    public void setCategories(ArrayList<Category> categories){
+        this.categories = categories;
     }
-*/
 
     public Category getCategory(String name){
         for (Category category: categories){

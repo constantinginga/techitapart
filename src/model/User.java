@@ -1,7 +1,6 @@
 package model;
 
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class User
@@ -33,7 +32,7 @@ public class User
     orderList.addOrder(order);
   }
 
-  public Order getOrderById(String id){
+  public Order getOrderById(int id){
     return orderList.getOrder(id);
   }
 

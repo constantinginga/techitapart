@@ -10,6 +10,7 @@ public class Product {
     private String id;
     private String imgSrc;
 
+
     public Product(String name, String description){
         if (name.equals("") || description.equals("")){
             throw new IllegalArgumentException("Product name or description is  empty");
@@ -30,6 +31,7 @@ public class Product {
         this.total_quantity = total_quantity;
         this.price = price;
     }
+
 
     public Product(String id, String name, String description, int total_quantity, double price){
         if (name.equals("") || description.equals("")){
