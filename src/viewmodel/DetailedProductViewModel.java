@@ -1,7 +1,5 @@
 package viewmodel;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Model;
@@ -88,7 +86,7 @@ public class DetailedProductViewModel
   {
     model.buyProduct(
         model.getProduct(state.getProductID(), state.getCategoryName())
-            .getName(), Integer.parseInt(productQuantity.get()),
+            , Integer.parseInt(productQuantity.get()),
         state.getCategoryName(), "Bob");
     errorLabel.set("Item ordered... I think :D");
   }

@@ -41,7 +41,8 @@ public class Category {
     }
 
     public void removeProduct(String id){
-        productList.removeProduct(id);
+       // productList.removeProduct(id);
+        productList.getAllProducts().remove(productList.getProductById(id));
     }
 
     public String getName() {

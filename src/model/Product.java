@@ -19,6 +19,7 @@ public class Product {
         this.description = description;
         this.total_quantity = 0;
         this.price = 0.00;
+        this.imgSrc = "default.png";
 
     }
 

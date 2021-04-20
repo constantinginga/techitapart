@@ -7,16 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import model.Product;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class ItemViewController
 {
@@ -43,7 +39,7 @@ public class ItemViewController
 
     } catch (Exception e){
       e.printStackTrace();
-    }});
+      }});
     }
     //    Image image = new Image(
     //        getClass().getResourceAsStream(products.getImgSrc()));
@@ -69,7 +65,7 @@ public class ItemViewController
 
         viewController.getViewModelFactory().getViewState().setProductID(selectedProduct.getId());
         viewController.getViewHandler()
-            .openView("DetailedProductAdminView.fxml");
+            .openView("DetailedProductView.fxml");
       }
       catch (IOException e)
       {

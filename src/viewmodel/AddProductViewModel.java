@@ -2,7 +2,10 @@ package viewmodel;
 
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
@@ -29,6 +32,8 @@ public class AddProductViewModel {
     private File filePath;
     private String fileName;
     private ObjectProperty<javafx.scene.image.Image> imageProperty;
+    private ObservableList<String> categoryList;
+    private StringProperty selectedCategory;
 
 
     public AddProductViewModel(Model model, ViewState viewState) {
@@ -40,6 +45,10 @@ public class AddProductViewModel {
         this.price = new SimpleDoubleProperty();
         this.imageProperty = new SimpleObjectProperty<>();
         this.errorLabel = new SimpleStringProperty();
+        this.selectedCategory = new SimpleStringProperty();
+        this.categoryList = FXCollections.observableArrayList();
+        categoryList.addAll(model.getAllCategory());
+//        categoryList.setAll(model.getAllCategory());
     }
 
     public StringProperty getName() {

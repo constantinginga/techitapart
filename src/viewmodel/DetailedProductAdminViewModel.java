@@ -90,6 +90,7 @@ public class DetailedProductAdminViewModel
         state.getCategoryName(), "Bob");
     errorLabel.set("Item ordered... I think :D");*/
   model.removeProduct(state.getProductID(), state.getCategoryName());
+    System.out.println("ID: "+ state.getProductID()+", Category Name:"+state.getCategoryName());
   }
 
   public String getImage()

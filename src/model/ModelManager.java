@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ModelManager implements Model {
     private CategoryList categoryList;
 
-    private Persistense persistense ;
+    private Persistence persistense ;
 
     private UserProfile userProfile;
 
@@ -77,6 +77,11 @@ public class ModelManager implements Model {
         persistense.addCategoryDB(category);
     }
 
+    @Override
+    public ArrayList<String> getAllCategory(){
+        return categoryList.getAddCategory();
+    }
+
 
     /**
      * Product
@@ -114,7 +119,10 @@ public class ModelManager implements Model {
     @Override
     public void removeProduct(String id, String categoryName) {
         persistense.removeProductByIdDB(id);
+     ///   categoryList.getCategory(categoryName).removeProduct(id);
+       // categoryList.removeProduct(id, categoryName);
         categoryList.getCategory(categoryName).removeProduct(id);
+
     }
 
 
@@ -139,14 +147,12 @@ public class ModelManager implements Model {
     public void addProductToCart(Product product, int quantity) {
         userProfile.addProductToCart(product, quantity);
         persistense.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
-
     }
+
 
     @Override
     public void updateCartItemQuantity(CartItem cartItem, int quantity, String username) {
         userProfile.updateCartItemQuantity(cartItem, quantity);
-
-
     }
 
 
@@ -154,6 +160,7 @@ public class ModelManager implements Model {
     public void removeProductFromCart(CartItem cartItem, String username) {
         userProfile.removeCartItem(cartItem);
     }
+
 
     @Override
     public void buy(String username) {
@@ -175,8 +182,11 @@ public class ModelManager implements Model {
 
     }
 
+    ///TODO remove later
     @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName) {
+   //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
+        persistense.loginDB("Bob", "Comdnbd_12");
         persistense.decreaseProductQuantity(product.getId(), quantity);
         categoryList.buyProduct(product.getName(), quantity, categoryName);
         persistense.addOrderDB(userName);

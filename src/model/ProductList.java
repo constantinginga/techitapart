@@ -26,7 +26,7 @@ public class ProductList {
 
     public void removeProduct(String id){
         for (Product product: products){
-            products.remove(product);
+          if(product.getId().equals(id))  products.remove(product);
         }
     }
 

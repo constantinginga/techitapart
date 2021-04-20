@@ -1,9 +1,6 @@
 package model;
 
 
-import persistence.CategoryDB;
-import persistence.CategoryPersistence;
-
 import java.util.ArrayList;
 
 
@@ -15,11 +12,22 @@ public class CategoryList {
     public CategoryList(){
         this.categories = new ArrayList<>();
 
+
     }
 
 
     public void setCategories(ArrayList<Category> categories){
-        this.categories = categories;
+        this.categories = categories ;
+    }
+
+    public ArrayList<String> getAddCategory(){
+        ArrayList<String> list = new ArrayList<>();
+
+        for (Category category: categories){
+            list.add(category.getName());
+        }
+
+        return list;
     }
 
     public Category getCategory(String name){
@@ -94,7 +102,6 @@ public class CategoryList {
     }
 
     public void removeProduct(String id, String categoryName){
-
         for (Category  category: categories){
             if (category.getName().equals(categoryName)){
                 category.removeProduct(id);

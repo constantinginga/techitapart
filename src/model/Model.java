@@ -10,6 +10,7 @@ public interface Model {
 
     /** Category **/
     void addCategory(String categoryName);
+    ArrayList<String> getAllCategory();
 
     /** Product **/
     void addProduct(Product product, String categoryName);

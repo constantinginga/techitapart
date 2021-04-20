@@ -27,7 +27,7 @@ public class AddProductViewController extends ViewController {
     private TextField quantityTextfield;
 
     @FXML
-    private ChoiceBox<?> categoryChoicebox;
+    private ChoiceBox<String> categoryChoicebox;
 
     @FXML
     private TextArea decriptionTextArea;
@@ -45,8 +45,19 @@ public class AddProductViewController extends ViewController {
                 super.getViewModelFactory().getAddProductViewModel().getPrice(), new NumberStringConverter());
         quantityTextfield.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getQuantity(), new NumberStringConverter());
-        //categoryChoicebox.
-        decriptionTextArea.textProperty().bindBidirectional(
+
+        categoryChoicebox.setItems(super.getViewModelFactory().getAddProductViewModel().getCategoryList());
+//        categoryChoicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//               AddProductViewController.super.getViewModelFactory().getAddProductViewModel().updateSelectedCategory(newValue);
+//            }
+//        });
+        categoryChoicebox.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> obs, String oldValue, String newValue) -> {
+            super.getViewModelFactory().getAddProductViewModel().updateSelectedCategory(newValue);
+        });
+
+        descriptionTextArea.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getDescription());
         Bindings.bindBidirectional(this.image.imageProperty(), super.getViewModelFactory().getAddProductViewModel().getImageProperty());
         errorLabel.textProperty().bind(super.getViewModelFactory().getAddProductViewModel().getErrorLabel());
