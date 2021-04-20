@@ -71,9 +71,16 @@ public class AddProductViewModel {
         return imageProperty;
     }
 
+    public ObservableList<String> getCategoryList() {
+        return categoryList;
+    }
 
     public DoubleProperty getPrice() {
         return price;
+    }
+
+    public void updateSelectedCategory(String newValue) {
+        selectedCategory.set(newValue);
     }
 
     public void reset() {
@@ -125,7 +132,7 @@ public class AddProductViewModel {
                 product.setImgSrc(fileName);
 //            product.setImgSrc("/images/" + filePath.getName());}
             }
-                model.addProduct(product, "General");
+                model.addProduct(product, selectedCategory.get());
             } catch (Exception e) {
             errorLabel.set(e.getMessage());
             return false;

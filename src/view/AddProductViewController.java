@@ -30,7 +30,7 @@ public class AddProductViewController extends ViewController {
     private ChoiceBox<String> categoryChoicebox;
 
     @FXML
-    private TextArea decriptionTextArea;
+    private TextArea descriptionTextArea;
     @FXML
     private ImageView image;
     @FXML

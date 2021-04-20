@@ -31,6 +31,7 @@ public class Product {
         this.description = description;
         this.total_quantity = total_quantity;
         this.price = price;
+        this.imgSrc = "default.png";
     }
 
 
@@ -43,6 +44,7 @@ public class Product {
         this.total_quantity = total_quantity;
         this.price = price;
         this.id = id;
+        this.imgSrc = "default.png";
     }
 
 

@@ -22,7 +22,9 @@ public class ProductDB implements ProductPersistence {
 
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
-                return new Product(String.valueOf(keys.getInt(1)), product.getName(), product.getDescription(), product.getTotal_quantity(), product.getPrice());
+                Product product1 = new Product(String.valueOf(keys.getInt(1)), product.getName(), product.getDescription(), product.getTotal_quantity(), product.getPrice());
+                product1.setImgSrc(product.getImgSrc());
+                return product1;
             }
 
         } catch (SQLException e) {

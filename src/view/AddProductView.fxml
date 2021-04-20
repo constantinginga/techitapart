@@ -107,7 +107,7 @@
                                 <Insets top="20.0" />
                             </VBox.margin>
                         </ChoiceBox>
-                        <TextArea fx:id="decriptionTextArea" prefHeight="182.0" prefWidth="277.0">
+                        <TextArea fx:id="descriptionTextArea" prefHeight="182.0" prefWidth="277.0">
                             <VBox.margin>
                                 <Insets top="30.0" />
                             </VBox.margin>
