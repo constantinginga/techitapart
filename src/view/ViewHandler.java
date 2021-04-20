@@ -31,7 +31,17 @@ public class ViewHandler extends ViewCreator
   public void openView(String id) throws IOException {
     Region root = super.getViewController(id).getRoot();
     currentScene.setRoot(root);
+    // CSS files
+    if (id.toLowerCase().contains("market")) {
+      currentScene.getStylesheets().add("stylesheets/market.css");
+    } else if (id.toLowerCase().contains("addproduct")) {
+      currentScene.getStylesheets().add("stylesheets/addProduct.css");
+    } else if (id.toLowerCase().contains("detailedproduct")) {
+      currentScene.getStylesheets().add("stylesheets/detailedProduct.css");
+    }
+
     String title = "";
+    System.out.println(id);
     if (root.getUserData() != null) {
       title += root.getUserData();
     }
