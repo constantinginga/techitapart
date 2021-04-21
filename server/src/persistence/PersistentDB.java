@@ -5,13 +5,19 @@ import model.*;
 import java.util.ArrayList;
 
 public class PersistentDB implements Persistence {
-    AccountPersistence accountDB = new AccountDB();
-    CartPersistence cartDB = new CartDB();
-    CategoryPersistence categoryDB = new CategoryDB();
-    OrderPersistence orderDB = new OrderDB();
-    ProductPersistence productDB = new ProductDB();
+    AccountPersistence accountDB;
+    CartPersistence cartDB;
+    CategoryPersistence categoryDB;
+    OrderPersistence orderDB;
+    ProductPersistence productDB;
 
-
+    public PersistentDB(){
+        accountDB = new AccountDB();
+        cartDB = new CartDB();
+        categoryDB = new CategoryDB();
+        orderDB = new OrderDB();
+        productDB = new ProductDB();
+    }
 
 
     @Override

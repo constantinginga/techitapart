@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserProfile implements Serializable {
     private static Map<String, UserProfile> map = new HashMap<>();
