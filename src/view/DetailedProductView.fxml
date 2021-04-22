@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="850.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DetailedProductViewController">
+<AnchorPane prefHeight="850.0" prefWidth="617.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DetailedProductViewController">
    <children>
       <VBox maxHeight="810.0" maxWidth="600.0" minHeight="810.0" minWidth="600.0" prefHeight="810.0" prefWidth="600.0">
          <children>
@@ -18,7 +18,7 @@
                <children>
                   <Label fx:id="productName" alignment="TOP_LEFT" prefHeight="77.0" prefWidth="429.0" text="Products name" wrapText="true">
                      <font>
-                        <Font size="36.0" />
+                        <Font name="Century Gothic Bold" size="36.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="180.0" top="20.0" />
@@ -44,7 +44,7 @@
                                  <children>
                                     <Label text="Price:">
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="Century Gothic" size="18.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets left="30.0" top="30.0" />
@@ -59,7 +59,7 @@
                                           <Insets top="30.0" />
                                        </HBox.margin>
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="Century Gothic" size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -72,7 +72,7 @@
                                  <children>
                                     <Label text="Quantity:">
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="Century Gothic" size="18.0" />
                                        </font>
                                        <HBox.margin>
                                           <Insets left="30.0" top="30.0" />
@@ -92,7 +92,7 @@
                                           <Insets top="30.0" />
                                        </HBox.margin>
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="Century Gothic" size="18.0" />
                                        </font>
                                     </Label>
                                     <Button accessibleRole="INCREMENT_BUTTON" mnemonicParsing="false" onAction="#handleAddQuantity" text="&gt;">
@@ -106,23 +106,23 @@
                         </HBox>
                         <Label fx:id="errorLabel" text="errorLabel" textFill="RED">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Century Gothic" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="100.0" />
                            </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#handleOrderButton" prefHeight="40.0" prefWidth="80.0" text="Order">
+                        <Button mnemonicParsing="false" onAction="#handleOrderButton" prefHeight="40.0" prefWidth="80.0" styleClass="search-buttton" text="Order" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Century Gothic" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="40.0" left="100.0" top="30.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="80.0" text="Back">
+                        <Button mnemonicParsing="false" onAction="#handleBackButton" prefHeight="40.0" prefWidth="80.0" styleClass="search-buttton" text="Back" textFill="WHITE">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Century Gothic" size="18.0" />
                            </font>
                            <VBox.margin>
                               <Insets left="100.0" />
@@ -141,20 +141,23 @@
                      <children>
                         <Label text="Description:">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Century Gothic" size="18.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
+                           <padding>
+                              <Insets left="250.0" />
+                           </padding>
                         </Label>
                      </children>
                   </HBox>
-                  <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="291.0" maxWidth="580.0" minHeight="291.0" minWidth="580.0" prefHeight="291.0" prefWidth="580.0">
+                  <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="291.0" maxWidth="594.0" minHeight="291.0" minWidth="580.0" prefHeight="291.0" prefWidth="594.0">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                        <Insets bottom="10.0" left="18.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Century Gothic" size="18.0" />
                      </font>
                   </TextArea>
                </children>

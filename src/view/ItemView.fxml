@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -9,15 +10,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseClicked="#clicked" prefHeight="260.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
+<AnchorPane onMouseClicked="#clicked" prefHeight="260.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ItemViewController">
     <children>
-        <VBox prefHeight="260.0" prefWidth="225.0" AnchorPane.bottomAnchor="-47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="215.0" prefWidth="225.0" stylesheets="@../stylesheets/market.css" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox prefHeight="47.0" prefWidth="225.0">
+                <HBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="225.0">
                     <children>
                         <Label fx:id="productName" text="Name" wrapText="true">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="Century Gothic" size="24.0" />
                             </font>
                             <HBox.margin>
                                 <Insets left="10.0" top="10.0" />
@@ -25,28 +26,35 @@
                         </Label>
                     </children>
                 </HBox>
-                <ImageView fx:id="img" fitHeight="166.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="img" fitHeight="166.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../default.png" />
-                    </image></ImageView>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+                    </image>
+               <VBox.margin>
+                  <Insets left="2.0" />
+               </VBox.margin></ImageView>
+            <HBox alignment="CENTER" prefHeight="67.0" prefWidth="225.0">
                <children>
-                  <Label text="Price:">
+                  <Label alignment="CENTER" text="Price:">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Century Gothic" size="24.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" right="30.0" />
                      </HBox.margin>
                   </Label>
-                        <Label fx:id="price" text="99 kr.">
+                        <Label fx:id="price" alignment="CENTER" text="99 kr.">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="Century Gothic" size="24.0" />
                             </font>
                         </Label>
                </children>
             </HBox>
             </children>
+         <styleClass>
+            <String fx:value="product-item" />
+            <String fx:value="shadow" />
+         </styleClass>
         </VBox>
     </children>
 </AnchorPane>
