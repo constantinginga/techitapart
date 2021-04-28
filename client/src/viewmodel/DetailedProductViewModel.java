@@ -5,6 +5,7 @@ import javafx.beans.property.StringProperty;
 import model.LocalModel;
 import model.Product;
 
+import java.io.File;
 import java.rmi.RemoteException;
 
 public class DetailedProductViewModel {
@@ -93,11 +94,9 @@ public class DetailedProductViewModel {
 
     }
 
-    public String getImage() {
+    public File getImage() {
         try {
-            return model.getProduct(state.getProductID(), state.getCategoryName())
-                    .getImgSrc();
-
+            return model.getImage((model.getProduct(state.getProductID(), state.getCategoryName())).getImgSrc());
         } catch (RemoteException e) {
             e.printStackTrace();
         }

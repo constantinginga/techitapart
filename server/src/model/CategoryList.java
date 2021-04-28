@@ -92,8 +92,14 @@ public class CategoryList {
     }
 
     public Product getProductById(String id, String categoryName){
+
         for (Category  category: categories){
-            if (category.getName().equals(categoryName)){
+            if (categoryName.equalsIgnoreCase("general")){
+                if (category.getProductByID(id) != null){
+                    return category.getProductByID(id);
+                }
+            }
+            else if (category.getName().equals(categoryName)){
                 return category.getProductByID(id);
             }
         }

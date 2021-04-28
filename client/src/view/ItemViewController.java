@@ -29,6 +29,7 @@ public class ItemViewController
     selectedProduct = products;
     productName.setText(selectedProduct.getName());
     price.setText(selectedProduct.getPrice() + " kr.");
+    System.out.println(fileImage.getPath());
     Platform.runLater(() -> {
     try {
 
