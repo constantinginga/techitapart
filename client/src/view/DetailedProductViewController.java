@@ -32,7 +32,7 @@ public class DetailedProductViewController extends ViewController {
         Platform.runLater(() -> {
             try {
 
-                File file = new File("resources\\images\\" + super.getViewModelFactory().getDetailedProductViewModel().getImage());
+                File file = super.getViewModelFactory().getDetailedProductViewModel().getImage();
                 BufferedImage bufferedImage = ImageIO.read(file);
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 productImageView.setImage(image);
