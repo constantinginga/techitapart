@@ -60,9 +60,6 @@ public interface ClientModel extends LocalSubject<String, Integer>
      **/
     void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException;
 
-    /**
-     * order
-     **/
-    void addOrder() throws RemoteException;
+
 
 }

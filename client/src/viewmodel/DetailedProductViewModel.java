@@ -131,6 +131,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
         Platform.runLater(() ->{
             System.out.println("Fuck this shit");
             productQuantity.set(Integer.toString(event.getValue2()));
+
         });
 
     }

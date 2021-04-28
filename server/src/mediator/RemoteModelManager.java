@@ -125,14 +125,11 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
 
     @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException {
-        //model.buyProduct(product, quantity, categoryName, userName);
-        model.updateProductQuantity(product.getId(), quantity, categoryName);
+        model.buyProduct(product, quantity, categoryName, userName);
+     //   model.updateProductQuantity(product.getId(), quantity, categoryName);
     }
 
-    @Override
-    public void addOrder() throws RemoteException {
-        model.addOrder();
-    }
+
 
     @Override public void propertyChange(ObserverEvent<String, Integer> event)
     {

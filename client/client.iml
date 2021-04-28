@@ -26,6 +26,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="MyObserver-1.2" level="project" />
+    <orderEntry type="library" name="javafx-swt" level="application" />
+    <orderEntry type="library" name="MyObserver-1.2" level="application" />
   </component>
 </module>

@@ -107,13 +107,6 @@ public class CategoryList {
         return null;
     }
 
-    public void removeProduct(String id, String categoryName){
-        for (Category  category: categories){
-            if (category.getName().equals(categoryName)){
-                category.removeProduct(id);
-            }
-        }
-    }
 
     public ArrayList<Category> getCategories()
     {

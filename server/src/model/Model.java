@@ -13,7 +13,6 @@ public interface Model extends LocalSubject<String, Integer>
     boolean login(String username, String password);
 
     /** Category **/
-    void addCategory(String categoryName);
     ArrayList<String> getAllCategory();
 
     /** Product **/
@@ -36,6 +35,4 @@ public interface Model extends LocalSubject<String, Integer>
     /** this method will be deleted after implementing the cart shop **/
     void buyProduct(Product product, int quantity, String categoryName, String userName);
 
-    /** order **/
-    void addOrder();
 }

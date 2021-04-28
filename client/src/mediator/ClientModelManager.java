@@ -24,6 +24,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         this.server = (RemoteModel) Naming.lookup("rmi://localhost:1099/shop");
         UnicastRemoteObject.exportObject(this, 0);
         property = new PropertyChangeProxy<>(this);
+        server.addListener(this);
     }
 
 //    @Override
@@ -115,13 +116,10 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         server.buyProduct(product, quantity, categoryName, userName);
     }
 
-    @Override
-    public void addOrder() throws RemoteException {
-        server.addOrder();
-    }
 
     @Override
     public void propertyChange(ObserverEvent event) throws RemoteException {
+        System.out.println("ClientModelManager--->>>>> "+event.getValue2());
         property.firePropertyChange(event);
     }
 

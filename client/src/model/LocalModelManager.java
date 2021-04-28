@@ -123,10 +123,6 @@ public class LocalModelManager implements LocalModel, LocalListener<String, Inte
         client.buyProduct(product, quantity, categoryName, userName);
     }
 
-    @Override
-    public void addOrder() throws RemoteException {
-        client.addOrder();
-    }
 
     @Override
     public void propertyChange(ObserverEvent event) {

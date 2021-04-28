@@ -2,14 +2,10 @@ package model;
 
 import persistence.*;
 import utility.observer.listener.GeneralListener;
-import utility.observer.subject.LocalSubject;
 import utility.observer.subject.PropertyChangeProxy;
-import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -81,10 +77,6 @@ public class ModelManager implements Model
     /**
      * Category
      **/
-    @Override
-    public void addCategory(String category) {
-        persistense.addCategoryDB(category);
-    }
 
     @Override
     public ArrayList<String> getAllCategory() {
@@ -93,7 +85,7 @@ public class ModelManager implements Model
 
 
     /**
-     * Product
+     * Product Admin
      **/
     @Override
     public void addProduct(Product product, String categoryName) {
@@ -113,7 +105,7 @@ public class ModelManager implements Model
         return categoryList.getCategory(categoryName).getProductList();
     }
 
-
+//TODO Remove later after adding categories
     @Override
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
@@ -145,8 +137,6 @@ public class ModelManager implements Model
     @Override
     public void removeProduct(String id, String categoryName) {
         persistense.removeProductByIdDB(id);
-        ///   categoryList.getCategory(categoryName).removeProduct(id);
-        // categoryList.removeProduct(id, categoryName);
         categoryList.getCategory(categoryName).removeProduct(id);
 
     }
@@ -157,7 +147,6 @@ public class ModelManager implements Model
         persistense.updateProductQuantityDB(id, quantity);
         categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
         System.out.println("Model manager fire property");
-        property.firePropertyChange("quantity", id, quantity);
     }
 
 
@@ -218,8 +207,12 @@ public class ModelManager implements Model
         // persistense.loginDB("Bob", "Comdnbd_12");
         persistense.decreaseProductQuantity(product.getId(), quantity);
         categoryList.buyProduct(product.getName(), quantity, categoryName);
+        property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity());
+        System.out.println("Model Manager: ->>>>>>>>>>>>>>>>>>>"+product.getTotal_quantity());
+
         // persistense.addOrderDB(userName);
     }
+
 
     @Override public boolean addListener(
         GeneralListener<String, Integer> listener, String... propertyNames)
