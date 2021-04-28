@@ -1,9 +1,12 @@
 package model;
 
+import utility.observer.subject.LocalSubject;
+
 import java.io.File;
 import java.util.ArrayList;
 
-public interface Model {
+public interface Model extends LocalSubject<String, Integer>
+{
 
     /** Account **/
     UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role );

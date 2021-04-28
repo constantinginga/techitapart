@@ -1,12 +1,17 @@
 package viewmodel;
 
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import model.LocalModel;
 import model.Product;
+import utility.observer.event.ObserverEvent;
+import utility.observer.listener.LocalListener;
+
 import java.io.File;
 import java.rmi.RemoteException;
 
-public class DetailedProductViewModel {
+public class DetailedProductViewModel implements LocalListener<String, Integer>
+{
     private LocalModel model;
     private ViewState state;
     private StringProperty productName, productPrice, productQuantity, errorLabel, description;
@@ -21,6 +26,7 @@ public class DetailedProductViewModel {
         errorLabel = new SimpleStringProperty();
         description = new SimpleStringProperty();
         editableProperty = new SimpleBooleanProperty(true);
+        model.addListener(this);
     }
 
     public void reset() {
@@ -120,4 +126,12 @@ public class DetailedProductViewModel {
         return null;
     }
 
+    @Override public void propertyChange(ObserverEvent<String, Integer> event)
+    {
+        Platform.runLater(() ->{
+            System.out.println("Fuck this shit");
+            productQuantity.set(Integer.toString(event.getValue2()));
+        });
+
+    }
 }

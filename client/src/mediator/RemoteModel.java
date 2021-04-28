@@ -4,13 +4,16 @@ import model.CartItem;
 import model.Product;
 import model.Role;
 import model.UserProfile;
+import utility.observer.listener.RemoteListener;
+import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface RemoteModel extends Remote {
+public interface RemoteModel extends RemoteSubject<String, Integer>
+{
 
     /**
      * Account

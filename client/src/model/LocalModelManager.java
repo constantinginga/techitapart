@@ -16,19 +16,17 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public class LocalModelManager implements LocalModel, LocalListener {
+public class LocalModelManager implements LocalModel, LocalListener<String, Integer> {
 
 
     private UserProfile userProfile;
-
-
     private ClientModelManager client;
-    private PropertyChangeAction property;
+    private PropertyChangeAction<String, Integer> property;
 
     public LocalModelManager() throws IOException, InterruptedException, NotBoundException {
         this.client = new ClientModelManager(this);
         this.property = new PropertyChangeProxy(this);
-//        client.addListener(this);
+        client.addListener(this);
     }
 
     /**
@@ -132,16 +130,16 @@ public class LocalModelManager implements LocalModel, LocalListener {
 
     @Override
     public void propertyChange(ObserverEvent event) {
-
+        property.firePropertyChange(event);
     }
 
     @Override
     public boolean addListener(GeneralListener listener, String... propertyNames) {
-        return false;
+        return property.addListener(listener, propertyNames);
     }
 
     @Override
     public boolean removeListener(GeneralListener listener, String... propertyNames) {
-        return false;
+        return property.removeListener(listener, propertyNames);
     }
 }

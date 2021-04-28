@@ -1,6 +1,10 @@
 package mediator;
 
 import model.*;
+import utility.observer.event.ObserverEvent;
+import utility.observer.listener.GeneralListener;
+import utility.observer.listener.LocalListener;
+import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -11,13 +15,17 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class RemoteModelManager implements RemoteModel {
+public class RemoteModelManager implements RemoteModel, LocalListener<String, Integer>
+{
     private Model model;
+    private PropertyChangeProxy<String, Integer> property;
 
     public RemoteModelManager(Model model) throws RemoteException, MalformedURLException {
         startRegistry();
         this.model = model;
+        this.property = new PropertyChangeProxy<>(this);
         startServer();
+        model.addListener(this);
     }
 
     private void startRegistry() throws RemoteException {
@@ -117,11 +125,32 @@ public class RemoteModelManager implements RemoteModel {
 
     @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException {
-        model.buyProduct(product, quantity, categoryName, userName);
+        //model.buyProduct(product, quantity, categoryName, userName);
+        model.updateProductQuantity(product.getId(), quantity, categoryName);
     }
 
     @Override
     public void addOrder() throws RemoteException {
         model.addOrder();
+    }
+
+    @Override public void propertyChange(ObserverEvent<String, Integer> event)
+    {
+        System.out.println("Fire property change in RemoteModelManager");
+        property.firePropertyChange(event);
+    }
+
+    @Override public boolean addListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+        throws RemoteException
+    {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override public boolean removeListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+        throws RemoteException
+    {
+        return property.removeListener(listener, propertyNames);
     }
 }

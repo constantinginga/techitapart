@@ -1,12 +1,14 @@
 package model;
 
+import utility.observer.listener.LocalListener;
 import utility.observer.subject.LocalSubject;
 
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface LocalModel extends LocalSubject {
+public interface LocalModel extends LocalSubject<String, Integer>
+{
 
     /**
      * Account

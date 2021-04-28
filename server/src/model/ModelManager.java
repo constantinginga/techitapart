@@ -1,27 +1,34 @@
 package model;
 
 import persistence.*;
-
+import utility.observer.listener.GeneralListener;
+import utility.observer.subject.LocalSubject;
+import utility.observer.subject.PropertyChangeProxy;
+import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public class ModelManager implements Model {
+public class ModelManager implements Model
+{
     private CategoryList categoryList;
 
     private Persistence persistense;
 
     private UserProfile userProfile;
 
+    private PropertyChangeProxy<String, Integer> property;
 
     public ModelManager() {
         categoryList = new CategoryList();
 
         persistense = new PersistentDB();
 
+        property = new PropertyChangeProxy<>(this);
 
         ArrayList<Category> categories1 = persistense.getAllCategoryDB();
 
@@ -147,9 +154,10 @@ public class ModelManager implements Model {
 
     @Override
     public void updateProductQuantity(String id, int quantity, String categoryName) {
-
         persistense.updateProductQuantityDB(id, quantity);
         categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
+        System.out.println("Model manager fire property");
+        property.firePropertyChange("quantity", id, quantity);
     }
 
 
@@ -207,11 +215,21 @@ public class ModelManager implements Model {
     @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName) {
         //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
-        persistense.loginDB("Bob", "Comdnbd_12");
+        // persistense.loginDB("Bob", "Comdnbd_12");
         persistense.decreaseProductQuantity(product.getId(), quantity);
         categoryList.buyProduct(product.getName(), quantity, categoryName);
-        persistense.addOrderDB(userName);
+        // persistense.addOrderDB(userName);
     }
 
+    @Override public boolean addListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+    {
+        return property.addListener(listener, propertyNames);
+    }
 
+    @Override public boolean removeListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+    {
+        return property.removeListener(listener, propertyNames);
+    }
 }

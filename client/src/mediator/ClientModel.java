@@ -4,12 +4,14 @@ import model.CartItem;
 import model.Product;
 import model.Role;
 import model.UserProfile;
+import utility.observer.subject.LocalSubject;
 
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface ClientModel {
+public interface ClientModel extends LocalSubject<String, Integer>
+{
 
     /**
      * Account

@@ -2,7 +2,9 @@ package mediator;
 
 import model.*;
 import utility.observer.event.ObserverEvent;
+import utility.observer.listener.GeneralListener;
 import utility.observer.listener.RemoteListener;
+import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -12,14 +14,16 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class ClientModelManager implements ClientModel, RemoteListener {
+public class ClientModelManager implements ClientModel, RemoteListener<String, Integer> {
     private RemoteModel server;
     private String username;
+    private PropertyChangeProxy<String, Integer> property;
 
 
     public ClientModelManager(LocalModel model) throws RemoteException, NotBoundException, MalformedURLException {
         this.server = (RemoteModel) Naming.lookup("rmi://localhost:1099/shop");
         UnicastRemoteObject.exportObject(this, 0);
+        property = new PropertyChangeProxy<>(this);
     }
 
 //    @Override
@@ -118,6 +122,18 @@ public class ClientModelManager implements ClientModel, RemoteListener {
 
     @Override
     public void propertyChange(ObserverEvent event) throws RemoteException {
+        property.firePropertyChange(event);
+    }
 
+    @Override public boolean addListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+    {
+        return property.addListener(listener, propertyNames);
+    }
+
+    @Override public boolean removeListener(
+        GeneralListener<String, Integer> listener, String... propertyNames)
+    {
+        return property.removeListener(listener, propertyNames);
     }
 }
