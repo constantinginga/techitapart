@@ -115,5 +115,63 @@ class ModelManagerTest {
         mm.getAllProducts();
         assertEquals(1000, mm.getAllProducts().size());
     }
+    @org.junit.jupiter.api.Test
+    void getImage() {
 
+        assertEquals(false, model.getImage("709786100.jpg") == null);
+        assertEquals(false, model.getImage("7097861003.jpg") == null);
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeProduct() {
+        model.addProduct(new Product("Product1", "Idk", 123, 23), "SSD");
+        Product product = new Product("Product1", "Idk", 123, 23);
+        for (Product product1 : model.getAllProducts()) {
+            if (product1.getName().equals("Product1")) {
+                product = product1;
+            }
+        }
+        int currentSize = model.getAllProducts().size();
+        model.removeProduct(product.getId(), "SSD");
+        assertEquals(currentSize - 1, model.getAllProducts().size());
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateProductQuantity() {
+        model.addProduct(new Product("Product1", "Idk", 123, 232), "SSD");
+        Product product = new Product("Product1", "Idk", 123, 232);
+        for (Product product1 : model.getAllProducts()) {
+            if (product1.getName().equals("Product1")) {
+                product = product1;
+            }
+        }
+//        product.setTotal_quantity(1);
+        model.updateProductQuantity(product.getId(), 12, "SSD");
+        assertEquals(12, model.getProduct(product.getId(), "SSD").getTotal_quantity());
+        Product finalProduct = product;
+        assertThrows(Exception.class, () -> {
+            model.updateProductQuantity(finalProduct.getId(), -1, "SSD");
+
+        });
+//        model.updateProductQuantity(product.getId(),-1,"SSD");
+//        assertEquals(-1, model.getProduct(product.getId(),"SSD").getTotal_quantity());
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateProductPrice() {
+        model.addProduct(new Product("Product1", "Idk", 123, 232), "SSD");
+        Product product = new Product("Product1", "Idk", 123, 232);
+        for (Product product1 : model.getAllProducts()) {
+            if (product1.getName().equals("Product1")) {
+                product = product1;
+            }
+        }
+        assertEquals(232.0, model.getProduct(product.getId(), "SSD").getPrice());
+        model.updateProductPrice(product.getId(), 1, "SSD");
+        assertEquals(1, model.getProduct(product.getId(), "SSD").getPrice());
+        model.updateProductPrice(product.getId(), -1, "SSD");
+        assertEquals(-1, model.getProduct(product.getId(), "SSD").getPrice());
+
+    }
 }
