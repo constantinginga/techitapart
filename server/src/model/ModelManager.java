@@ -99,7 +99,9 @@ public class ModelManager implements Model
         return categoryList.getProductById(id, categoryName);
     }
 
-
+    /**
+     * For the future (when adding categories)
+     */
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
         return categoryList.getCategory(categoryName).getProductList();
@@ -138,10 +140,10 @@ public class ModelManager implements Model
     public void removeProduct(String id, String categoryName) {
         persistense.removeProductByIdDB(id);
         categoryList.getCategory(categoryName).removeProduct(id);
-
     }
 
 
+    // For admin in the edit window, it set the quantity to the passed quantity
     @Override
     public void updateProductQuantity(String id, int quantity, String categoryName) {
         persistense.updateProductQuantityDB(id, quantity);
@@ -149,7 +151,7 @@ public class ModelManager implements Model
         System.out.println("Model manager fire property");
     }
 
-
+    // For admin in the edit window, it set the price to the passed price
     @Override
     public void updateProductPrice(String id, double price, String categoryName) {
         persistense.updateProductPriceDB(price, id);
@@ -195,10 +197,6 @@ public class ModelManager implements Model
     }
 
 
-    @Override
-    public void addOrder() {
-
-    }
 
     ///TODO remove later
     @Override
