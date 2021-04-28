@@ -50,22 +50,23 @@ public class DetailedProductViewController extends ViewController {
         errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getErrorLabel());
         descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getDescription());
         super.getViewModelFactory().getDetailedProductViewModel().getEditableProperty().addListener(((observable, oldValue, newValue) -> {
-            orderButton.setDisable(newValue);
-            System.out.println("23");
+            orderButton.setDisable(!newValue);
         }));
     }
 
     @Override
     public void reset() throws InterruptedException {
-        super.getViewModelFactory().getDetailedProductViewModel().reset();
         Platform.runLater(() -> {
             try {
-
+                super.getViewModelFactory().getDetailedProductViewModel().reset();
                 File file = super.getViewModelFactory().getDetailedProductViewModel().getImage();
                 BufferedImage bufferedImage = ImageIO.read(file);
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 productImageView.setImage(image);
                 productImageView.setPreserveRatio(true);
+                super.getViewModelFactory().getDetailedProductViewModel().getEditableProperty().addListener(((observable, oldValue, newValue) -> {
+                    orderButton.setDisable(!newValue);
+                }));
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -3,7 +3,6 @@ package viewmodel;
 import javafx.beans.property.*;
 import model.LocalModel;
 import model.Product;
-
 import java.io.File;
 import java.rmi.RemoteException;
 
@@ -11,7 +10,7 @@ public class DetailedProductViewModel {
     private LocalModel model;
     private ViewState state;
     private StringProperty productName, productPrice, productQuantity, errorLabel, description;
-    private ObjectProperty<Boolean> editableProperty;
+    private BooleanProperty editableProperty;
 
     public DetailedProductViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
@@ -21,7 +20,7 @@ public class DetailedProductViewModel {
         productQuantity = new SimpleStringProperty();
         errorLabel = new SimpleStringProperty();
         description = new SimpleStringProperty();
-        editableProperty = new SimpleObjectProperty<>(false);
+        editableProperty = new SimpleBooleanProperty(true);
     }
 
     public void reset() {
@@ -32,7 +31,11 @@ public class DetailedProductViewModel {
             productQuantity.set(String.valueOf(product.getTotal_quantity()));
             description.set(product.getDescription());
             errorLabel.set("");
-            editableProperty = new SimpleObjectProperty<>(false);
+            if(product.getTotal_quantity() <= 0){
+                editableProperty.set(false);
+            } else {
+                editableProperty.set(true);
+            }
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -50,15 +53,11 @@ public class DetailedProductViewModel {
         return productQuantity;
     }
 
-    public ObjectProperty<Boolean> getEditableProperty()
+    public BooleanProperty getEditableProperty()
     {
         return editableProperty;
     }
 
-    public ObjectProperty<Boolean> editablePropertyProperty()
-    {
-        return editableProperty;
-    }
 
     public StringProperty getErrorLabel() {
         return errorLabel;
@@ -70,8 +69,6 @@ public class DetailedProductViewModel {
 
     public void addQuantity() {
         try {
-            editableProperty.set(!getEditableProperty().get());
-            editableProperty.setValue(!getEditableProperty().get());
             if (Integer.parseInt(productQuantity.get()) >= model.getProduct(state.getProductID(), state.getCategoryName()).getTotal_quantity()) {
                 productQuantity.set(String.valueOf(model.getProduct(state.getProductID(), state.getCategoryName()).getTotal_quantity()));
             } else {
@@ -85,9 +82,13 @@ public class DetailedProductViewModel {
     }
 
     public void removeQuantity() {
-        if (Integer.parseInt(productQuantity.get()) <= 1) {
+        if (Integer.parseInt(productQuantity.get()) == 1) {
             productQuantity.set(String.valueOf(1));
-        } else {
+        }
+        else if (Integer.parseInt(productQuantity.get()) == 0) {
+            productQuantity.set(String.valueOf(0));
+        }
+        else {
             productQuantity
                     .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
         }
@@ -97,6 +98,7 @@ public class DetailedProductViewModel {
         try {
             if(model.getProduct(state.getProductID(), state.getCategoryName()).getTotal_quantity() == 0){
                 editableProperty.set(false);
+                return;
             }
             model.buyProduct(
                     model.getProduct(state.getProductID(), state.getCategoryName())
