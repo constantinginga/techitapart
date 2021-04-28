@@ -4,6 +4,7 @@ import utility.observer.listener.LocalListener;
 import utility.observer.subject.LocalSubject;
 
 import java.io.File;
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -63,4 +64,9 @@ public interface LocalModel extends LocalSubject<String, Integer>
      * order
      **/
     void addOrder() throws RemoteException;
+
+    /**
+     * closing of window
+     */
+    void close() throws NoSuchObjectException;
 }

@@ -4,11 +4,13 @@ import model.*;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.GeneralListener;
 import utility.observer.listener.RemoteListener;
+import utility.observer.subject.PropertyChangeAction;
 import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -17,13 +19,16 @@ import java.util.ArrayList;
 public class ClientModelManager implements ClientModel, RemoteListener<String, Integer> {
     private RemoteModel server;
     private String username;
-    private PropertyChangeProxy<String, Integer> property;
+    private PropertyChangeAction<String, Integer> property;
+    private LocalModel model;
 
 
     public ClientModelManager(LocalModel model) throws RemoteException, NotBoundException, MalformedURLException {
+        this.model = model;
         this.server = (RemoteModel) Naming.lookup("rmi://localhost:1099/shop");
         UnicastRemoteObject.exportObject(this, 0);
-        property = new PropertyChangeProxy<>(this);
+        server.addListener(this);
+        property = new PropertyChangeProxy<>(this, true);
     }
 
 //    @Override
@@ -120,8 +125,15 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         server.addOrder();
     }
 
+    @Override public void close() throws NoSuchObjectException
+    {
+        property.close();
+        UnicastRemoteObject.unexportObject(this, true);
+    }
+
     @Override
-    public void propertyChange(ObserverEvent event) throws RemoteException {
+    public void propertyChange(ObserverEvent<String, Integer> event) throws RemoteException {
+        System.out.println("Fire property change in ClientModelManager");
         property.firePropertyChange(event);
     }
 

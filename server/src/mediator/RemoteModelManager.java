@@ -23,9 +23,9 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     public RemoteModelManager(Model model) throws RemoteException, MalformedURLException {
         startRegistry();
         this.model = model;
-        this.property = new PropertyChangeProxy<>(this);
-        startServer();
         model.addListener(this);
+        startServer();
+        this.property = new PropertyChangeProxy<>(this, true);
     }
 
     private void startRegistry() throws RemoteException {
@@ -125,8 +125,8 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
 
     @Override
     public void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException {
-        //model.buyProduct(product, quantity, categoryName, userName);
-        model.updateProductQuantity(product.getId(), quantity, categoryName);
+        model.buyProduct(product, quantity, categoryName, userName);
+        //model.updateProductQuantity(product.getId(), quantity, categoryName);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     @Override public void propertyChange(ObserverEvent<String, Integer> event)
     {
         System.out.println("Fire property change in RemoteModelManager");
-        property.firePropertyChange(event);
+        property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 
     @Override public boolean addListener(

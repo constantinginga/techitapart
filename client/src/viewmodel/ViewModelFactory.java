@@ -3,6 +3,7 @@ package viewmodel;
 import model.LocalModel;
 
 import java.io.File;
+import java.rmi.RemoteException;
 
 public class ViewModelFactory
 {
@@ -13,7 +14,7 @@ public class ViewModelFactory
   private MarketUserViewModel marketUserViewModel;
   private DetailedProductAdminViewModel detailedProductAdminViewModel;
   private ViewState viewState;
-  public ViewModelFactory(LocalModel model)
+  public ViewModelFactory(LocalModel model) throws RemoteException
   {
     viewState = new ViewState();
     addProductViewModel = new AddProductViewModel(model, viewState);

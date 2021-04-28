@@ -2,14 +2,11 @@ package model;
 
 import persistence.*;
 import utility.observer.listener.GeneralListener;
-import utility.observer.subject.LocalSubject;
+import utility.observer.subject.PropertyChangeAction;
 import utility.observer.subject.PropertyChangeProxy;
-import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
@@ -17,28 +14,23 @@ public class ModelManager implements Model
 {
     private CategoryList categoryList;
 
-    private Persistence persistense;
+    private Persistence persistence;
 
     private UserProfile userProfile;
 
-    private PropertyChangeProxy<String, Integer> property;
+    private PropertyChangeAction<String, Integer> property;
 
     public ModelManager() {
         categoryList = new CategoryList();
-
-        persistense = new PersistentDB();
-
+        persistence = new PersistentDB();
         property = new PropertyChangeProxy<>(this);
-
-        ArrayList<Category> categories1 = persistense.getAllCategoryDB();
-
-
+        ArrayList<Category> categories1 = persistence.getAllCategoryDB();
         categoryList.setCategories(categories1);
         System.out.println(" Category \n" + categories1.toString() + "\n");
 
         for (Category category : categoryList.getCategories()) {
 
-            ArrayList<Product> products = persistense.getAllProductDB(category.getName());
+            ArrayList<Product> products = persistence.getAllProductDB(category.getName());
             System.out.println(products.toString());
 
             category.addProductList(products);
@@ -53,7 +45,8 @@ public class ModelManager implements Model
     // how will this login method work in server client system?
     @Override
     public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) {
-        User user = persistense.registerNewUserDB(fName, lName, email, username, password, role);
+        User user = persistence
+            .registerNewUserDB(fName, lName, email, username, password, role);
         userProfile = UserProfile.getInstance(username);
         Cart cart = new Cart();
 
@@ -64,11 +57,11 @@ public class ModelManager implements Model
     // how will this login method work in server client system?
     @Override
     public boolean login(String username, String password) {
-        if (persistense.loginDB(username, password)) {
+        if (persistence.loginDB(username, password)) {
             userProfile = UserProfile.getInstance(username);
             Cart cart = new Cart();
             userProfile.setCart(cart);
-            cart.setCartItems(persistense.getAllProductsInCart(username));
+            cart.setCartItems(persistence.getAllProductsInCart(username));
             return true;
             //   return userProfile;
         } else {
@@ -83,7 +76,7 @@ public class ModelManager implements Model
      **/
     @Override
     public void addCategory(String category) {
-        persistense.addCategoryDB(category);
+        persistence.addCategoryDB(category);
     }
 
     @Override
@@ -97,14 +90,18 @@ public class ModelManager implements Model
      **/
     @Override
     public void addProduct(Product product, String categoryName) {
-        Product product1 = persistense.addProductToCategoryDB(product, categoryName);
+        Product product1 = persistence
+            .addProductToCategoryDB(product, categoryName);
         categoryList.addProduct(product1, categoryName);
     }
 
 
     @Override
     public Product getProduct(String id, String categoryName) {
+        System.out.println(categoryList.getProductById(id, categoryName).getTotal_quantity());
+        //System.out.println(persistence.getProductByIdDB(id).getTotal_quantity());
         return categoryList.getProductById(id, categoryName);
+        //return persistence.getProductByIdDB(id);
     }
 
 
@@ -144,7 +141,7 @@ public class ModelManager implements Model
 
     @Override
     public void removeProduct(String id, String categoryName) {
-        persistense.removeProductByIdDB(id);
+        persistence.removeProductByIdDB(id);
         ///   categoryList.getCategory(categoryName).removeProduct(id);
         // categoryList.removeProduct(id, categoryName);
         categoryList.getCategory(categoryName).removeProduct(id);
@@ -154,16 +151,17 @@ public class ModelManager implements Model
 
     @Override
     public void updateProductQuantity(String id, int quantity, String categoryName) {
-        persistense.updateProductQuantityDB(id, quantity);
-        categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
-        System.out.println("Model manager fire property");
-        property.firePropertyChange("quantity", id, quantity);
+        persistence.updateProductQuantityDB(id, quantity);
+        //categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
+        categoryList.getCategory(categoryName).getProductByID(id).buyProduct(quantity);
+        System.out.println("Fire property change in ModelManager");
+        //property.firePropertyChange("quantity", id, quantity);
     }
 
 
     @Override
     public void updateProductPrice(String id, double price, String categoryName) {
-        persistense.updateProductPriceDB(price, id);
+        persistence.updateProductPriceDB(price, id);
         categoryList.getCategory(categoryName).getProductByID(id).setPrice(price);
     }
 
@@ -175,7 +173,7 @@ public class ModelManager implements Model
     @Override
     public void addProductToCart(Product product, int quantity) {
         userProfile.addProductToCart(product, quantity);
-        persistense.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
+        persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
     }
 
     // how will this login method work in server client system?
@@ -193,13 +191,14 @@ public class ModelManager implements Model
     // how will this login method work in server client system?
     @Override
     public void buy(String username) {
-        Order order = new Order(persistense.addOrderDB(username), userProfile.getUsername());
+        Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
         userProfile.addOrder(order);
-        persistense.setOrderId(order.getOrder_id(), username);
+        persistence.setOrderId(order.getOrder_id(), username);
 
         for (CartItem cartItem : userProfile.getAllCartItem()) {
 
-            persistense.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+            persistence
+                .decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
         }
 
         userProfile.setCart(new Cart());
@@ -216,7 +215,8 @@ public class ModelManager implements Model
     public void buyProduct(Product product, int quantity, String categoryName, String userName) {
         //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
         // persistense.loginDB("Bob", "Comdnbd_12");
-        persistense.decreaseProductQuantity(product.getId(), quantity);
+        property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
+        persistence.decreaseProductQuantity(product.getId(), quantity);
         categoryList.buyProduct(product.getName(), quantity, categoryName);
         // persistense.addOrderDB(userName);
     }

@@ -1,9 +1,5 @@
 package model;
-
-
 import java.util.ArrayList;
-
-
 
 public class CategoryList {
 
@@ -11,10 +7,7 @@ public class CategoryList {
 
     public CategoryList(){
         this.categories = new ArrayList<>();
-
-
     }
-
 
     public void setCategories(ArrayList<Category> categories){
         this.categories = categories ;
@@ -26,7 +19,6 @@ public class CategoryList {
         for (Category category: categories){
             list.add(category.getName());
         }
-
         return list;
     }
 
@@ -37,8 +29,6 @@ public class CategoryList {
 
         return null;
     }
-
-
 
     public Category getCategory(int index){
         return categories.get(index);
@@ -52,15 +42,11 @@ public class CategoryList {
     }
 
     public void addProduct(Product product, String categoryName){
-
-
         for (Category category1: categories){
             if (categoryName.equals(category1.getName())){
                 category1.addProduct(product);
             }
         }
-
-
     }
 
     public void buyProduct(String productName, int quantity, String categoryName){
@@ -87,7 +73,6 @@ public class CategoryList {
                 return category.getProduct(product);
             }
         }
-
         return null;
     }
 
@@ -103,7 +88,6 @@ public class CategoryList {
                 return category.getProductByID(id);
             }
         }
-
         return null;
     }
 
