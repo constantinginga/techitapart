@@ -12,7 +12,7 @@ public class ConnectionDB {
     private final static String URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=";
     private final static String SCHEMA_NAME = "techitapart";
     private final static String USERNAME = "postgres";
-    private final static String PASSWORD = "klaavs17";
+    private final static String PASSWORD = "kubino";
 //    private final static String URL = "jdbc:postgresql://ec2-99-80-200-225.eu-west-1.compute.amazonaws.com:5432/df75rrd5dikon6?currentSchema=";
 //    private final static String SCHEMA_NAME = "techitapart";
 //    private final static String USERNAME = "xorpblocnixrey";
