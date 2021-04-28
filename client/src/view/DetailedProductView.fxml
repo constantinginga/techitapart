@@ -112,7 +112,7 @@
                               <Insets left="100.0" />
                            </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#handleOrderButton" prefHeight="40.0" prefWidth="80.0" text="Order">
+                        <Button mnemonicParsing="false" fx:id="orderButton" onAction="#handleOrderButton" prefHeight="40.0" prefWidth="80.0" text="Order">
                            <font>
                               <Font size="18.0" />
                            </font>

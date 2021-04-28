@@ -3,6 +3,7 @@ package view;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -27,6 +28,8 @@ public class DetailedProductViewController extends ViewController {
     @FXML
     private TextArea descriptionTextArea;
 
+    @FXML private Button orderButton;
+
     @Override
     protected void init() throws InterruptedException {
         Platform.runLater(() -> {
@@ -46,6 +49,10 @@ public class DetailedProductViewController extends ViewController {
         productQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getProductQuantity());
         errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getErrorLabel());
         descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getDescription());
+        super.getViewModelFactory().getDetailedProductViewModel().getEditableProperty().addListener(((observable, oldValue, newValue) -> {
+            orderButton.setDisable(newValue);
+            System.out.println("23");
+        }));
     }
 
     @Override
