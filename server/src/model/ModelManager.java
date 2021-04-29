@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.Gson;
 import persistence.*;
 import utility.observer.listener.GeneralListener;
 import utility.observer.subject.PropertyChangeAction;
@@ -23,7 +24,7 @@ public class ModelManager implements Model
     public ModelManager() {
         categoryList = new CategoryList();
         persistence = new PersistentDB();
-        property = new PropertyChangeProxy<>(this);
+        property = new PropertyChangeProxy<>(this, true);
         ArrayList<Category> categories1 = persistence.getAllCategoryDB();
         categoryList.setCategories(categories1);
         System.out.println(" Category \n" + categories1.toString() + "\n");
@@ -92,7 +93,11 @@ public class ModelManager implements Model
     public void addProduct(Product product, String categoryName) {
         Product product1 = persistence
             .addProductToCategoryDB(product, categoryName);
+        Gson gson = new Gson();
+        String g1 = gson.toJson(product);
+        System.out.println("AddProduct property change in ModelManager");
         categoryList.addProduct(product1, categoryName);
+        property.firePropertyChange("addProduct", g1, null);
     }
 
 
@@ -117,7 +122,6 @@ public class ModelManager implements Model
         for (Category category : categoryList.getCategories()) {
             products.addAll(category.getProductList());
         }
-
         return products;
     }
 
@@ -144,8 +148,9 @@ public class ModelManager implements Model
         persistence.removeProductByIdDB(id);
         ///   categoryList.getCategory(categoryName).removeProduct(id);
         // categoryList.removeProduct(id, categoryName);
+        System.out.println("Remove product property change in ModelManager");
+        property.firePropertyChange("removeProduct", id, null);
         categoryList.getCategory(categoryName).removeProduct(id);
-
     }
 
 
@@ -154,8 +159,6 @@ public class ModelManager implements Model
         persistence.updateProductQuantityDB(id, quantity);
         //categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
         categoryList.getCategory(categoryName).getProductByID(id).buyProduct(quantity);
-        System.out.println("Fire property change in ModelManager");
-        //property.firePropertyChange("quantity", id, quantity);
     }
 
 

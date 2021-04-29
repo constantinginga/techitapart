@@ -113,6 +113,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     }
   }
 
+
   public void removeQuantity()
   {
     if (Integer.parseInt(productQuantity.get()) == 1)
@@ -176,8 +177,11 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
   {
     Platform.runLater(() -> {
       System.out.println("Fire property change in DetailedProductViewProperty");
-      if(event.getValue2().equals(state.getProductID()))
-      productQuantity.set(Integer.toString(event.getValue2()));
+      if(event.getPropertyName().contains("quantity")){
+        //if(event.getValue2().equals(state.getProductID())){
+          productQuantity.set(Integer.toString(event.getValue2()));
+       // }
+      }
     });
 
   }

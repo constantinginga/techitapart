@@ -56,6 +56,7 @@ public class LocalModelManager
   @Override public void addProduct(Product product, String categoryName)
       throws RemoteException
   {
+    System.out.println("AddProduct fire propertyChange in LocalModelManager");
     client.addProduct(product, categoryName);
   }
 
@@ -68,6 +69,7 @@ public class LocalModelManager
   @Override public void removeProduct(String id, String categoryName)
       throws RemoteException
   {
+    System.out.println("RemoveProduct fire propertyChange in LocalModelManager");
     client.removeProduct(id, categoryName);
   }
 

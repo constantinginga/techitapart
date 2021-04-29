@@ -2,6 +2,7 @@ package model;
 
 import utility.observer.listener.LocalListener;
 import utility.observer.subject.LocalSubject;
+import viewmodel.MarketAdminViewModel;
 
 import java.io.File;
 import java.rmi.NoSuchObjectException;

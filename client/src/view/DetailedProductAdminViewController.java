@@ -27,7 +27,7 @@ public class DetailedProductAdminViewController extends ViewController
     Platform.runLater(() -> {
       try {
 
-        File file = new File("resources\\images\\"+ super.getViewModelFactory().getDetailedProductAdminViewModel().getImage());
+        File file = super.getViewModelFactory().getDetailedProductViewModel().getImage();
         BufferedImage bufferedImage = ImageIO.read(file);
         Image image = SwingFXUtils.toFXImage(bufferedImage,null);
         productImageView.setImage(image);
@@ -48,7 +48,7 @@ public class DetailedProductAdminViewController extends ViewController
     Platform.runLater(() -> {
       try {
 
-        File file = new File("resources\\images\\"+ super.getViewModelFactory().getDetailedProductAdminViewModel().getImage());
+        File file = super.getViewModelFactory().getDetailedProductViewModel().getImage();
         BufferedImage bufferedImage = ImageIO.read(file);
         Image image = SwingFXUtils.toFXImage(bufferedImage,null);
         productImageView.setImage(image);

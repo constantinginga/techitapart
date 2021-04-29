@@ -1,5 +1,7 @@
 package view;
 
+import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +12,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import utility.observer.event.ObserverEvent;
+import utility.observer.listener.LocalListener;
 
 import java.io.IOException;
 
-public class MarketAdminViewController extends ViewController
+public class MarketAdminViewController extends ViewController implements
+    LocalListener<String, Integer>
 {
   @FXML private ScrollPane scroll;
 
@@ -82,61 +87,77 @@ public class MarketAdminViewController extends ViewController
     {
       e.printStackTrace();
     }
-
+    super.getViewModelFactory().getMarketAdminViewModel().addListener(this);
   }
 
   @Override public void reset() throws InterruptedException
   {
-    grid.getChildren().clear();
-    super.getViewModelFactory().getMarketAdminViewModel().reset();
-    int column = 0;
-    int row = 1;
-    try
-    {
-      for (int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel()
-          .getProducts().size(); i++)
+    Platform.runLater(() ->{
+      grid.getChildren().clear();
+      super.getViewModelFactory().getMarketAdminViewModel().reset();
+      int column = 0;
+      int row = 1;
+      try
       {
-        super.getViewModelFactory().getViewState().setCategoryID("General");
-        super.getViewModelFactory().getViewState().setProductID(
-            super.getViewModelFactory().getMarketAdminViewModel().getProducts()
-                .get(i).getId());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("ItemView.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-
-        ItemViewController itemController = fxmlLoader.getController();
-        itemController.init(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i),this,super.getViewModelFactory().getMarketAdminViewModel().getImage(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i).getImgSrc()));
-
-
-        if (column == 3)
+        for (int i = 0; i < super.getViewModelFactory().getMarketAdminViewModel()
+            .getProducts().size(); i++)
         {
-          column = 0;
-          row++;
+          super.getViewModelFactory().getViewState().setCategoryID("General");
+          super.getViewModelFactory().getViewState().setProductID(
+              super.getViewModelFactory().getMarketAdminViewModel().getProducts()
+                  .get(i).getId());
+          FXMLLoader fxmlLoader = new FXMLLoader();
+          fxmlLoader.setLocation(getClass().getResource("ItemView.fxml"));
+          AnchorPane anchorPane = fxmlLoader.load();
+
+          ItemViewController itemController = fxmlLoader.getController();
+          itemController.init(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i),this,super.getViewModelFactory().getMarketAdminViewModel().getImage(super.getViewModelFactory().getMarketAdminViewModel().getProducts().get(i).getImgSrc()));
+
+
+          if (column == 3)
+          {
+            column = 0;
+            row++;
+          }
+
+          grid.add(anchorPane, column++, row);
+          //set grid width
+          grid.setMinWidth(Region.USE_PREF_SIZE);
+          grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+          grid.setMaxWidth(Region.USE_PREF_SIZE);
+
+          //set grid height
+          grid.setMinHeight(Region.USE_COMPUTED_SIZE);
+          grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+          grid.setMaxHeight(Region.USE_PREF_SIZE);
+
+          GridPane.setMargin(anchorPane, new Insets(10));
         }
-
-        grid.add(anchorPane, column++, row);
-        //set grid width
-        grid.setMinWidth(Region.USE_PREF_SIZE);
-        grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-        grid.setMaxWidth(Region.USE_PREF_SIZE);
-
-        //set grid height
-        grid.setMinHeight(Region.USE_COMPUTED_SIZE);
-        grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-        grid.setMaxHeight(Region.USE_PREF_SIZE);
-
-        GridPane.setMargin(anchorPane, new Insets(10));
       }
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
-
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    });
   }
 
   public void addProduct(ActionEvent actionEvent) throws IOException
   {
     super.getViewHandler().openView("AddProductView.fxml");
+  }
+
+  @Override public void propertyChange(ObserverEvent<String, Integer> event)
+  {
+    Platform.runLater(() ->{
+      System.out.println(event.getPropertyName());
+      try
+      {
+        reset();
+      }
+      catch (InterruptedException e)
+      {
+        e.printStackTrace();
+      }
+    });
   }
 }

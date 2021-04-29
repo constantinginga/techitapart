@@ -11,7 +11,6 @@ public class ItemViewModel {
     private ViewState state;
     private StringProperty productName;
     private StringProperty price;
-    // kekw hot to bind image?
 
     public ItemViewModel(LocalModel model, ViewState viewState) {
         this.model = model;

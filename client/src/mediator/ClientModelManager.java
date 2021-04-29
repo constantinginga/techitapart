@@ -53,6 +53,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
 
     @Override
     public void addProduct(Product product, String categoryName) throws RemoteException {
+        System.out.println("AddProduct fire propertyChange in ClientModelManager");
         server.addProduct(product, categoryName);
     }
 
@@ -63,6 +64,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
 
     @Override
     public void removeProduct(String id, String categoryName) throws RemoteException {
+        System.out.println("RemoveProduct fire propertyChange in ClientModelManager");
         server.removeProduct(id, categoryName);
     }
 
