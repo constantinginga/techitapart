@@ -218,10 +218,10 @@ public class ModelManager implements Model
     public void buyProduct(Product product, int quantity, String categoryName, String userName) {
         //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
         // persistense.loginDB("Bob", "Comdnbd_12");
-        property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
+        // persistense.addOrderDB(userName);
         persistence.decreaseProductQuantity(product.getId(), quantity);
         categoryList.buyProduct(product.getName(), quantity, categoryName);
-        // persistense.addOrderDB(userName);
+        property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
     }
 
     @Override public boolean addListener(

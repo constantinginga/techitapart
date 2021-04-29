@@ -66,7 +66,7 @@ public class ItemViewController
 
         viewController.getViewModelFactory().getViewState().setProductID(selectedProduct.getId());
         viewController.getViewHandler()
-            .openView("DetailedProductAdminView.fxml");
+            .openView("DetailedProductView.fxml");
       }
       catch (IOException e)
       {
