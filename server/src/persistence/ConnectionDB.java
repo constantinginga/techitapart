@@ -9,15 +9,16 @@ public class ConnectionDB {
     private String username;
     private String password;
 
-    private final static String URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=";
-    private final static String SCHEMA_NAME = "techitapart";
-    private final static String USERNAME = "postgres";
-    private final static String PASSWORD = "kubino";
-//    private final static String URL = "jdbc:postgresql://ec2-99-80-200-225.eu-west-1.compute.amazonaws.com:5432/df75rrd5dikon6?currentSchema=";
+//    private final static String URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=";
 //    private final static String SCHEMA_NAME = "techitapart";
-//    private final static String USERNAME = "xorpblocnixrey";
-//    private final static String PASSWORD = "7f8b2ffb33886cbe57fdb0c360df3186e636ea082374d6b7bebdc1d33d075930";
-//
+//    private final static String USERNAME = "postgres";
+//    private final static String PASSWORD = "kubino";
+
+    private final static String URL = "jdbc:postgresql://ec2-99-80-200-225.eu-west-1.compute.amazonaws.com:5432/df75rrd5dikon6?currentSchema=";
+    private final static String SCHEMA_NAME = "techitapart";
+    private final static String USERNAME = "xorpblocnixrey";
+    private final static String PASSWORD = "7f8b2ffb33886cbe57fdb0c360df3186e636ea082374d6b7bebdc1d33d075930";
+
 
     //    categoryDB = new CategoryDB("jdbc:postgresql://localhost:5432/postgres?currentSchema=","techitapart","postgres","password");
 
