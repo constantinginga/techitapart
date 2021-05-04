@@ -11,8 +11,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 
 
-public class ModelManager implements Model
-{
+public class ModelManager implements Model {
     private CategoryList categoryList;
 
     private Persistence persistence;
@@ -47,7 +46,7 @@ public class ModelManager implements Model
     @Override
     public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) {
         User user = persistence
-            .registerNewUserDB(fName, lName, email, username, password, role);
+                .registerNewUserDB(fName, lName, email, username, password, role);
         userProfile = UserProfile.getInstance(username);
         Cart cart = new Cart();
 
@@ -92,7 +91,7 @@ public class ModelManager implements Model
     @Override
     public void addProduct(Product product, String categoryName) {
         Product product1 = persistence
-            .addProductToCategoryDB(product, categoryName);
+                .addProductToCategoryDB(product, categoryName);
         Gson gson = new Gson();
         String g1 = gson.toJson(product);
         System.out.println("AddProduct property change in ModelManager");
@@ -136,10 +135,15 @@ public class ModelManager implements Model
             file = Files.copy(file.toPath(), new File("server\\resources\\images\\" + file.getName()).toPath()).toFile();
             file.renameTo(new File("server\\resources\\images\\" + fileName));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public ArrayList<Product> searchForProducts(String productName) {
+        return persistence.searchForProducts(productName);
     }
 
 
@@ -201,7 +205,7 @@ public class ModelManager implements Model
         for (CartItem cartItem : userProfile.getAllCartItem()) {
 
             persistence
-                .decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+                    .decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
         }
 
         userProfile.setCart(new Cart());
@@ -224,15 +228,15 @@ public class ModelManager implements Model
         property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
     }
 
-    @Override public boolean addListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override public boolean removeListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.removeListener(listener, propertyNames);
     }
 }

@@ -19,5 +19,6 @@ public interface ProductPersistence {
     void removeProductByIdDB(String id);
 
     ArrayList<Product> getAllProductDB(String categoryName);
+    ArrayList<Product> searchForProducts(String productName);
 
 }

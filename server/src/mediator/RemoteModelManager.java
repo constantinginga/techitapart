@@ -15,8 +15,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class RemoteModelManager implements RemoteModel, LocalListener<String, Integer>
-{
+public class RemoteModelManager implements RemoteModel, LocalListener<String, Integer> {
     private Model model;
     private PropertyChangeProxy<String, Integer> property;
 
@@ -94,13 +93,18 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     }
 
     @Override
+    public ArrayList<Product> searchForProducts(String productName) throws RemoteException {
+        return model.searchForProducts(productName);
+    }
+
+    @Override
     public File getImage(String url) throws RemoteException {
         return model.getImage(url);
     }
 
     @Override
-    public void uploadImage(File file,String filePath) throws RemoteException {
-        model.uploadImage(file,filePath);
+    public void uploadImage(File file, String filePath) throws RemoteException {
+        model.uploadImage(file, filePath);
     }
 
     @Override
@@ -134,23 +138,23 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
         model.addOrder();
     }
 
-    @Override public void propertyChange(ObserverEvent<String, Integer> event)
-    {
+    @Override
+    public void propertyChange(ObserverEvent<String, Integer> event) {
         System.out.println("Fire property change in RemoteModelManager");
         property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 
-    @Override public boolean addListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-        throws RemoteException
-    {
+    @Override
+    public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames)
+            throws RemoteException {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override public boolean removeListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-        throws RemoteException
-    {
+    @Override
+    public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames)
+            throws RemoteException {
         return property.removeListener(listener, propertyNames);
     }
 }

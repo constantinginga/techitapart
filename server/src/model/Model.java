@@ -26,7 +26,7 @@ public interface Model extends LocalSubject<String, Integer>
     ArrayList<Product> getAllProducts();
     File getImage(String url);
     void uploadImage(File file, String fileName);
-
+    ArrayList<Product> searchForProducts(String productName);
     /** update cart **/
     void addProductToCart (Product product,int quantity);
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username);

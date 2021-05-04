@@ -11,8 +11,7 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface ClientModel extends LocalSubject<String, Integer>
-{
+public interface ClientModel extends LocalSubject<String, Integer> {
 
     /**
      * Account
@@ -44,7 +43,11 @@ public interface ClientModel extends LocalSubject<String, Integer>
     ArrayList<Product> getAllProducts() throws RemoteException;
 
     File getImage(String url) throws RemoteException;
-    void uploadImage(File file,String filePath) throws RemoteException;
+
+    void uploadImage(File file, String filePath) throws RemoteException;
+
+    ArrayList<Product> searchForProducts(String productName);
+
     /**
      * update cart
      **/

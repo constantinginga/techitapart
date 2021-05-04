@@ -92,9 +92,15 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     public File getImage(String url) {
         return server.getImage(url);
     }
+
     @Override
-    public void uploadImage(File file,String filePath) throws RemoteException {
-        server.uploadImage(file,filePath);
+    public void uploadImage(File file, String filePath) throws RemoteException {
+        server.uploadImage(file, filePath);
+    }
+
+    @Override
+    public ArrayList<Product> searchForProducts(String productName) {
+        return server.searchForProducts(productName);
     }
 
     @Override
@@ -127,8 +133,8 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         server.addOrder();
     }
 
-    @Override public void close() throws NoSuchObjectException
-    {
+    @Override
+    public void close() throws NoSuchObjectException {
         property.close();
         UnicastRemoteObject.unexportObject(this, true);
     }
@@ -139,15 +145,15 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         property.firePropertyChange(event);
     }
 
-    @Override public boolean addListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override public boolean removeListener(
-        GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.removeListener(listener, propertyNames);
     }
 }

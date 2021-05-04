@@ -169,4 +169,32 @@ public class ProductDB implements ProductPersistence {
             throw new IllegalArgumentException("DB issue with connectivity");
         }
     }
+
+    @Override
+    public ArrayList<Product> searchForProducts(String productName) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE name ~* ?");
+            statement.setString(1, ".*" + productName + ".*");
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Product> result = new ArrayList<>();
+            while (resultSet.next()) {
+                int productId = resultSet.getInt("product_id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                String img = resultSet.getString("image");
+                int total_quantity = resultSet.getInt("total_quantity");
+                double price = resultSet.getDouble("price");
+                Product product = new Product(String.valueOf(productId), name, description, total_quantity, price);
+                product.setImgSrc(img);
+                result.add(product);
+            }
+            return result;
+
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+            throw new IllegalArgumentException("DB issue with connectivity");
+        }
+    }
+
 }

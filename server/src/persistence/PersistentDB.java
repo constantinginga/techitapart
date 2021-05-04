@@ -11,7 +11,7 @@ public class PersistentDB implements Persistence {
     OrderPersistence orderDB;
     ProductPersistence productDB;
 
-    public PersistentDB(){
+    public PersistentDB() {
         accountDB = new AccountDB();
         cartDB = new CartDB();
         categoryDB = new CategoryDB();
@@ -52,12 +52,12 @@ public class PersistentDB implements Persistence {
 
     @Override
     public void updateLName(String username, String newLName) {
-            accountDB.updateLName(username, newLName);
+        accountDB.updateLName(username, newLName);
     }
 
     @Override
     public void updateDetails(String username, String newUsername, String newPassword, String newFName, String newLName, String newEmail) {
-            accountDB.updateDetails(username, newUsername, newPassword, newFName, newLName, newEmail);
+        accountDB.updateDetails(username, newUsername, newPassword, newFName, newLName, newEmail);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class PersistentDB implements Persistence {
 
     @Override
     public void setOrderId(int orderId, String username) {
-            cartDB.setOrderId(orderId, username);
+        cartDB.setOrderId(orderId, username);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class PersistentDB implements Persistence {
 
     @Override
     public void addCategoryDB(String categoryName) {
-     categoryDB.addCategoryDB(categoryName);
+        categoryDB.addCategoryDB(categoryName);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class PersistentDB implements Persistence {
 
     @Override
     public void decreaseProductQuantity(String productId, int quantity) {
-            productDB.decreaseProductQuantity(productId, quantity);
+        productDB.decreaseProductQuantity(productId, quantity);
     }
 
     @Override
@@ -152,11 +152,16 @@ public class PersistentDB implements Persistence {
 
     @Override
     public void removeProductByIdDB(String id) {
-            productDB.removeProductByIdDB(id);
+        productDB.removeProductByIdDB(id);
     }
 
     @Override
     public ArrayList<Product> getAllProductDB(String categoryName) {
         return productDB.getAllProductDB(categoryName);
+    }
+
+    @Override
+    public ArrayList<Product> searchForProducts(String productName) {
+        return productDB.searchForProducts(productName);
     }
 }

@@ -12,8 +12,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface RemoteModel extends RemoteSubject<String, Integer>
-{
+public interface RemoteModel extends RemoteSubject<String, Integer> {
 
     /**
      * Account
@@ -44,8 +43,12 @@ public interface RemoteModel extends RemoteSubject<String, Integer>
 
     ArrayList<Product> getAllProducts() throws RemoteException;
 
+    ArrayList<Product> searchForProducts(String productName);
+
     File getImage(String url);
-    void uploadImage(File file,String filePath) throws RemoteException;
+
+    void uploadImage(File file, String filePath) throws RemoteException;
+
     /**
      * update cart
      **/

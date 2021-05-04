@@ -44,6 +44,7 @@ public interface LocalModel extends LocalSubject<String, Integer>
     File getImage(String url) throws RemoteException;
 
     void uploadImage(File file, String url);
+    ArrayList<Product> searchForProducts(String productName);
 
     /**
      * update cart
