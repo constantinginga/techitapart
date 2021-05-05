@@ -1,8 +1,6 @@
 package viewmodel;
 
 import model.LocalModel;
-
-import java.io.File;
 import java.rmi.RemoteException;
 
 public class ViewModelFactory
@@ -13,7 +11,10 @@ public class ViewModelFactory
   private MarketAdminViewModel marketAdminViewModel;
   private MarketUserViewModel marketUserViewModel;
   private DetailedProductAdminViewModel detailedProductAdminViewModel;
+  private SignUpViewModel signUpViewModel;
+  private EntryViewModel entryViewModel;
   private ViewState viewState;
+
   public ViewModelFactory(LocalModel model) throws RemoteException
   {
     viewState = new ViewState();
@@ -23,6 +24,8 @@ public class ViewModelFactory
     marketUserViewModel = new MarketUserViewModel(model, viewState);
     itemViewModel = new ItemViewModel(model, viewState);
     detailedProductAdminViewModel = new DetailedProductAdminViewModel(model, viewState);
+    signUpViewModel = new SignUpViewModel(model, viewState);
+    entryViewModel = new EntryViewModel(model, viewState);
   }
 
   public AddProductViewModel getAddProductViewModel()
@@ -53,6 +56,14 @@ public class ViewModelFactory
   public DetailedProductAdminViewModel getDetailedProductAdminViewModel()
   {
     return detailedProductAdminViewModel;
+  }
+
+  public SignUpViewModel getSignUpViewModel() {
+    return signUpViewModel;
+  }
+
+  public EntryViewModel getEntryViewModel() {
+    return entryViewModel;
   }
 
   public ViewState getViewState()

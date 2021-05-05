@@ -34,6 +34,7 @@ public class MarketUserViewModel {
     }
 
     public void reset() {
+        System.out.println(state.getUserID());
         getData();
     }
 
