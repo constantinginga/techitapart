@@ -57,6 +57,16 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
         return model.getAllCategory();
     }
 
+    @Override public Category getCategory(String name) throws RemoteException
+    {
+        return model.getCategory(name);
+    }
+
+    @Override public ArrayList<Category> getAllCategories() throws RemoteException
+    {
+        return model.getAllCategories();
+    }
+
     @Override
     public void addProduct(Product product, String categoryName) throws RemoteException {
         model.addProduct(product, categoryName);

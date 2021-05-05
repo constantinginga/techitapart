@@ -50,6 +50,7 @@ public class AddProductViewModel {
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
+        categoryList.remove("General");
 //        categoryList.setAll(model.getAllCategory());
     }
 

@@ -24,6 +24,10 @@ public interface LocalModel extends LocalSubject<String, Integer>
      **/
     ArrayList<String> getAllCategory() throws RemoteException;
 
+    Category getCategory(String name) throws RemoteException;
+
+    ArrayList<Category> getAllCategories() throws RemoteException;
+
     /**
      * Product
      **/

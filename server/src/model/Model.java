@@ -15,6 +15,7 @@ public interface Model extends LocalSubject<String, Integer>
     /** Category **/
     void addCategory(String categoryName);
     ArrayList<String> getAllCategory();
+    Category getCategory(String name);ArrayList<Category> getAllCategories();
 
     /** Product **/
     void addProduct(Product product, String categoryName);

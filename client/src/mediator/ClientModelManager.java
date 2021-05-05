@@ -51,6 +51,17 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         return server.getAllCategory();
     }
 
+    @Override public Category getCategory(String name) throws RemoteException
+    {
+        return server.getCategory(name);
+    }
+
+    @Override public ArrayList<Category> getAllCategories()
+        throws RemoteException
+    {
+        return server.getAllCategories();
+    }
+
     @Override
     public void addProduct(Product product, String categoryName) throws RemoteException {
         System.out.println("AddProduct fire propertyChange in ClientModelManager");

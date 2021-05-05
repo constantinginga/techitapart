@@ -84,6 +84,14 @@ public class ModelManager implements Model {
         return categoryList.getAddCategory();
     }
 
+    @Override public ArrayList<Category> getAllCategories(){
+        return categoryList.getAllCategories();
+    }
+
+    @Override public Category getCategory(String name)
+    {
+        return categoryList.getCategory(name);
+    }
 
     /**
      * Product
@@ -111,6 +119,9 @@ public class ModelManager implements Model {
 
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
+        if(categoryName.equals("General")){
+            return getAllProducts();
+        }
         return categoryList.getCategory(categoryName).getProductList();
     }
 

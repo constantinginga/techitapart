@@ -22,8 +22,8 @@ public class ItemViewController
   private Product selectedProduct;
   private ViewController viewController;
 
-  protected void init(Product products,
-      ViewController viewController,File fileImage)
+  protected void init(Product products, ViewController viewController,
+      File fileImage)
   {
     this.viewController = viewController;
     selectedProduct = products;
@@ -31,29 +31,33 @@ public class ItemViewController
     price.setText(selectedProduct.getPrice() + " kr.");
     System.out.println(fileImage.getPath());
     Platform.runLater(() -> {
-    try {
+      try
+      {
 
-      File file = fileImage;
-      BufferedImage bufferedImage = ImageIO.read(file);
-      Image image = SwingFXUtils.toFXImage(bufferedImage,null);
-      img.setImage(image);
+        File file = fileImage;
+        BufferedImage bufferedImage = ImageIO.read(file);
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        img.setImage(image);
 
-    } catch (Exception e){
-      e.printStackTrace();
-      }});
-    }
-    //    Image image = new Image(
-    //        getClass().getResourceAsStream(products.getImgSrc()));
-    //    img.setImage(image);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+    });
+  }
+  //    Image image = new Image(
+  //        getClass().getResourceAsStream(products.getImgSrc()));
+  //    img.setImage(image);
 
-//  @Override protected void init() throws InterruptedException
-//  {
-//    //    productName.setsuper.getViewModelFactory().getItemViewModel().getProductName());
-//    //    price.textProperty().bind(super.getViewModelFactory().getItemViewModel().getPrice());
-//    //    Bindings.bindBidirectional(this.img.imageProperty(), GlobalModel.getInstance().getProject().getImageProperty());
-//  }
+  //  @Override protected void init() throws InterruptedException
+  //  {
+  //    //    productName.setsuper.getViewModelFactory().getItemViewModel().getProductName());
+  //    //    price.textProperty().bind(super.getViewModelFactory().getItemViewModel().getPrice());
+  //    //    Bindings.bindBidirectional(this.img.imageProperty(), GlobalModel.getInstance().getProject().getImageProperty());
+  //  }
 
-   public void reset() throws InterruptedException
+  public void reset() throws InterruptedException
   {
 
   }
@@ -63,10 +67,16 @@ public class ItemViewController
     Platform.runLater(() -> {
       try
       {
-
-        viewController.getViewModelFactory().getViewState().setProductID(selectedProduct.getId());
-        viewController.getViewHandler()
-            .openView("DetailedProductView.fxml");
+        if(viewController.getViewHandler().getTitle().equals("MarketAdminView.fxml")){
+          viewController.getViewModelFactory().getViewState()
+              .setProductID(selectedProduct.getId());
+          viewController.getViewHandler().openView("DetailedProductAdminView.fxml");
+        }
+        else if(viewController.getViewHandler().getTitle().equals("MarketUserView.fxml")){
+          viewController.getViewModelFactory().getViewState()
+              .setProductID(selectedProduct.getId());
+          viewController.getViewHandler().openView("DetailedProductView.fxml");
+        }
       }
       catch (IOException e)
       {

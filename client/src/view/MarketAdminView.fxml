@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
+<AnchorPane prefHeight="810.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
     <children>
         <BorderPane prefHeight="810.0" prefWidth="1188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -56,6 +56,25 @@
                                 </Button>
                             </children>
                         </HBox>
+                  <ScrollPane fx:id="categoryScroll" hbarPolicy="NEVER" prefHeight="626.0" prefWidth="435.0" stylesheets="@../stylesheets/market.css" vbarPolicy="NEVER">
+                     <content>
+                        <GridPane fx:id="categoryGrid" prefHeight="3.0" prefWidth="63.0">
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                           </rowConstraints>
+                        </GridPane>
+                     </content>
+                     <styleClass>
+                        <String fx:value="top-bar" />
+                        <String fx:value="scrollPane" />
+                     </styleClass>
+                     <padding>
+                        <Insets left="20.0" right="117.5" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </ScrollPane>
                     </children>
                 </VBox>
             </left>

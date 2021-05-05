@@ -1,7 +1,8 @@
 package model;
 import java.util.ArrayList;
 
-public class CategoryList {
+public class CategoryList
+{
 
     private ArrayList<Category> categories;
 
@@ -20,6 +21,14 @@ public class CategoryList {
             list.add(category.getName());
         }
         return list;
+    }
+
+    public ArrayList<Category> getAllCategories(){
+        /*ArrayList<Category> list = new ArrayList<>();
+
+        list.addAll(categories);
+        return list;*/
+        return categories;
     }
 
     public Category getCategory(String name){
