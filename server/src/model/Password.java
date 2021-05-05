@@ -8,7 +8,7 @@ public class Password
   {
     if (password == null)
     {
-      throw new IllegalArgumentException("Null password");
+      throw new IllegalArgumentException("Please enter password");
     }
     String message = Password.isLegal(password);
     if (message != null)
@@ -27,7 +27,7 @@ public class Password
   {
     if (password == null || password.length() < 6)
     {
-      return "model.Password must have at least 6 characters";
+      return "Password must have at least 6 characters";
     }
     int lower = 0;
     int upper = 0;
@@ -55,11 +55,11 @@ public class Password
     }
     if (lower + upper + digit + special < password.length())
     {
-      return "model.Password may only contain letters, digits, hyphens amd underscore characters";
+      return "Password may only contain letters, digits, hyphens amd underscore characters";
     }
     if (lower == 0 || upper == 0 || digit == 0)
     {
-      return "model.Password must contain at least one uppercase letter, at least one lowercase letter and at least one digit";
+      return "Password must contain at least one uppercase letter, at least one lowercase letter and at least one digit";
     }
 
     return null;

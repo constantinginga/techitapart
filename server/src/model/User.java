@@ -41,7 +41,7 @@ public class User
 
   public void setfName(String fName) {
     if (fName == null || fName.equals("")){
-      throw new  IllegalArgumentException("First Name is null or empty string");
+      throw new  IllegalArgumentException("Please enter first name");
     }
     this.fName = fName;
   }
@@ -49,7 +49,7 @@ public class User
 
   public void setlName(String lName) {
     if (lName == null || lName.equals("")){
-      throw new IllegalArgumentException("Last name is null or empty string");
+      throw new IllegalArgumentException("Please enter last name");
     }
     this.lName = lName;
   }
@@ -71,6 +71,10 @@ public class User
 
   public void setEmail(String email) {
     Pattern pattern = Pattern.compile(regex);
+
+    if (email == null) {
+      throw new IllegalArgumentException("Please enter email address");
+    }
 
     if(!pattern.matcher(email).matches()){
       throw new IllegalArgumentException("Invalid email address");
