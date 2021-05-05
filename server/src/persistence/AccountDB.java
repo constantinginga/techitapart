@@ -41,7 +41,7 @@ public class AccountDB implements AccountPersistence {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Can't connect to db");
+            throw new IllegalArgumentException("Username already exists");
         }
     }
 

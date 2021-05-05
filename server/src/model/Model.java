@@ -13,7 +13,6 @@ public interface Model extends LocalSubject<String, Integer>
     boolean login(String username, String password);
 
     /** Category **/
-    void addCategory(String categoryName);
     ArrayList<String> getAllCategory();
 
     /** Product **/

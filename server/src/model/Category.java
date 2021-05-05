@@ -1,73 +1,92 @@
 package model;
 
-
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Category {
-    private String name;
-    private ProductList productList;
+public class Category  {
+    private ArrayList<Product> productList;
+    private String categoryName;
 
 
-    public Category(String name){
-        this.name = name;
-        productList = new ProductList();
+    public Category(String newCategoryName){
+        productList = new ArrayList<>();
+        categoryName = newCategoryName;
     }
 
-    public void buyProduct(String productName, int quantity){
-        productList.buyProduct(productName, quantity);
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void addProduct(Product product) {
-
-        productList.addProduct(product);
-    }
-
-    public void addProductList(ArrayList<Product> products){
-        for (Product product: products){
-            productList.addProduct(product);
-        }
-    }
-
-    public Product getProductByName(String name){
-        return productList.getProductByName(name);
-    }
-
-    public Product getProduct(Product product){
-        return productList.getProduct(product);
-    }
-
-    public Product getProductByID(String id){
-        return productList.getProductById(id);
-    }
-
-    public void removeProduct(String id){
-       // productList.removeProduct(id);
-        productList.getAllProducts().remove(productList.getProductById(id));
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ProductList getProducts() {
+    public ArrayList<Product> getAllProduct(){
         return productList;
     }
 
-    public ArrayList<Product> getProductList() {
-        return productList.getAllProducts();
+
+    public void addProduct(Product newProduct){
+       productList.add(newProduct);
     }
 
-    public void setProductList(ProductList productList) {
-        this.productList = productList;
+    public void removeProduct(Product newProduct){
+        productList.remove(newProduct);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void removeProductById(String id){
+
+        productList.removeIf(product -> product.getId().equals(id));
     }
 
-    @Override public String toString()
-    {
-        return "Category{" + "name='" + name + '\'' + ", productList="
-            + productList +  '}';
+    public ArrayList<Product> getAllProductComponentsForCategory() {
+        return productList;
+    }
+
+
+    public Product getProduct(String id){
+
+        for (Product product: productList){
+            if (product.getId().equals(id))
+                return product;
+        }
+
+        return null;
+    }
+
+
+    public void updateProductQuantity(String id, int quantity){
+
+        for (Product product: productList){
+            if (product.getId().equals(id))
+                product.setTotal_quantity(quantity);
+        }
+    }
+
+    public void updateProductPrice(String id, double price){
+        for (Product product: productList){
+            if (product.getId().equals(id))
+                product.setPrice(price);
+        }
+    }
+
+    public void decreaseProductQuantity(String id, int quantity){
+        for (Product product: productList){
+            if (product.getId().equals(id))
+                product.decreaseQuantity(quantity);
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        String s = " ";
+
+        Iterator productIteraor = productList.iterator();
+
+        while (productIteraor.hasNext()){
+            Product productString = (Product) productIteraor.next();
+            s += productString +">>> \n";
+        }
+
+        return "Category{" +
+                            s +
+                '}';
     }
 }

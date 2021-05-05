@@ -148,7 +148,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
               .parseInt(productQuantity.getValue()), state.getCategoryName(),
           "Bob");*/
       model.buyProduct(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
-          .parseInt(productQuantity.getValue()), "General", "Bob" );
+          .parseInt(productQuantity.getValue()), "General", state.getUserID() );
 
     }
     catch (RemoteException e)

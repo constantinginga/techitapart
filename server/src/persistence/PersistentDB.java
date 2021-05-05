@@ -96,7 +96,7 @@ public class PersistentDB implements Persistence {
     }
 
     @Override
-    public ArrayList<Category> getAllCategoryDB() {
+    public ArrayList<String> getAllCategoryDB() {
         return categoryDB.getAllCategoryDB();
     }
 

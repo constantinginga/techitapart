@@ -38,7 +38,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
 
     @Override
     public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException {
-        return null;
+        return server.registerUSer(fName, lName, email, username, password, role);
     }
 
     @Override

@@ -100,7 +100,7 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    public void buyProduct(int quantity){
+    public void decreaseQuantity(int quantity){
         if (quantity > total_quantity){
             throw new IllegalArgumentException("quantity is not available in the stock");
         }

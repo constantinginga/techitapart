@@ -3,7 +3,7 @@ package model;
 
 import java.io.Serializable;
 
-public class CartItem  implements Serializable {
+public class CartItem implements Serializable {
     private Product product;
     private int quantity;
     private int id;

@@ -12,15 +12,14 @@ public class CategoryDB implements CategoryPersistence {
 
 
     @Override
-    public ArrayList<Category> getAllCategoryDB() {
+    public ArrayList<String> getAllCategoryDB() {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT category_name FROM category");
             ResultSet resultSet = statement.executeQuery();
-            ArrayList<Category> result = new ArrayList<>();
+            ArrayList<String> result = new ArrayList<>();
             while (resultSet.next()) {
                 String name = resultSet.getString("category_name");
-                Category category = new Category(name);
-                result.add(category);
+                result.add(name);
             }
             return result;
         } catch (SQLException throwables) {

@@ -3,9 +3,10 @@ package model;
 import persistence.CartDB;
 import persistence.OrderDB;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Order {
+public class Order implements Serializable {
     private int order_id;
     private String username;
     private LocalDate date;

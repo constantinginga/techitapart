@@ -1,20 +1,36 @@
 package model;
 
-import model.*;
-import model.OrderList;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserProfile implements Serializable {
+    private static Map<String, UserProfile> map = new HashMap<>();
     private String username;
     private OrderList orderList;
     private Cart cart;
 
-    public UserProfile(String username){
+
+    private UserProfile(String username) {
         this.username = username;
         this.orderList = new OrderList();
         this.cart = new Cart();
+        //this.map =  ;
+    }
+
+
+    public static UserProfile getInstance(String key) {
+        UserProfile instance = map.get(key);
+
+        if (instance == null) {
+            synchronized (map) {
+                instance = new UserProfile(key);
+                map.put(key, instance);
+            }
+        }
+
+        return instance;
     }
 
 
@@ -31,15 +47,15 @@ public class UserProfile implements Serializable {
         cart.removeCartItemById(cartItem.getId());
     }
 
-    public ArrayList<CartItem> getAllCartItem(){
+    public ArrayList<CartItem> getAllCartItem() {
         return cart.getCartItems();
     }
 
-    public void addOrder(Order order){
+    public void addOrder(Order order) {
         orderList.addOrder(order);
     }
 
-    public Order getOrderById(int id){
+    public Order getOrderById(int id) {
         return orderList.getOrder(id);
     }
 

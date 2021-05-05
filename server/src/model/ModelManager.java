@@ -9,35 +9,44 @@ import utility.observer.subject.PropertyChangeProxy;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class ModelManager implements Model {
-    private CategoryList categoryList;
+public class ModelManager implements Model
+{
 
     private Persistence persistence;
 
     private UserProfile userProfile;
 
     private PropertyChangeAction<String, Integer> property;
+    private ArrayList<String> categories;
+    private Map<String, Category> map;
+
+
 
     public ModelManager() {
-        categoryList = new CategoryList();
-        persistence = new PersistentDB();
         property = new PropertyChangeProxy<>(this, true);
-        ArrayList<Category> categories1 = persistence.getAllCategoryDB();
-        categoryList.setCategories(categories1);
-        System.out.println(" Category \n" + categories1.toString() + "\n");
+        persistence = new PersistentDB();
+        categories = persistence.getAllCategoryDB();
+        map = new HashMap<>();
 
-        for (Category category : categoryList.getCategories()) {
 
-            ArrayList<Product> products = persistence.getAllProductDB(category.getName());
-            System.out.println(products.toString());
-
-            category.addProductList(products);
+        for (int i = 0; i < categories.size(); i++) {
+            Category category = new Category(categories.get(i));
+            for (Product product: persistence.getAllProductDB(categories.get(i))){
+                if (product != null) category.addProduct(product);
+            }
+            map.put(categories.get(i), category);
         }
 
-
     }
+
+    public Category getCategory(String Cname){
+        return map.get(Cname);
+    }
+
 
     /**
      * Register And Login
@@ -45,44 +54,54 @@ public class ModelManager implements Model {
     // how will this login method work in server client system?
     @Override
     public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) {
-        User user = persistence
-                .registerNewUserDB(fName, lName, email, username, password, role);
-        userProfile = UserProfile.getInstance(username);
-        Cart cart = new Cart();
-
-        userProfile.setCart(cart);
-        return userProfile;
+        try {
+            User user = persistence
+                    .registerNewUserDB(fName, lName, email, username, password, role);
+            userProfile = UserProfile.getInstance(user.getUserName().getName());
+            Cart cart = new Cart();
+            userProfile.setCart(cart);
+            return userProfile;
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     // how will this login method work in server client system?
     @Override
     public boolean login(String username, String password) {
-        if (persistence.loginDB(username, password)) {
-            userProfile = UserProfile.getInstance(username);
+        UserName checkedUsername;
+        Password checkedPassword;
+        try {
+            checkedUsername = new UserName(username);
+            checkedPassword = new Password(password);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        if (persistence.loginDB(checkedUsername.getName(), checkedPassword.getPassword())) {
+            userProfile = UserProfile.getInstance(checkedUsername.getName());
             Cart cart = new Cart();
             userProfile.setCart(cart);
-            cart.setCartItems(persistence.getAllProductsInCart(username));
+            cart.setCartItems(persistence.getAllProductsInCart(checkedUsername.getName()));
             return true;
             //   return userProfile;
         } else {
-            return false;
+            throw new IllegalArgumentException("Account already exists");
         }
         // return userProfile;
     }
+
+
 
 
     /**
      * Category
      **/
     @Override
-    public void addCategory(String category) {
-        persistence.addCategoryDB(category);
+    public ArrayList<String> getAllCategory() {
+        return categories;
     }
 
-    @Override
-    public ArrayList<String> getAllCategory() {
-        return categoryList.getAddCategory();
-    }
 
 
     /**
@@ -95,31 +114,34 @@ public class ModelManager implements Model {
         Gson gson = new Gson();
         String g1 = gson.toJson(product);
         System.out.println("AddProduct property change in ModelManager");
-        categoryList.addProduct(product1, categoryName);
+        getCategory(categoryName).addProduct(product1);
         property.firePropertyChange("addProduct", g1, null);
     }
 
 
     @Override
     public Product getProduct(String id, String categoryName) {
-        System.out.println(categoryList.getProductById(id, categoryName).getTotal_quantity());
-        //System.out.println(persistence.getProductByIdDB(id).getTotal_quantity());
-        return categoryList.getProductById(id, categoryName);
-        //return persistence.getProductByIdDB(id);
+        // System.out.println(persistence.getProductByIdDB(id).getTotal_quantity());
+        return getCategory(categoryName).getProduct(id);
+        // Return persistence.getProductByIdDB(id);
     }
 
 
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
-        return categoryList.getCategory(categoryName).getProductList();
+        ArrayList<Product> list = new ArrayList<>();
+        for(Product product: getCategory(categoryName).getAllProduct()){
+            list.add(product);
+        }
+        return list;
     }
 
 
     @Override
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        for (Category category : categoryList.getCategories()) {
-            products.addAll(category.getProductList());
+        for (String category : categories) {
+            products.addAll(getAllProductsInCategory(category));
         }
         return products;
     }
@@ -135,7 +157,7 @@ public class ModelManager implements Model {
             file = Files.copy(file.toPath(), new File("server\\resources\\images\\" + file.getName()).toPath()).toFile();
             file.renameTo(new File("server\\resources\\images\\" + fileName));
 
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
 
@@ -154,7 +176,8 @@ public class ModelManager implements Model {
         // categoryList.removeProduct(id, categoryName);
         System.out.println("Remove product property change in ModelManager");
         property.firePropertyChange("removeProduct", id, null);
-        categoryList.getCategory(categoryName).removeProduct(id);
+
+        getCategory(categoryName).removeProductById(id);
     }
 
 
@@ -162,14 +185,14 @@ public class ModelManager implements Model {
     public void updateProductQuantity(String id, int quantity, String categoryName) {
         persistence.updateProductQuantityDB(id, quantity);
         //categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
-        categoryList.getCategory(categoryName).getProductByID(id).buyProduct(quantity);
+        getCategory(categoryName).updateProductQuantity(id, quantity);
     }
 
 
     @Override
     public void updateProductPrice(String id, double price, String categoryName) {
         persistence.updateProductPriceDB(price, id);
-        categoryList.getCategory(categoryName).getProductByID(id).setPrice(price);
+        getCategory(categoryName).updateProductPrice(id, price);
     }
 
 
@@ -178,7 +201,7 @@ public class ModelManager implements Model {
      **/
     // how will this login method work in server client system?
     @Override
-    public void addProductToCart(Product product, int quantity) {
+    public void addProductToCart (Product product, int quantity) {
         userProfile.addProductToCart(product, quantity);
         persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
     }
@@ -223,20 +246,20 @@ public class ModelManager implements Model {
         //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
         // persistense.loginDB("Bob", "Comdnbd_12");
         // persistense.addOrderDB(userName);
-        persistence.decreaseProductQuantity(product.getId(), quantity);
-        categoryList.buyProduct(product.getName(), quantity, categoryName);
         property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
+        persistence.decreaseProductQuantity(product.getId(), quantity);
+        getCategory(categoryName).decreaseProductQuantity(product.getId(), quantity);
     }
 
-    @Override
-    public boolean addListener(
-            GeneralListener<String, Integer> listener, String... propertyNames) {
+    @Override public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames)
+    {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override
-    public boolean removeListener(
-            GeneralListener<String, Integer> listener, String... propertyNames) {
+    @Override public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames)
+    {
         return property.removeListener(listener, propertyNames);
     }
 }
