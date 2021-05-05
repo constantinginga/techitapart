@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="810.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
+<AnchorPane prefHeight="810.0" prefWidth="1220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
     <children>
         <BorderPane prefHeight="810.0" prefWidth="1188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -67,7 +67,7 @@
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <children>
-                                <Region prefHeight="65.0" prefWidth="270.0" styleClass="top-bar" stylesheets="@../stylesheets/market.css" />
+                                <Region prefHeight="65.0" prefWidth="191.0" styleClass="top-bar" stylesheets="@../stylesheets/market.css" />
                                 <Button mnemonicParsing="false" onAction="#addProduct" prefHeight="45.0" prefWidth="155.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Add a product" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
@@ -92,6 +92,14 @@
                                         <Insets top="20.0" />
                                     </HBox.margin>
                                 </Button>
+                        <Button mnemonicParsing="false" onAction="#handleLogoutButton" prefHeight="45.0" prefWidth="98.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Logout" textFill="WHITE">
+                           <font>
+                              <Font name="Century Gothic" size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </HBox.margin>
+                        </Button>
                             </children>
                         </HBox>
                         <HBox prefHeight="43.0" prefWidth="880.0" styleClass="top-bar" stylesheets="@../stylesheets/market.css" />

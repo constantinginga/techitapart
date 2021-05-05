@@ -89,6 +89,6 @@ public class DetailedProductViewController extends ViewController {
     }
 
     public void handleBackButton() throws IOException {
-        super.getViewHandler().openView("MarketAdminView.fxml");
+        super.getViewHandler().openView("MarketUserView.fxml");
     }
 }

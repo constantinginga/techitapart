@@ -131,4 +131,9 @@ public class MarketAdminViewController extends ViewController implements
             createGrid();
         }
     }
+
+    @FXML
+    private void handleLogoutButton() throws IOException {
+        super.getViewHandler().openView("EntryView.fxml");
+    }
 }

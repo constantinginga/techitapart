@@ -25,7 +25,7 @@ public class ViewHandler extends ViewCreator
   public void start(Stage primaryStage) throws IOException
   {
     this.primaryStage = primaryStage;
-    openView("MarketAdminView.fxml");
+    openView("EntryView.fxml");
   }
 
   public void openView(String id) throws IOException {
