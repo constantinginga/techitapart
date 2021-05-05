@@ -21,6 +21,7 @@ public class DetailedProductAdminViewController extends ViewController
   @FXML private Label productQuantity;
   @FXML private Label errorLabel;
   @FXML private TextArea descriptionTextArea;
+  @FXML private Label totalQuantity;
 
   @Override protected void init() throws InterruptedException
   {
@@ -40,6 +41,7 @@ public class DetailedProductAdminViewController extends ViewController
     productQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductAdminViewModel().getProductQuantity());
     errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductAdminViewModel().getErrorLabel());
     descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductAdminViewModel().getDescription());
+    totalQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductAdminViewModel().getTotalQuantity());
   }
 
   @Override public void reset() throws InterruptedException
