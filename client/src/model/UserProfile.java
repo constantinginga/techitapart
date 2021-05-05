@@ -10,9 +10,10 @@ public class UserProfile implements Serializable {
     private String username;
     private OrderList orderList;
     private Cart cart;
+    private String role;
 
 
-    private UserProfile(String username) {
+    private UserProfile(String username){
         this.username = username;
         this.orderList = new OrderList();
         this.cart = new Cart();
@@ -20,19 +21,29 @@ public class UserProfile implements Serializable {
     }
 
 
-    public static UserProfile getInstance(String key) {
+
+
+    public static UserProfile getInstance(String key){
         UserProfile instance = map.get(key);
 
-        if (instance == null) {
-            synchronized (map) {
+        if (instance == null){
+            synchronized (map){
                 instance = new UserProfile(key);
-                map.put(key, instance);
+                map.put(key, instance );
             }
         }
 
         return instance;
     }
 
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public void addProductToCart(Product product, int quantity) {
         cart.addCartItem(new CartItem(product, quantity));
@@ -47,15 +58,15 @@ public class UserProfile implements Serializable {
         cart.removeCartItemById(cartItem.getId());
     }
 
-    public ArrayList<CartItem> getAllCartItem() {
+    public ArrayList<CartItem> getAllCartItem(){
         return cart.getCartItems();
     }
 
-    public void addOrder(Order order) {
+    public void addOrder(Order order){
         orderList.addOrder(order);
     }
 
-    public Order getOrderById(int id) {
+    public Order getOrderById(int id){
         return orderList.getOrder(id);
     }
 

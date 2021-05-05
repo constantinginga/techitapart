@@ -5,10 +5,7 @@ import model.Role;
 import model.User;
 import model.UserName;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class AccountDB implements AccountPersistence {
 
@@ -46,19 +43,24 @@ public class AccountDB implements AccountPersistence {
     }
 
     @Override
-    public boolean loginDB(String username, String password) {
+    public String loginDB(String username, String password) {
         try(Connection connection = ConnectionDB.getInstance().getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("SELECT  * from \"User\" WHERE username = ? AND password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-            return  (resultSet.next());
+            if (resultSet.next()){
+                return resultSet.getString("role");
+            }else {
+                return null;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new IllegalArgumentException("Username not exist, maybe you need to SignUp first");
         }
-        return false;
+
     }
 
 

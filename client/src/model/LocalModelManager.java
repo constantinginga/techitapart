@@ -9,7 +9,6 @@ import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -41,7 +40,7 @@ public class LocalModelManager
     }
 
     @Override
-    public boolean login(String username, String password)
+    public UserProfile login(String username, String password)
             throws RemoteException {
         return client.login(username, password);
     }

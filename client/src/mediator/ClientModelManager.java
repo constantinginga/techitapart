@@ -42,7 +42,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     }
 
     @Override
-    public boolean login(String username, String password) throws RemoteException {
+    public UserProfile login(String username, String password) throws RemoteException {
         return server.login(username, password);
     }
 

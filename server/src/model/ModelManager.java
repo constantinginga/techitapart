@@ -13,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ModelManager implements Model
-{
+public class ModelManager implements Model {
 
     private Persistence persistence;
 
@@ -23,7 +22,6 @@ public class ModelManager implements Model
     private PropertyChangeAction<String, Integer> property;
     private ArrayList<String> categories;
     private Map<String, Category> map;
-
 
 
     public ModelManager() {
@@ -35,7 +33,7 @@ public class ModelManager implements Model
 
         for (int i = 0; i < categories.size(); i++) {
             Category category = new Category(categories.get(i));
-            for (Product product: persistence.getAllProductDB(categories.get(i))){
+            for (Product product : persistence.getAllProductDB(categories.get(i))) {
                 if (product != null) category.addProduct(product);
             }
             map.put(categories.get(i), category);
@@ -43,7 +41,7 @@ public class ModelManager implements Model
 
     }
 
-    public Category getCategory(String Cname){
+    public Category getCategory(String Cname) {
         return map.get(Cname);
     }
 
@@ -68,30 +66,23 @@ public class ModelManager implements Model
 
     // how will this login method work in server client system?
     @Override
-    public boolean login(String username, String password) {
-        UserName checkedUsername;
-        Password checkedPassword;
-        try {
-            checkedUsername = new UserName(username);
-            checkedPassword = new Password(password);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
+    public UserProfile login(String username, String password) {
 
-        if (persistence.loginDB(checkedUsername.getName(), checkedPassword.getPassword())) {
-            userProfile = UserProfile.getInstance(checkedUsername.getName());
+        try {
+            String role = persistence.loginDB(username, password);
+            userProfile = UserProfile.getInstance(username);
+            userProfile.setRole(role);
             Cart cart = new Cart();
             userProfile.setCart(cart);
-            cart.setCartItems(persistence.getAllProductsInCart(checkedUsername.getName()));
-            return true;
+            cart.setCartItems(persistence.getAllProductsInCart(username));
+            return userProfile;
             //   return userProfile;
-        } else {
-            throw new IllegalArgumentException("Account already exists");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Username not exist");
+
         }
         // return userProfile;
     }
-
-
 
 
     /**
@@ -101,7 +92,6 @@ public class ModelManager implements Model
     public ArrayList<String> getAllCategory() {
         return categories;
     }
-
 
 
     /**
@@ -130,7 +120,7 @@ public class ModelManager implements Model
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
         ArrayList<Product> list = new ArrayList<>();
-        for(Product product: getCategory(categoryName).getAllProduct()){
+        for (Product product : getCategory(categoryName).getAllProduct()) {
             list.add(product);
         }
         return list;
@@ -157,7 +147,7 @@ public class ModelManager implements Model
             file = Files.copy(file.toPath(), new File("server\\resources\\images\\" + file.getName()).toPath()).toFile();
             file.renameTo(new File("server\\resources\\images\\" + fileName));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -201,7 +191,7 @@ public class ModelManager implements Model
      **/
     // how will this login method work in server client system?
     @Override
-    public void addProductToCart (Product product, int quantity) {
+    public void addProductToCart(Product product, int quantity) {
         userProfile.addProductToCart(product, quantity);
         persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
     }
@@ -251,15 +241,15 @@ public class ModelManager implements Model
         getCategory(categoryName).decreaseProductQuantity(product.getId(), quantity);
     }
 
-    @Override public boolean addListener(
-            GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override public boolean removeListener(
-            GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.removeListener(listener, propertyNames);
     }
 }
