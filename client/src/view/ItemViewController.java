@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import model.Product;
 
 import javax.imageio.ImageIO;
@@ -71,6 +72,7 @@ public class ItemViewController
           viewController.getViewModelFactory().getViewState()
               .setProductID(selectedProduct.getId());
           viewController.getViewHandler().openView("DetailedProductAdminView.fxml");
+
         }
         else if(viewController.getViewHandler().getTitle().equals("MarketUserView.fxml")){
           viewController.getViewModelFactory().getViewState()
