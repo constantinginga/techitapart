@@ -33,12 +33,12 @@ public class ModelManager implements Model
         map = new HashMap<>();
 
 
-        for (String s : categories) {
-            Category category = new Category(s);
-            for (Product product : persistence.getAllProductDB(s)) {
+        for (int i = 0; i < categories.size(); i++) {
+            Category category = new Category(categories.get(i));
+            for (Product product: persistence.getAllProductDB(categories.get(i))){
                 if (product != null) category.addProduct(product);
             }
-            map.put(s, category);
+            map.put(categories.get(i), category);
         }
 
     }
@@ -176,6 +176,7 @@ public class ModelManager implements Model
         // categoryList.removeProduct(id, categoryName);
         System.out.println("Remove product property change in ModelManager");
         property.firePropertyChange("removeProduct", id, null);
+
         getCategory(categoryName).removeProductById(id);
     }
 
