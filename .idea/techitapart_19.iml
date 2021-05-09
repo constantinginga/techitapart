@@ -5,19 +5,27 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/resources/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
 <<<<<<< HEAD
     <orderEntry type="library" exported="" name="javafx-swt" level="application" />
     <orderEntry type="library" exported="" name="JavaFX11" level="application" />
     <orderEntry type="library" exported="" name="postgresql-42.2.11" level="application" />
 =======
+=======
+>>>>>>> b5d1058d32153ecbb34a25e7adc58a7bc48b9c37
     <orderEntry type="library" name="javafx-swt" level="application" />
     <orderEntry type="library" name="JavaFX11" level="application" />
     <orderEntry type="library" name="postgresql-42.2.11" level="application" />
     <orderEntry type="library" name="MyObserver-1.2" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="gson-2.8.6" level="project" />
 >>>>>>> TIA-43
+=======
+    <orderEntry type="library" name="gson-2.8.6" level="application" />
+>>>>>>> b5d1058d32153ecbb34a25e7adc58a7bc48b9c37
   </component>
 </module>
