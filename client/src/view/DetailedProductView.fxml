@@ -83,9 +83,9 @@
                                                     <HBox.margin>
                                                         <Insets right="20.0" top="30.0" />
                                                     </HBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
                                                 </Button>
                                                 <Label fx:id="productQuantity" text="0">
                                                     <HBox.margin>
@@ -99,13 +99,39 @@
                                                     <HBox.margin>
                                                         <Insets left="20.0" top="30.0" />
                                                     </HBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
                                                 </Button>
                                             </children>
                                         </HBox>
                                     </children>
+                                </HBox>
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Label text="Products left:">
+                                            <font>
+                                                <Font name="Century Gothic" size="18.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="30.0" top="15.0" />
+                                            </HBox.margin>
+                                        </Label>
+                                        <Label fx:id="totalQuantity" text="Label">
+                                            <HBox.margin>
+                                                <Insets top="15.0" />
+                                            </HBox.margin>
+                                            <font>
+                                                <Font name="Century Gothic" size="18.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets left="3.0" />
+                                            </padding>
+                                        </Label>
+                                    </children>
+                                    <padding>
+                                        <Insets top="10.0" />
+                                    </padding>
                                 </HBox>
                                 <Label fx:id="errorLabel" text="errorLabel" textFill="RED">
                                     <font>

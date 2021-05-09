@@ -14,7 +14,7 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
 {
     private LocalModel model;
     private ViewState state;
-    private StringProperty productName, productPrice, productQuantity, errorLabel, description;
+    private StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
     private BooleanProperty editableProperty;
 
     public DetailedProductAdminViewModel(LocalModel model, ViewState viewState)
@@ -27,6 +27,7 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         productQuantity = new SimpleStringProperty();
         errorLabel = new SimpleStringProperty();
         description = new SimpleStringProperty();
+        totalQuantity = new SimpleStringProperty();
         editableProperty = new SimpleBooleanProperty(true);
         model.addListener(this);
     }
@@ -42,6 +43,7 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
             System.out.println("Client: " + product.getTotal_quantity());
             productQuantity.set(Integer.toString(product.getTotal_quantity()));
             description.set(product.getDescription());
+            totalQuantity.set(String.valueOf(product.getTotal_quantity()));
             errorLabel.set("");
             if (product.getTotal_quantity() <= 0)
             {
@@ -87,6 +89,8 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
     {
         return description;
     }
+
+    public StringProperty getTotalQuantity() { return totalQuantity; }
 
     public void addQuantity()
     {
@@ -168,6 +172,7 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
             if(event.getPropertyName().contains("quantity")){
                 //if(event.getValue2().equals(state.getProductID())){
                 productQuantity.set(Integer.toString(event.getValue2()));
+                totalQuantity.set(Integer.toString(event.getValue2()));
                 // }
             }
         });

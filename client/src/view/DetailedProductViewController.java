@@ -27,7 +27,8 @@ public class DetailedProductViewController extends ViewController {
     private Label errorLabel;
     @FXML
     private TextArea descriptionTextArea;
-
+    @FXML
+    private Label totalQuantity;
     @FXML private Button orderButton;
 
     @Override
@@ -49,6 +50,7 @@ public class DetailedProductViewController extends ViewController {
         productQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getProductQuantity());
         errorLabel.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getErrorLabel());
         descriptionTextArea.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getDescription());
+        totalQuantity.textProperty().bindBidirectional(super.getViewModelFactory().getDetailedProductViewModel().getTotalQuantity());
         super.getViewModelFactory().getDetailedProductViewModel().getEditableProperty().addListener(((observable, oldValue, newValue) -> {
             orderButton.setDisable(!newValue);
         }));

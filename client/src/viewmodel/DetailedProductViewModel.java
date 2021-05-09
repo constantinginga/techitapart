@@ -14,7 +14,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
 {
   private LocalModel model;
   private ViewState state;
-  private StringProperty productName, productPrice, productQuantity, errorLabel, description;
+  private StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
   private BooleanProperty editableProperty;
 
   public DetailedProductViewModel(LocalModel model, ViewState viewState)
@@ -26,6 +26,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     productPrice = new SimpleStringProperty();
     productQuantity = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
+    totalQuantity = new SimpleStringProperty();
     description = new SimpleStringProperty();
     editableProperty = new SimpleBooleanProperty(true);
     model.addListener(this);
@@ -42,6 +43,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
       System.out.println("Client: " + product.getTotal_quantity());
       productQuantity.set(Integer.toString(product.getTotal_quantity()));
       description.set(product.getDescription());
+      totalQuantity.set(String.valueOf(product.getTotal_quantity()));
       errorLabel.set("");
       if (product.getTotal_quantity() <= 0)
       {
@@ -87,6 +89,8 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
   {
     return description;
   }
+
+  public StringProperty getTotalQuantity() { return totalQuantity; }
 
   public void addQuantity()
   {
@@ -180,6 +184,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
       if(event.getPropertyName().contains("quantity")){
         if(event.getValue1().equals(state.getProductID())){
           productQuantity.set(Integer.toString(event.getValue2()));
+          totalQuantity.set(Integer.toString(event.getValue2()));
         }
       }
     });
