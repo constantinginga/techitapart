@@ -12,10 +12,12 @@ public class ViewHandler extends ViewCreator
   private Scene currentScene;
   private Stage primaryStage;
   private ViewModelFactory viewModelFactory;
+  private String title;
 
   public ViewHandler(ViewModelFactory viewModelFactory) {
     this.viewModelFactory = viewModelFactory;
     currentScene = new Scene(new Region());
+    title = "";
   }
 
   public void closeView(){
@@ -26,6 +28,10 @@ public class ViewHandler extends ViewCreator
   {
     this.primaryStage = primaryStage;
     openView("EntryView.fxml");
+  }
+
+  public Stage getPrimaryStage() {
+    return primaryStage;
   }
 
   public void openView(String id) throws IOException {
@@ -40,8 +46,8 @@ public class ViewHandler extends ViewCreator
       currentScene.getStylesheets().add("stylesheets/detailedProduct.css");
     }
 
-    String title = "";
-    System.out.println(id);
+    title = id;
+    System.out.println(title);
     if (root.getUserData() != null) {
       title += root.getUserData();
     }
@@ -52,8 +58,16 @@ public class ViewHandler extends ViewCreator
     primaryStage.show();
   }
 
+  public String getTitle() {
+    return title;
+  }
+
   @Override
   protected void initViewController(ViewController controller, Region root) throws InterruptedException {
     controller.init(this,viewModelFactory,root);
+  }
+
+  public Scene getCurrentScene() {
+    return currentScene;
   }
 }

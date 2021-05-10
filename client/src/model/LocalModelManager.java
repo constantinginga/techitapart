@@ -51,6 +51,17 @@ public class LocalModelManager
         return client.getAllCategory();
     }
 
+    @Override public Category getCategory(String name) throws RemoteException
+    {
+        return client.getCategory(name);
+    }
+
+    @Override public ArrayList<Category> getAllCategories()
+            throws RemoteException
+    {
+        return client.getAllCategories();
+    }
+
     @Override
     public void addProduct(Product product, String categoryName)
             throws RemoteException {

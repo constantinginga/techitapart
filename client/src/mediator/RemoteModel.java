@@ -1,9 +1,6 @@
 package mediator;
 
-import model.CartItem;
-import model.Product;
-import model.Role;
-import model.UserProfile;
+import model.*;
 import utility.observer.listener.RemoteListener;
 import utility.observer.subject.RemoteSubject;
 
@@ -25,6 +22,10 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
      * Category
      **/
     ArrayList<String> getAllCategory() throws RemoteException;
+
+    Category getCategory(String name) throws RemoteException;
+
+    ArrayList<Category> getAllCategories() throws RemoteException;
 
     /**
      * Product

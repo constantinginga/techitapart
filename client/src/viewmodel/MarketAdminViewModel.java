@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Category;
 import model.LocalModel;
 import model.Product;
 import utility.observer.event.ObserverEvent;
@@ -22,6 +23,7 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     private PropertyChangeAction<String, Integer> property;
     private StringProperty searchBar;
     ObservableList<Product> products = FXCollections.observableArrayList();
+    ObservableList<Category> categories = FXCollections.observableArrayList();
 
 
     public MarketAdminViewModel(LocalModel model, ViewState viewState) {
@@ -36,6 +38,10 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
 
     public ObservableList<Product> getProducts() {
         return products;
+    }
+
+    public ObservableList<Category> getCategories() {
+        return categories;
     }
 
     public StringProperty searchBarProperty() {
@@ -57,9 +63,10 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     }
 
     public void getData() {
-        //Get all products from model
+        //Get all products and categories from model
         try {
-            products = FXCollections.observableArrayList(model.getAllProducts());
+            products = FXCollections.observableArrayList(model.getAllProductsInCategory(state.categoryName));
+            categories = FXCollections.observableArrayList(model.getAllCategories());
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }

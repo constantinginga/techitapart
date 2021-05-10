@@ -8,6 +8,7 @@ public class ViewModelFactory
   private  AddProductViewModel addProductViewModel;
   private DetailedProductViewModel detailedProductViewModel;
   private ItemViewModel itemViewModel;
+  private CategoryViewModel categoryViewModel;
   private MarketAdminViewModel marketAdminViewModel;
   private MarketUserViewModel marketUserViewModel;
   private DetailedProductAdminViewModel detailedProductAdminViewModel;
@@ -23,6 +24,7 @@ public class ViewModelFactory
     marketAdminViewModel = new MarketAdminViewModel(model, viewState);
     marketUserViewModel = new MarketUserViewModel(model, viewState);
     itemViewModel = new ItemViewModel(model, viewState);
+    categoryViewModel = new CategoryViewModel(model, viewState);
     detailedProductAdminViewModel = new DetailedProductAdminViewModel(model, viewState);
     signUpViewModel = new SignUpViewModel(model, viewState);
     entryViewModel = new EntryViewModel(model, viewState);
@@ -31,6 +33,10 @@ public class ViewModelFactory
   public AddProductViewModel getAddProductViewModel()
   {
     return addProductViewModel;
+  }
+
+  public CategoryViewModel getCategoryViewModel() {
+    return categoryViewModel;
   }
 
   public DetailedProductViewModel getDetailedProductViewModel()

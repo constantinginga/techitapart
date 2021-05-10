@@ -1,9 +1,6 @@
 package mediator;
 
-import model.CartItem;
-import model.Product;
-import model.Role;
-import model.UserProfile;
+import model.*;
 import utility.observer.subject.LocalSubject;
 
 import java.io.File;
@@ -24,6 +21,10 @@ public interface ClientModel extends LocalSubject<String, Integer> {
      * Category
      **/
     ArrayList<String> getAllCategory() throws RemoteException;
+
+    Category getCategory(String name) throws RemoteException;
+
+    ArrayList<Category> getAllCategories() throws RemoteException;
 
     /**
      * Product

@@ -27,7 +27,13 @@ public class MarketAdminViewController extends ViewController implements
     private ScrollPane scroll;
 
     @FXML
+    private ScrollPane categoryScroll;
+
+    @FXML
     private GridPane grid;
+
+    @FXML
+    private GridPane categoryGrid;
 
     @FXML
     private Button photo;
@@ -58,6 +64,7 @@ public class MarketAdminViewController extends ViewController implements
     public void reset() throws InterruptedException {
         super.getViewModelFactory().getMarketAdminViewModel().reset();
         createGrid();
+        createGridForCategory();
     }
 
     public void addProduct(ActionEvent actionEvent) throws IOException {
@@ -119,6 +126,57 @@ public class MarketAdminViewController extends ViewController implements
                     GridPane.setMargin(anchorPane, new Insets(10));
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+        });
+    }
+
+    public void createGridForCategory()
+    {
+        Platform.runLater(() -> {
+            categoryGrid.getChildren().clear();
+            int column = 0;
+            int row = 1;
+            try
+            {
+                for (int i = 0;
+                     i < super.getViewModelFactory().getMarketAdminViewModel()
+                             .getCategories().size(); i++)
+                {
+                    super.getViewModelFactory().getViewState().setCategoryID("General");
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("CategoryView.fxml"));
+                    AnchorPane anchorPane = fxmlLoader.load();
+
+                    CategoryViewController categoryController = fxmlLoader
+                            .getController();
+                    categoryController.init(
+                            super.getViewModelFactory().getMarketAdminViewModel()
+                                    .getCategories().get(i), this);
+
+                    if (column == 1)
+                    {
+                        column = 0;
+                        row++;
+                    }
+
+                    categoryGrid.add(anchorPane, column++, row);
+                    //set grid width
+                    categoryGrid.setMinWidth(Region.USE_PREF_SIZE);
+                    categoryGrid.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                    categoryGrid.setMaxWidth(Region.USE_PREF_SIZE);
+
+                    //set grid height
+                    categoryGrid.setMinHeight(Region.USE_COMPUTED_SIZE);
+                    categoryGrid.setPrefHeight(Region.USE_COMPUTED_SIZE);
+                    categoryGrid.setMaxHeight(Region.USE_PREF_SIZE);
+
+                    GridPane.setMargin(anchorPane, new Insets(10));
+                }
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
 
             }

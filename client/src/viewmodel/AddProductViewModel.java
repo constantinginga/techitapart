@@ -51,6 +51,7 @@ public class AddProductViewModel {
             exception.printStackTrace();
         }
 //        categoryList.setAll(model.getAllCategory());
+        categoryList.remove("General");
     }
 
     public StringProperty getName() {

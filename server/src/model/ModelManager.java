@@ -16,13 +16,13 @@ import java.util.Map;
 public class ModelManager implements Model
 {
 
-    private Persistence persistence;
+    private final Persistence persistence;
 
     private UserProfile userProfile;
 
-    private PropertyChangeAction<String, Integer> property;
-    private ArrayList<String> categories;
-    private Map<String, Category> map;
+    private final PropertyChangeAction<String, Integer> property;
+    private final ArrayList<String> categories;
+    private final Map<String, Category> map;
 
 
 
@@ -33,18 +33,14 @@ public class ModelManager implements Model
         map = new HashMap<>();
 
 
-        for (int i = 0; i < categories.size(); i++) {
-            Category category = new Category(categories.get(i));
-            for (Product product: persistence.getAllProductDB(categories.get(i))){
+        for (String s : categories) {
+            Category category = new Category(s);
+            for (Product product : persistence.getAllProductDB(s)) {
                 if (product != null) category.addProduct(product);
             }
-            map.put(categories.get(i), category);
+            map.put(s, category);
         }
 
-    }
-
-    public Category getCategory(String Cname){
-        return map.get(Cname);
     }
 
 
@@ -102,7 +98,19 @@ public class ModelManager implements Model
         return categories;
     }
 
+    @Override public ArrayList<Category> getAllCategories(){
+        ArrayList<Category> categories = new ArrayList<>();
+        for (String key : map.keySet()) {
+            categories.add(map.get(key));
+        }
 
+        return categories;
+    }
+
+    @Override public Category getCategory(String name)
+    {
+        return map.get(name);
+    }
 
     /**
      * Product
@@ -129,19 +137,16 @@ public class ModelManager implements Model
 
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
-        ArrayList<Product> list = new ArrayList<>();
-        for(Product product: getCategory(categoryName).getAllProduct()){
-            list.add(product);
-        }
-        return list;
+        return (categoryName.equals("General")) ? getAllProducts() : map.get(categoryName).getAllProduct();
     }
 
 
     @Override
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        for (String category : categories) {
-            products.addAll(getAllProductsInCategory(category));
+
+        for (String key : map.keySet()) {
+            products.addAll(map.get(key).getAllProduct());
         }
         return products;
     }
