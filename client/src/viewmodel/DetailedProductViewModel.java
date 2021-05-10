@@ -18,7 +18,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
   private BooleanProperty editableProperty;
 
   public DetailedProductViewModel(LocalModel model, ViewState viewState)
-      throws RemoteException
+          throws RemoteException
   {
     this.model = model;
     this.state = viewState;
@@ -26,10 +26,10 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     productPrice = new SimpleStringProperty();
     productQuantity = new SimpleStringProperty();
     errorLabel = new SimpleStringProperty();
-    totalQuantity = new SimpleStringProperty();
     description = new SimpleStringProperty();
     editableProperty = new SimpleBooleanProperty(true);
     model.addListener(this);
+    totalQuantity = new SimpleStringProperty();
   }
 
   public void reset()
@@ -37,7 +37,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     try
     {
       Product product = model
-          .getProduct(state.getProductID(), state.getCategoryName());
+              .getProduct(state.getProductID(), state.getCategoryName());
       productName.set(product.getName());
       productPrice.set(String.valueOf(product.getPrice()));
       System.out.println("Client: " + product.getTotal_quantity());
@@ -97,17 +97,17 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     try
     {
       if (Integer.parseInt(productQuantity.get()) >= model
-          .getProduct(state.getProductID(), state.getCategoryName())
-          .getTotal_quantity())
+              .getProduct(state.getProductID(), state.getCategoryName())
+              .getTotal_quantity())
       {
         productQuantity.set(String.valueOf(
-            model.getProduct(state.getProductID(), state.getCategoryName())
-                .getTotal_quantity()));
+                model.getProduct(state.getProductID(), state.getCategoryName())
+                        .getTotal_quantity()));
       }
       else
       {
         productQuantity
-            .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
+                .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
       }
 
     }
@@ -131,7 +131,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     else
     {
       productQuantity
-          .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
+              .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
     }
   }
 
@@ -140,7 +140,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     try
     {
       if (model.getProduct(state.getProductID(), "General")
-          .getTotal_quantity() == 0)
+              .getTotal_quantity() == 0)
       {
         editableProperty.set(false);
         return;
@@ -152,7 +152,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
               .parseInt(productQuantity.getValue()), state.getCategoryName(),
           "Bob");*/
       model.buyProduct(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
-          .parseInt(productQuantity.getValue()), "General", state.getUserID() );
+              .parseInt(productQuantity.getValue()), "General", state.getUserID() );
 
     }
     catch (RemoteException e)
@@ -167,8 +167,8 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     try
     {
       return model.getImage(
-          (model.getProduct(state.getProductID(), state.getCategoryName()))
-              .getImgSrc());
+              (model.getProduct(state.getProductID(), state.getCategoryName()))
+                      .getImgSrc());
     }
     catch (RemoteException e)
     {
