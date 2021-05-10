@@ -41,7 +41,7 @@ public class LocalModelManager
     }
 
     @Override
-    public boolean login(String username, String password)
+    public UserProfile login(String username, String password)
             throws RemoteException {
         return client.login(username, password);
     }
