@@ -17,7 +17,7 @@ public interface LocalModel extends LocalSubject<String, Integer>
      **/
     UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException;
 
-    UserProfile login(String username, String password) throws RemoteException;
+    boolean login(String username, String password) throws RemoteException;
 
     /**
      * Category

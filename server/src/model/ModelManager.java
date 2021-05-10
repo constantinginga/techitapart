@@ -64,20 +64,25 @@ public class ModelManager implements Model
 
     // how will this login method work in server client system?
     @Override
-    public UserProfile login(String username, String password) {
-
+    public boolean login(String username, String password) {
+        UserName checkedUsername;
+        Password checkedPassword;
         try {
-            String role = persistence.loginDB(username, password);
-            userProfile = UserProfile.getInstance(username);
-            userProfile.setRole(role);
+            checkedUsername = new UserName(username);
+            checkedPassword = new Password(password);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        if (persistence.loginDB(checkedUsername.getName(), checkedPassword.getPassword())) {
+            userProfile = UserProfile.getInstance(checkedUsername.getName());
             Cart cart = new Cart();
             userProfile.setCart(cart);
-            cart.setCartItems(persistence.getAllProductsInCart(username));
-            return userProfile;
+            cart.setCartItems(persistence.getAllProductsInCart(checkedUsername.getName()));
+            return true;
             //   return userProfile;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Username not exist");
-
+        } else {
+            throw new IllegalArgumentException("Account already exists");
         }
         // return userProfile;
     }

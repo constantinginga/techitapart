@@ -48,7 +48,7 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     }
 
     @Override
-    public UserProfile login(String username, String password) throws RemoteException {
+    public boolean login(String username, String password) throws RemoteException {
         return model.login(username, password);
     }
 

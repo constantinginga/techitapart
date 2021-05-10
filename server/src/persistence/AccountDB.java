@@ -46,18 +46,19 @@ public class AccountDB implements AccountPersistence {
     }
 
     @Override
-    public String loginDB(String username, String password) {
+    public boolean loginDB(String username, String password) {
         try(Connection connection = ConnectionDB.getInstance().getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("SELECT  * from \"User\" WHERE username = ? AND password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-            return (resultSet.next()) ? resultSet.getString("role") : null;
+            return  (resultSet.next());
+
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Username not exist, maybe you need to SignUp first");
         }
+        return false;
     }
 
 
