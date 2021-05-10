@@ -10,6 +10,7 @@ public class UserProfile implements Serializable {
     private String username;
     private OrderList orderList;
     private Cart cart;
+    private String role;
 
 
     private UserProfile(String username) {
@@ -33,6 +34,14 @@ public class UserProfile implements Serializable {
         return instance;
     }
 
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public void addProductToCart(Product product, int quantity) {
         cart.addCartItem(new CartItem(product, quantity));
@@ -82,6 +91,5 @@ public class UserProfile implements Serializable {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-
-
 }
+

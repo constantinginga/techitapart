@@ -26,7 +26,7 @@ public class PersistentDB implements Persistence {
     }
 
     @Override
-    public boolean loginDB(String username, String password) {
+    public String loginDB(String username, String password) {
         return accountDB.loginDB(username, password);
     }
 

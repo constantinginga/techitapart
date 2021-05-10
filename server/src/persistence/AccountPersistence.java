@@ -5,7 +5,7 @@ import model.User;
 
 public interface AccountPersistence {
     User registerNewUserDB(String fName, String lName, String email, String username, String password, Role role);
-    boolean loginDB(String username, String password);
+    String loginDB(String username, String password);
 
     // Edit
     void updateUserName(String currentUsername, String newUsername);
