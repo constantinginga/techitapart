@@ -39,7 +39,6 @@ public class ModelManager implements Model
             }
             map.put(s, category);
         }
-
         map.put("General", new Category("General"));
         map.get("General").getAllProduct().addAll(getAllProducts());
     }
