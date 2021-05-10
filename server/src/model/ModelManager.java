@@ -32,7 +32,6 @@ public class ModelManager implements Model
         categories = persistence.getAllCategoryDB();
         map = new HashMap<>();
 
-
         for (String s : categories) {
             Category category = new Category(s);
             for (Product product : persistence.getAllProductDB(s)) {
@@ -41,6 +40,8 @@ public class ModelManager implements Model
             map.put(s, category);
         }
 
+        map.put("General", new Category("General"));
+        map.get("General").getAllProduct().addAll(getAllProducts());
     }
 
 

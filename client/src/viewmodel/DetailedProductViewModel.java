@@ -28,8 +28,8 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
     errorLabel = new SimpleStringProperty();
     description = new SimpleStringProperty();
     editableProperty = new SimpleBooleanProperty(true);
-    model.addListener(this);
     totalQuantity = new SimpleStringProperty();
+    model.addListener(this);
   }
 
   public void reset()
