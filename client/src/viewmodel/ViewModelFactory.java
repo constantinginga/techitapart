@@ -15,6 +15,8 @@ public class ViewModelFactory
   private SignUpViewModel signUpViewModel;
   private EntryViewModel entryViewModel;
   private LoginViewModel loginViewModel;
+//  private CartItemViewModel cartItemViewModel;
+  private ShoppingCartViewModel shoppingCartViewModel;
   private ViewState viewState;
 
   public ViewModelFactory(LocalModel model) throws RemoteException
@@ -29,7 +31,9 @@ public class ViewModelFactory
     detailedProductAdminViewModel = new DetailedProductAdminViewModel(model, viewState);
     signUpViewModel = new SignUpViewModel(model, viewState);
     loginViewModel = new LoginViewModel(model, viewState);
+//    cartItemViewModel = new CartItemViewModel(model, viewState);
     entryViewModel = new EntryViewModel(model, viewState);
+    shoppingCartViewModel = new ShoppingCartViewModel(model, viewState);
   }
 
   public LoginViewModel getSignInViewModel() {
@@ -53,6 +57,14 @@ public class ViewModelFactory
   public ItemViewModel getItemViewModel()
   {
     return itemViewModel;
+  }
+
+//  public CartItemViewModel getCartItemViewModel() {
+//    return cartItemViewModel;
+//  }
+
+  public ShoppingCartViewModel getShoppingCartViewModel() {
+    return shoppingCartViewModel;
   }
 
   public MarketAdminViewModel getMarketAdminViewModel()

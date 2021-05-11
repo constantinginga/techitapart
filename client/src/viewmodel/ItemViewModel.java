@@ -15,10 +15,8 @@ public class ItemViewModel {
     public ItemViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
-
         productName = new SimpleStringProperty();
         price = new SimpleStringProperty();
-
     }
 
 

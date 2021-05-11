@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketUserViewController">
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketUserViewController">
     <children>
         <BorderPane maxWidth="1188.0" minWidth="1155.0" prefHeight="810.0" prefWidth="1188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -68,7 +60,7 @@
                                 <Insets left="20.0" right="117.5" />
                             </padding>
                             <VBox.margin>
-                                <Insets bottom="10.0" left="80.0"/>
+                                <Insets bottom="10.0" left="80.0" />
                             </VBox.margin>
                         </ScrollPane>
                     </children>
@@ -91,7 +83,7 @@
                                         <Insets right="20.0" top="20.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="86.0" styleClass="search-buttton" text="Basket" textFill="WHITE">
+                                <Button mnemonicParsing="false" onAction="#handleCartButton" prefHeight="45.0" prefWidth="86.0" styleClass="search-buttton" text="Cart" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>

@@ -194,4 +194,9 @@ public class MarketAdminViewController extends ViewController implements
     private void handleLogoutButton() throws IOException {
         super.getViewHandler().openView("EntryView.fxml");
     }
+
+    @FXML
+    private void handleCartButton() throws IOException {
+        super.getViewHandler().openView("ShoppingCartView.fxml");
+    }
 }

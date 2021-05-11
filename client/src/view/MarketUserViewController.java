@@ -177,6 +177,11 @@ public class MarketUserViewController extends ViewController implements LocalLis
         super.getViewHandler().openView("EntryView.fxml");
     }
 
+    @FXML
+    private void handleCartButton() throws IOException {
+        super.getViewHandler().openView("ShoppingCartView.fxml");
+    }
+
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         Platform.runLater(() -> {
