@@ -19,6 +19,12 @@ public interface LocalModel extends LocalSubject<String, Integer>
 
     UserProfile login(String username, String password) throws RemoteException;
 
+    UserProfile getUserProfile() throws RemoteException;
+
+    User getUser(String username) throws RemoteException;
+
+    ArrayList<String> getAllUsernames() throws RemoteException;
+
     /**
      * Category
      **/
@@ -27,6 +33,8 @@ public interface LocalModel extends LocalSubject<String, Integer>
     Category getCategory(String name) throws RemoteException;
 
     ArrayList<Category> getAllCategories() throws RemoteException;
+
+    void updateUser(User user) throws RemoteException;
 
     /**
      * Product

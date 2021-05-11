@@ -52,6 +52,26 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
         return model.login(username, password);
     }
 
+    @Override public UserProfile getUserProfile() throws RemoteException
+    {
+        return model.getUserProfile();
+    }
+
+    @Override public User getUser(String username) throws RemoteException
+    {
+        return model.getUser(username);
+    }
+
+    @Override public void updateUser(User user) throws RemoteException
+    {
+        model.updateUser(user);
+    }
+
+    @Override public ArrayList<String> getAllUsernames() throws RemoteException
+    {
+        return model.getAllUsernames();
+    }
+
     @Override
     public ArrayList<String> getAllCategory() throws RemoteException {
         return model.getAllCategory();

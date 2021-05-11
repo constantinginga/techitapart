@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
+<AnchorPane minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketAdminViewController">
     <children>
         <BorderPane prefHeight="810.0" prefWidth="1188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
             <left>
@@ -95,7 +95,7 @@
                                         <Insets right="20.0" top="20.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="144.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="My Account" textFill="WHITE">
+                                <Button mnemonicParsing="false" onAction="#handleMyAccountButton" prefHeight="79.0" prefWidth="144.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="My Account" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>

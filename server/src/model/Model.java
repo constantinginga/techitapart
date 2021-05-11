@@ -11,6 +11,10 @@ public interface Model extends LocalSubject<String, Integer>
     /** Account **/
     UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role );
     UserProfile login(String username, String password);
+    UserProfile getUserProfile();
+    User getUser(String username);
+    void updateUser(User user);
+    ArrayList<String> getAllUsernames();
 
     /** Category **/
     ArrayList<String> getAllCategory();

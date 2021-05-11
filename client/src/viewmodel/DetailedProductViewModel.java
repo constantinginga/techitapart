@@ -40,7 +40,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
               .getProduct(state.getProductID(), state.getCategoryName());
       productName.set(product.getName());
       productPrice.set(String.valueOf(product.getPrice()));
-      System.out.println("Client: " + product.getTotal_quantity());
       productQuantity.set(Integer.toString(product.getTotal_quantity()));
       description.set(product.getDescription());
       totalQuantity.set(String.valueOf(product.getTotal_quantity()));
@@ -180,7 +179,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
   @Override public void propertyChange(ObserverEvent<String, Integer> event)
   {
     Platform.runLater(() -> {
-      System.out.println("Fire property change in DetailedProductViewProperty");
       if(event.getPropertyName().contains("quantity")){
         if(event.getValue1().equals(state.getProductID())){
           productQuantity.set(Integer.toString(event.getValue2()));

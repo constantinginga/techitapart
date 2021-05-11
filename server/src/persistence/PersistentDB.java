@@ -60,6 +60,41 @@ public class PersistentDB implements Persistence {
         accountDB.updateDetails(username, newUsername, newPassword, newFName, newLName, newEmail);
     }
 
+    @Override public User getUser(String username)
+    {
+        return accountDB.getUser(username);
+    }
+
+    @Override public String getfName()
+    {
+        return null;
+    }
+
+    @Override public String getlName()
+    {
+        return null;
+    }
+
+    @Override public UserName getUsername()
+    {
+        return null;
+    }
+
+    @Override public Password getPassword()
+    {
+        return null;
+    }
+
+    @Override public String email()
+    {
+        return null;
+    }
+
+    @Override public ArrayList<String> getAllUsernames()
+    {
+        return accountDB.getAllUsernames();
+    }
+
     @Override
     public ArrayList<CartItem> getOrderedProducts(int orderId) {
         return cartDB.getOrderedProducts(orderId);

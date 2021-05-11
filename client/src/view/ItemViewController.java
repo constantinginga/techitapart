@@ -72,7 +72,6 @@ public class ItemViewController
           viewController.getViewModelFactory().getViewState()
                   .setProductID(selectedProduct.getId());
           viewController.getViewHandler().openView("DetailedProductAdminView.fxml");
-
         }
         else if(viewController.getViewHandler().getTitle().equals("MarketUserView.fxml")){
           viewController.getViewModelFactory().getViewState()

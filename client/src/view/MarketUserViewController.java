@@ -190,4 +190,10 @@ public class MarketUserViewController extends ViewController implements LocalLis
             }
         });
     }
+
+    public void handleMyAccountButton(ActionEvent actionEvent)
+        throws IOException
+    {
+        super.getViewHandler().openView("UserView.fxml");
+    }
 }

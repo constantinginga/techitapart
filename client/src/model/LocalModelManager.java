@@ -46,6 +46,21 @@ public class LocalModelManager
         return client.login(username, password);
     }
 
+    @Override public UserProfile getUserProfile() throws RemoteException
+    {
+        return client.getUserProfile();
+    }
+
+    @Override public User getUser(String username) throws RemoteException
+    {
+        return client.getUser(username);
+    }
+
+    @Override public ArrayList<String> getAllUsernames() throws RemoteException
+    {
+        return client.getAllUsernames();
+    }
+
     @Override
     public ArrayList<String> getAllCategory() throws RemoteException {
         return client.getAllCategory();
@@ -60,6 +75,11 @@ public class LocalModelManager
             throws RemoteException
     {
         return client.getAllCategories();
+    }
+
+    @Override public void updateUser(User user) throws RemoteException
+    {
+        client.updateUser(user);
     }
 
     @Override

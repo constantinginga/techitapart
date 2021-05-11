@@ -14,7 +14,9 @@ public class ViewModelFactory
   private DetailedProductAdminViewModel detailedProductAdminViewModel;
   private SignUpViewModel signUpViewModel;
   private EntryViewModel entryViewModel;
+  private UserViewModel userViewModel;
   private LoginViewModel loginViewModel;
+  private UserListViewModel userListViewModel;
   private ViewState viewState;
 
   public ViewModelFactory(LocalModel model) throws RemoteException
@@ -30,6 +32,8 @@ public class ViewModelFactory
     signUpViewModel = new SignUpViewModel(model, viewState);
     loginViewModel = new LoginViewModel(model, viewState);
     entryViewModel = new EntryViewModel(model, viewState);
+    userViewModel = new UserViewModel(model, viewState);
+    userListViewModel = new UserListViewModel(model, viewState);
   }
 
   public LoginViewModel getSignInViewModel() {
@@ -60,6 +64,16 @@ public class ViewModelFactory
     return marketAdminViewModel;
   }
 
+  public LoginViewModel getLoginViewModel()
+  {
+    return loginViewModel;
+  }
+
+  public UserListViewModel getUserListViewModel()
+  {
+    return userListViewModel;
+  }
+
   public MarketUserViewModel getMarketUserViewModel()
   {
     return marketUserViewModel;
@@ -76,6 +90,11 @@ public class ViewModelFactory
 
   public EntryViewModel getEntryViewModel() {
     return entryViewModel;
+  }
+
+  public UserViewModel getUserViewModel()
+  {
+    return userViewModel;
   }
 
   public ViewState getViewState()

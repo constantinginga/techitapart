@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AccountDB implements AccountPersistence {
 
@@ -61,7 +62,7 @@ public class AccountDB implements AccountPersistence {
     }
 
 
-    @Override
+        @Override
     public void updateUserName(String currentUsername, String newUsername) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET username=? WHERE username=?");
@@ -134,6 +135,87 @@ public class AccountDB implements AccountPersistence {
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+    @Override public User getUser(String username){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"User\" WHERE username = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                UserName userName = new UserName(username);
+                String password = resultSet.getString("password");
+                Password passWord = new Password(password);
+                String email = resultSet.getString("email");
+                User user = new User(firstName,lastName,email,userName,passWord);
+                return user;
+            }
+            else {
+                throw new IllegalArgumentException(" connection issue");
+
+            }
+        }
+        catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            throw new IllegalArgumentException(" connection issue");
+        }
+    }
+    @Override public String getfName()
+    {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement statement = connection.prepareStatement("SELECT first_name FROM \"User\" WHERE username = ?");
+            //statement.setString(1, );
+            ResultSet resultSet = statement.executeQuery();
+            String result = resultSet.getString("first_name");
+            return result;
+        }
+        catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            throw new IllegalArgumentException(" connection issue");
+        }
+    }
+
+    @Override public String getlName()
+    {
+        return null;
+    }
+
+    @Override public UserName getUsername()
+    {
+        return null;
+    }
+
+    @Override public Password getPassword()
+    {
+        return null;
+    }
+
+    @Override public String email()
+    {
+        return null;
+    }
+
+    @Override public ArrayList<String> getAllUsernames()
+    {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement statement = connection.prepareStatement("SELECT username FROM \"User\"");
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<String> result = new ArrayList<>();
+            while (resultSet.next()){
+               String username = resultSet.getString("username");
+               result.add(username);
+            }
+            return result;
+        }
+        catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+            throw new IllegalArgumentException(" connection issue");
         }
     }
 }

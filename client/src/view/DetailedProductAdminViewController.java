@@ -49,7 +49,6 @@ public class DetailedProductAdminViewController extends ViewController
     super.getViewModelFactory().getDetailedProductAdminViewModel().reset();
     Platform.runLater(() -> {
       try {
-
         File file = super.getViewModelFactory().getDetailedProductViewModel().getImage();
         BufferedImage bufferedImage = ImageIO.read(file);
         Image image = SwingFXUtils.toFXImage(bufferedImage,null);
