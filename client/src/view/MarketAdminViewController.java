@@ -37,21 +37,10 @@ public class MarketAdminViewController extends ViewController implements
 
     @FXML
     private Button photo;
+
     @FXML
     private TextField searchField;
 
-    //  private List<Product> getData(){
-    //    List<Product> Products = new ArrayList<>();
-    //    Product product;
-    //
-    //    for(int i = 0; i <= 20; i++)
-    //    {
-    //      product = new Product("Phone", "Iphone 12 256gb", 199, 100);
-    //      product.setImgSrc("../default1.jpg");
-    //      Products.add(product);
-    //    }
-    //    return Products;
-    //  }
 
     @Override
     protected void init() throws InterruptedException {

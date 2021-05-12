@@ -3,10 +3,9 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import model.Order;
+
 
 import java.io.IOException;
 
@@ -19,12 +18,16 @@ public class UserListViewController extends ViewController
   @FXML private TextField password;
   @FXML private Label errorLabel;
   @FXML private ListView<String> listView;
-  @FXML private Button editButton;
+  @FXML private ListView<Order> orderListView;
+
+
 
   @Override protected void init() throws InterruptedException
   {
     listView.itemsProperty()
         .bind(super.getViewModelFactory().getUserListViewModel().getUsers());
+    orderListView.itemsProperty()
+        .bind(super.getViewModelFactory().getUserListViewModel().getOrders());
     firstName.textProperty().bindBidirectional(
         super.getViewModelFactory().getUserListViewModel().firstNameProperty());
     lastName.textProperty().bindBidirectional(

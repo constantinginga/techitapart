@@ -50,6 +50,6 @@ public class Order implements Serializable {
 
     @Override
     public String toString(){
-        return order_id +"-"+username+"-"+date;
+        return "    Order ID: " + order_id +"                  " + "Date: " + date;
     }
 }

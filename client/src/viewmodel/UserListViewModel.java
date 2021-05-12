@@ -7,17 +7,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.LocalModel;
-import model.Password;
-import model.User;
-import model.UserName;
-
+import model.*;
 
 import java.rmi.RemoteException;
 
 public class UserListViewModel
 {
   private ListProperty<String> users;
+  private ListProperty<Order> orders;
   private LocalModel localModel;
   private ViewState state;
   private StringProperty firstName;
@@ -40,7 +37,13 @@ public class UserListViewModel
     this.password = new SimpleStringProperty();
     this.error = new SimpleStringProperty();
     this.users = new SimpleListProperty<>();
+    this.orders = new SimpleListProperty<>();
     selectedUserProperty = new SimpleStringProperty();
+  }
+
+  public ListProperty<Order> getOrders()
+  {
+    return orders;
   }
 
   public ListProperty<String> getUsers()
@@ -84,6 +87,7 @@ public class UserListViewModel
       try
       {
         ObservableList<String> temp = FXCollections.observableArrayList();
+        System.out.println(localModel.getAllUsernames());
         temp.setAll(localModel.getAllUsernames());
         users.set(temp);
       }
@@ -94,6 +98,15 @@ public class UserListViewModel
     });
   }
 
+//  public void getAllOrders()
+//  {
+//    Platform.runLater(() -> {
+//      ObservableList<String> temp = FXCollections.observableArrayList();
+//      temp.setAll(localModel.getAllOrdersByUsername(selectedUserProperty.get()).);
+//      orders.set(temp);
+//    });
+//  }
+
   public void setSelectedExerciseProperty(String selectedExerciseProperty)
   {
     this.selectedUserProperty.set(selectedExerciseProperty);
@@ -103,7 +116,6 @@ public class UserListViewModel
   {
     try
     {
-
       User user = localModel.getUser(state.getUserID());
       firstName.set(user.getfName());
       lastName.set(user.getlName());
@@ -141,13 +153,14 @@ public class UserListViewModel
     Platform.runLater(() -> {
       try
       {
-        state.setUserID(selectedUserProperty.get());
-        User user = localModel.getUser(state.getUserID());
+        User user = localModel.getUser(selectedUserProperty.get());
         firstName.set(user.getfName());
         lastName.set(user.getlName());
         email.set(user.getEmail());
         username.set(user.getUserName().getName());
         password.set(user.getPassword().getPassword());
+        ObservableList<Order> temp = FXCollections.observableArrayList(localModel.getAllOrdersByUsername(selectedUserProperty.get()));
+        orders.set(temp);
       }
       catch (Exception e)
       {

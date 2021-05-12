@@ -40,3 +40,7 @@
 .scrollPane {
     -fx-background: #D3D3D3;
 }
+
+.list-cell{
+    -fx-font: 18px 'Century Gothic';
+}

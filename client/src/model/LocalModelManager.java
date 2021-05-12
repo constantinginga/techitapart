@@ -179,6 +179,11 @@ public class LocalModelManager
         client.addOrder();
     }
 
+    @Override public ArrayList<Order> getAllOrdersByUsername(String username)
+    {
+        return client.getAllOrdersByUsername(username);
+    }
+
     @Override
     public void close() throws NoSuchObjectException {
         property.close();

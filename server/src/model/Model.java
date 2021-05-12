@@ -43,4 +43,5 @@ public interface Model extends LocalSubject<String, Integer>
 
     /** order **/
     void addOrder();
+    ArrayList<Order> getAllOrdersByUsername(String username);
 }

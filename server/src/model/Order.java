@@ -26,7 +26,7 @@ public class Order implements Serializable {
     }
 
     public void setOrder_id(String orderId) {
-        this.order_id = order_id;
+        this.order_id = Integer.valueOf(orderId);
     }
 
     public void setUser_id(String username) {
@@ -53,6 +53,6 @@ public class Order implements Serializable {
 
     @Override
     public String toString(){
-        return order_id +"-"+username+"-"+date;
+        return "    Order ID: " + order_id +"                  " + "Date: " + date;
     }
 }

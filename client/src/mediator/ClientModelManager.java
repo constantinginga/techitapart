@@ -170,6 +170,11 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         UnicastRemoteObject.unexportObject(this, true);
     }
 
+    @Override public ArrayList<Order> getAllOrdersByUsername(String username)
+    {
+        return server.getAllOrdersByUsername(username);
+    }
+
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) throws RemoteException {
         System.out.println("Fire property change in ClientModelManager");

@@ -168,6 +168,12 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
         model.addOrder();
     }
 
+    @Override public ArrayList<Order> getAllOrdersByUsername(String username)
+        throws RemoteException
+    {
+        return model.getAllOrdersByUsername(username);
+    }
+
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         System.out.println("Fire property change in RemoteModelManager");

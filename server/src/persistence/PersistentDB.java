@@ -150,6 +150,11 @@ public class PersistentDB implements Persistence {
         return orderDB.addOrderDB(username);
     }
 
+    @Override public ArrayList<Order> getAllOrderByUsername(String username)
+    {
+        return orderDB.getAllOrderByUsername(username);
+    }
+
     @Override
     public Product addProductToCategoryDB(Product product, String categoryName) {
         return productDB.addProductToCategoryDB(product, categoryName);

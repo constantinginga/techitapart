@@ -79,6 +79,8 @@ public interface LocalModel extends LocalSubject<String, Integer>
      **/
     void addOrder() throws RemoteException;
 
+    ArrayList<Order> getAllOrdersByUsername(String username);
+
     /**
      * closing of window
      */

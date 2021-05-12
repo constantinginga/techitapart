@@ -307,6 +307,11 @@ public class ModelManager implements Model
 
   }
 
+  @Override public ArrayList<Order> getAllOrdersByUsername(String username)
+  {
+    return persistence.getAllOrderByUsername(username);
+  }
+
   ///TODO remove later
   @Override public void buyProduct(Product product, int quantity,
       String categoryName, String userName)
