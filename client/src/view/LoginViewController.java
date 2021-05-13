@@ -1,10 +1,11 @@
 package view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 
@@ -22,6 +23,16 @@ public class LoginViewController extends ViewController {
         username.textProperty().bindBidirectional(super.getViewModelFactory().getSignInViewModel().getUsername());
         password.textProperty().bindBidirectional(super.getViewModelFactory().getSignInViewModel().getPassword());
         error.textProperty().bindBidirectional(super.getViewModelFactory().getSignInViewModel().getError());
+
+        password.setOnKeyPressed((KeyEvent e) -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    handleLoginButton();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -30,7 +41,7 @@ public class LoginViewController extends ViewController {
     }
 
     @FXML
-    private void handleSLoginButton(ActionEvent actionEvent) throws IOException {
+    private void handleLoginButton() throws IOException {
         if (super.getViewModelFactory().getSignInViewModel().login().equalsIgnoreCase("consumer")) {
             super.getViewHandler().openView("MarketUserView.fxml");
         } else if (super.getViewModelFactory().getSignInViewModel().login().equalsIgnoreCase("admin")) {
@@ -39,12 +50,12 @@ public class LoginViewController extends ViewController {
     }
 
     @FXML
-    private void handleBackButton(ActionEvent actionEvent) throws IOException {
+    private void handleBackButton() throws IOException {
         super.getViewHandler().openView("EntryView.fxml");
     }
 
     @FXML
-    private void handleHyperLink(ActionEvent actionEvent) throws IOException {
+    private void handleHyperLink() throws IOException {
         super.getViewHandler().openView("SignUpView.fxml");
     }
 }

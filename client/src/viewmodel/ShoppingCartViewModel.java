@@ -27,12 +27,6 @@ public class ShoppingCartViewModel {
         this.totalItems = new SimpleStringProperty();
         this.totalPrice = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
-        // this is temporary
-//        for (int i = 0; i < 20; i++) {
-//            Product product = new Product("PRODUCT #" + i, "Description lol", 50, 499);
-//            product.setImgSrc("default.jpg");
-//            items.add(new CartItem(product, 5));
-//        }
         reset();
     }
 

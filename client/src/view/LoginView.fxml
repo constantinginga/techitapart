@@ -29,7 +29,7 @@
                 <Font name="Century Gothic" size="18.0" />
             </font>
         </PasswordField>
-        <Button layoutX="109.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleSLoginButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Login" textFill="WHITE">
+        <Button layoutX="109.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Login" textFill="WHITE">
             <font>
                 <Font name="Century Gothic" size="18.0" />
             </font>

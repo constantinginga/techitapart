@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 
 public class SignUpViewController extends ViewController {
@@ -24,6 +25,16 @@ public class SignUpViewController extends ViewController {
         username.textProperty().bindBidirectional(super.getViewModelFactory().getSignUpViewModel().getUsername());
         password.textProperty().bindBidirectional(super.getViewModelFactory().getSignUpViewModel().getPassword());
         error.textProperty().bind(super.getViewModelFactory().getSignUpViewModel().getError());
+
+        password.setOnKeyPressed((KeyEvent e) -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    handleSignUpButton();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
