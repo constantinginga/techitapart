@@ -24,13 +24,13 @@ class ModelManagerTest {
         });
     }
 
-    @org.junit.jupiter.api.Test
+   /* @org.junit.jupiter.api.Test
     void registerUSerSuccessfullOne() {
         UserProfile user = model
                 .registerUSer("Jakub", "Platzek", "jakub.platzek@gmail.com", "Kompera_SVK", "yoMamah69", Role.Consumer);
         assertEquals("Kompera_SVK", user.getUsername());
         assertEquals(0, user.getOrderList().getAllOrders().size());
-    }
+    }*/
     /*
         @org.junit.jupiter.api.Test
         void loginNull() {

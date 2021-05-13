@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import model.CartItem;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 public class ShoppingCartViewController extends ViewController {
 

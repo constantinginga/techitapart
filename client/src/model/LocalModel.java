@@ -1,8 +1,6 @@
 package model;
 
-import utility.observer.listener.LocalListener;
 import utility.observer.subject.LocalSubject;
-import viewmodel.MarketAdminViewModel;
 
 import java.io.File;
 import java.rmi.NoSuchObjectException;
@@ -14,7 +12,8 @@ public interface LocalModel extends LocalSubject<String, Integer>
 
     /**
      * Account
-     **/
+     *
+     * @return*/
     UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException;
 
     UserProfile login(String username, String password) throws RemoteException;
@@ -53,9 +52,11 @@ public interface LocalModel extends LocalSubject<String, Integer>
     /**
      * update cart
      **/
-    void addProductToCart(Product product, int quantity) throws RemoteException;
+    void addProductToCart(Product product, int quantity, String username) throws RemoteException;
 
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username) throws RemoteException;
+
+    ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException;
 
     void removeProductFromCart(CartItem cartItem, String username) throws RemoteException;
 

@@ -9,7 +9,6 @@ import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 public class LocalModelManager
         implements LocalModel, LocalListener<String, Integer> {
 
-    private UserProfile userProfile;
     private ClientModelManager client;
     private PropertyChangeAction<String, Integer> property;
 
@@ -31,7 +29,8 @@ public class LocalModelManager
 
     /**
      * Register And Login
-     **/
+     *
+     * @return*/
     // how will this login method work in server client system?
     @Override
     public UserProfile registerUSer(String fName, String lName,
@@ -126,15 +125,27 @@ public class LocalModelManager
     }
 
     @Override
-    public void addProductToCart(Product product, int quantity)
+    public void addProductToCart(Product product, int quantity, String username)
             throws RemoteException {
-        client.addProductToCart(product, quantity);
+        client.addProductToCart(product, quantity, username);
+        System.out.println("FROM CLIENT: ADDPRODUCT METHOD");
     }
 
     @Override
     public void updateCartItemQuantity(CartItem cartItem, int quantity,
                                        String username) throws RemoteException {
         client.updateCartItemQuantity(cartItem, quantity, username);
+    }
+
+    @Override
+    public ArrayList<CartItem> getProductsFromCart(String username) {
+        try {
+            return client.getProductsFromCart(username);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override

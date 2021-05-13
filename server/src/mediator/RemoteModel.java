@@ -1,11 +1,9 @@
 package mediator;
 
 import model.*;
-import utility.observer.listener.RemoteListener;
 import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -53,7 +51,8 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
     /**
      * update cart
      **/
-    void addProductToCart(Product product, int quantity) throws RemoteException;
+    void addProductToCart(Product product, int quantity, String username) throws RemoteException;
+    ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException;
 
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username) throws RemoteException;
 

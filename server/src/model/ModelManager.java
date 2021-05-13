@@ -18,12 +18,11 @@ public class ModelManager implements Model
 
     private final Persistence persistence;
 
-    private UserProfile userProfile;
+   // private UserProfile userProfile;
 
     private final PropertyChangeAction<String, Integer> property;
     private final ArrayList<String> categories;
     private final Map<String, Category> map;
-
 
 
     public ModelManager() {
@@ -53,7 +52,7 @@ public class ModelManager implements Model
         try {
             User user = persistence
                     .registerNewUserDB(fName, lName, email, username, password, role);
-            userProfile = UserProfile.getInstance(user.getUserName().getName());
+           UserProfile userProfile = UserProfile.getInstance(user.getUserName().getName());
             Cart cart = new Cart();
             userProfile.setCart(cart);
             return userProfile;
@@ -68,11 +67,11 @@ public class ModelManager implements Model
 
         try {
             String role = persistence.loginDB(username, password);
-            userProfile = UserProfile.getInstance(username);
+           UserProfile userProfile = UserProfile.getInstance(username);
             userProfile.setRole(role);
             Cart cart = new Cart();
-            userProfile.setCart(cart);
             cart.setCartItems(persistence.getAllProductsInCart(username));
+            userProfile.setCart(cart);
             return userProfile;
             //   return userProfile;
         } catch (IllegalArgumentException e) {
@@ -201,26 +200,37 @@ public class ModelManager implements Model
      **/
     // how will this login method work in server client system?
     @Override
-    public void addProductToCart (Product product, int quantity) {
+    public void addProductToCart (Product product, int quantity, String username) {
+        UserProfile userProfile = UserProfile.getInstance(username);
+
         userProfile.addProductToCart(product, quantity);
         persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
+    }
+
+    @Override
+    public ArrayList<CartItem> getProductsFromCart(String username) {
+        UserProfile userProfile = UserProfile.getInstance(username);
+        return (userProfile != null) ? userProfile.getAllCartItem() : null;
     }
 
     // how will this login method work in server client system?
     @Override
     public void updateCartItemQuantity(CartItem cartItem, int quantity, String username) {
+        UserProfile userProfile = UserProfile.getInstance(username);
         userProfile.updateCartItemQuantity(cartItem, quantity);
     }
 
 
     @Override
     public void removeProductFromCart(CartItem cartItem, String username) {
+        UserProfile userProfile = UserProfile.getInstance(username);
         userProfile.removeCartItem(cartItem);
     }
 
     // how will this login method work in server client system?
     @Override
     public void buy(String username) {
+        UserProfile userProfile = UserProfile.getInstance(username);
         Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
         userProfile.addOrder(order);
         persistence.setOrderId(order.getOrder_id(), username);

@@ -7,8 +7,11 @@ import javafx.collections.ObservableList;
 import model.CartItem;
 import model.LocalModel;
 import model.Product;
+import model.UserProfile;
+
 import java.io.File;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class ShoppingCartViewModel {
     private LocalModel model;
@@ -22,12 +25,12 @@ public class ShoppingCartViewModel {
         this.totalItems = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
         // this is temporary
-        for (int i = 0; i < 20; i++) {
-            Product product = new Product("PRODUCT #" + i, "Description lol", 50, 499);
-            product.setImgSrc("default.jpg");
-            items.add(new CartItem(product, 5));
-        }
-        totalItems.set(String.valueOf(items.size()));
+//        for (int i = 0; i < 20; i++) {
+//            Product product = new Product("PRODUCT #" + i, "Description lol", 50, 499);
+//            product.setImgSrc("default.jpg");
+//            items.add(new CartItem(product, 5));
+//        }
+        reset();
     }
 
     public StringProperty getTotalItems() {
@@ -47,7 +50,13 @@ public class ShoppingCartViewModel {
     }
 
     public void reset() {
-
+        try {
+            ArrayList<CartItem> cartItems = model.getProductsFromCart(state.getUserID());
+            if (cartItems != null) items.setAll(cartItems);
+            totalItems.set(String.valueOf(items.size()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ObservableList<CartItem> getItems() {

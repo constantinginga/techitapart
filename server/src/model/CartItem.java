@@ -41,4 +41,13 @@ public class CartItem implements Serializable {
     public Product getProduct() {
         return product;
     }
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "product=" + product +
+                ", quantity=" + quantity +
+                ", id=" + id +
+                '}';
+    }
 }

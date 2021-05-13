@@ -17,20 +17,20 @@ public class UserProfile implements Serializable {
         this.username = username;
         this.orderList = new OrderList();
         this.cart = new Cart();
-        //this.map =  ;
     }
 
 
     public static UserProfile getInstance(String key) {
         UserProfile instance = map.get(key);
-
         if (instance == null) {
             synchronized (map) {
-                instance = new UserProfile(key);
-                map.put(key, instance);
+                instance = map.get(key);
+                if (instance == null) {
+                    instance = new UserProfile(key);
+                    map.put(key, instance);
+                }
             }
         }
-
         return instance;
     }
 

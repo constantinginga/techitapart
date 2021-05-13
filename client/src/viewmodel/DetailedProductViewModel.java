@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import model.LocalModel;
 import model.Product;
+import model.UserProfile;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
 
@@ -139,7 +140,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
   {
     try
     {
-      if (model.getProduct(state.getProductID(), "General")
+      if (model.getProduct(state.getProductID(), state.getCategoryID())
               .getTotal_quantity() == 0)
       {
         editableProperty.set(false);
@@ -150,9 +151,21 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
           model.getProduct(state.getProductID(), state.getCategoryName())
               .getTotal_quantity() - Integer
               .parseInt(productQuantity.getValue()), state.getCategoryName(),
-          "Bob");*/
-      model.buyProduct(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
-              .parseInt(productQuantity.getValue()), "General", state.getUserID() );
+          "Bob");
+          */
+
+      System.out.println(productQuantity.getValue()
+      );
+      model.addProductToCart(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
+              .parseInt(productQuantity.getValue()), state.getUserID());
+
+      System.out.println(UserProfile.getInstance(state.getUserID()).getAllCartItem().toString());
+
+/*
+  model.buyProduct(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
+             .parseInt(productQuantity.getValue()), "General", state.getUserID());
+
+*/
 
     }
     catch (RemoteException e)

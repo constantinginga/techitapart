@@ -52,7 +52,9 @@ public interface ClientModel extends LocalSubject<String, Integer> {
     /**
      * update cart
      **/
-    void addProductToCart(Product product, int quantity) throws RemoteException;
+    void addProductToCart(Product product, int quantity, String username) throws RemoteException;
+
+    ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException;
 
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username) throws RemoteException;
 

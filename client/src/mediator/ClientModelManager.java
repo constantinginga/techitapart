@@ -115,8 +115,14 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     }
 
     @Override
-    public void addProductToCart(Product product, int quantity) throws RemoteException {
-        server.addProductToCart(product, quantity);
+    public void addProductToCart(Product product, int quantity, String username) throws RemoteException {
+        server.addProductToCart(product, quantity, username);
+        System.out.println("FROM REMOTE CLIENT");
+    }
+
+    @Override
+    public ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException {
+        return server.getProductsFromCart(username);
     }
 
     @Override

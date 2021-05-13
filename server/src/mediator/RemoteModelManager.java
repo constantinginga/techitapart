@@ -118,8 +118,14 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     }
 
     @Override
-    public void addProductToCart(Product product, int quantity) throws RemoteException {
-        model.addProductToCart(product, quantity);
+    public void addProductToCart(Product product, int quantity, String username) throws RemoteException {
+        System.out.println("FROM REMOTE SERVER");
+        model.addProductToCart(product, quantity, username);
+    }
+
+    @Override
+    public ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException {
+        return model.getProductsFromCart(username);
     }
 
     @Override

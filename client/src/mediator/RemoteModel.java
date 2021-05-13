@@ -53,13 +53,15 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
     /**
      * update cart
      **/
-    void addProductToCart(Product product, int quantity) throws RemoteException;
+    void addProductToCart(Product product, int quantity, String username) throws RemoteException;
 
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username) throws RemoteException;
 
     void removeProductFromCart(CartItem cartItem, String username) throws RemoteException;
 
     void buy(String username) throws RemoteException;
+
+    ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException;
 
     /**
      * this method will be deleted after implementing the cart shop
