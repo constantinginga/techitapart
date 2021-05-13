@@ -13,12 +13,12 @@
             <Font name="Century Gothic" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="409.0" layoutY="43.0" mnemonicParsing="false" onAction="#decreaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&lt;" textFill="WHITE">
+      <Button fx:id="decreaseButton" layoutX="409.0" layoutY="43.0" mnemonicParsing="false" onAction="#decreaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&lt;" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="469.0" layoutY="43.0" mnemonicParsing="false" onAction="#increaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&gt;" textFill="WHITE">
+      <Button fx:id="increaseButton" layoutX="469.0" layoutY="43.0" mnemonicParsing="false" onAction="#increaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&gt;" textFill="WHITE">
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font>

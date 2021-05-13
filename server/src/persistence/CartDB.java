@@ -45,11 +45,26 @@ public class CartDB implements CartPersistence {
         return null;
     }
 
+    @Override
+    public int cartItemExists(int product_id, String username) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT quantity FROM CartItem WHERE product_id = ? AND username = ?");
+            statement.setInt(1, product_id);
+            statement.setString(2, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) return resultSet.getInt("quantity");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return -1;
+    }
 
     @Override
     public void addProductToCart(int product_id, int quantity, String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?)");
+            // add item to cart if it doesn't exist, otherwise increase its quantity
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?) ON CONFLICT (product_id, username) DO UPDATE SET quantity = EXCLUDED.quantity + CartItem.quantity");
             statement.setInt(1, quantity);
             statement.setInt(2, product_id);
             statement.setString(3, username);
@@ -62,7 +77,7 @@ public class CartDB implements CartPersistence {
     @Override
     public void updateCartItemQuantity(int product_id, int quantity, String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE cartItem SET quantity = quantity - ?  WHERE product_id =? AND username = ?  ");
+            PreparedStatement statement = connection.prepareStatement("UPDATE cartItem SET quantity = quantity + ?  WHERE product_id =? AND username = ?  ");
             statement.setInt(1, quantity);
             statement.setInt(2, product_id);
             statement.setString(3, username);

@@ -146,13 +146,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
         editableProperty.set(false);
         return;
       }
-     /* model.buyProduct(
-          model.getProduct(state.getProductID(), state.getCategoryName()),
-          model.getProduct(state.getProductID(), state.getCategoryName())
-              .getTotal_quantity() - Integer
-              .parseInt(productQuantity.getValue()), state.getCategoryName(),
-          "Bob");
-          */
 
       System.out.println(productQuantity.getValue()
       );
@@ -161,16 +154,14 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
 
       System.out.println(UserProfile.getInstance(state.getUserID()).getAllCartItem().toString());
 
-/*
-  model.buyProduct(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
-             .parseInt(productQuantity.getValue()), "General", state.getUserID());
 
-*/
 
     }
     catch (RemoteException e)
     {
       e.printStackTrace();
+    } catch (IllegalArgumentException e) {
+      errorLabel.set(e.getMessage());
     }
 
   }

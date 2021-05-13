@@ -76,6 +76,11 @@ public class PersistentDB implements Persistence {
     }
 
     @Override
+    public int cartItemExists(int product_id, String username) {
+        return cartDB.cartItemExists(product_id, username);
+    }
+
+    @Override
     public void removeCartItem(int product_id, String username) {
         cartDB.removeCartItem(product_id, username);
     }

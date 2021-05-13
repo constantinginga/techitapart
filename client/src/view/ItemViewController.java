@@ -43,7 +43,7 @@ public class ItemViewController
       }
       catch (Exception e)
       {
-        e.printStackTrace();
+        System.out.println(e.getMessage());
       }
     });
   }

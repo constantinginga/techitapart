@@ -25,6 +25,7 @@ public class ShoppingCartViewController extends ViewController {
     protected void init() throws InterruptedException {
         quantityOfItemsCart.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalItems());
         quantityOfItemsOrder.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalItems());
+        totalPrice.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalPrice());
         reset();
     }
 
@@ -45,8 +46,7 @@ public class ShoppingCartViewController extends ViewController {
     }
 
     public void clearGrid(String name) {
-        grid.getChildren().remove(super.getViewModelFactory().getShoppingCartViewModel().getItemIndex(name));
-
+        grid.getChildren().remove(super.getViewModelFactory().getShoppingCartViewModel().removeItem(name));
     }
 
     private void createGrid() {
@@ -82,4 +82,13 @@ public class ShoppingCartViewController extends ViewController {
             }
         });
     }
+
+    public void updateCartItemQuantity(CartItem cartItem,  int quantity){
+        super.getViewModelFactory().getShoppingCartViewModel().updateCartItemQuantity(cartItem,quantity);
+    }
+
+    public void removeCartItem(CartItem cartItem){
+        super.getViewModelFactory().getShoppingCartViewModel().removeCartItem(cartItem);
+    }
+
 }

@@ -28,9 +28,16 @@ public class Cart implements Serializable {
     }
 
     public void updateItemQuantity(CartItem cartItem, int quantity) {
-        for (CartItem cartItem1: cartItems){
+        for (CartItem cartItem1: cartItems) {
             if (cartItem1.getId() == cartItem.getId()){
-                cartItem1.setQuantity(quantity);
+                int newQuantity = cartItem1.getQuantity() + quantity;
+                if (newQuantity < 1) {
+                    throw new IllegalArgumentException("Quantity too low");
+                }
+                if (newQuantity > cartItem1.getProduct().getTotal_quantity()) {
+                    throw new IllegalArgumentException("Quantity too high");
+                }
+                cartItem1.setQuantity(cartItem1.getQuantity() + quantity);
             }
         }
     }

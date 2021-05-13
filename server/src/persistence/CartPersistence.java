@@ -10,7 +10,7 @@ public interface CartPersistence {
 
     void addProductToCart(int product_id, int quantity, String username);
     void updateCartItemQuantity(int product_id, int quantity, String username);
-
+    int cartItemExists(int product_id, String username);
     void removeCartItem(int product_id, String username);
     void removeCartItem(int cartItemId);
     ArrayList<CartItem> getAllProductsInCart(String username);

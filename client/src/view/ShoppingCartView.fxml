@@ -41,7 +41,7 @@
                   <Font name="Century Gothic" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="totalPrice" layoutX="327.0" layoutY="209.0">
+            <Label fx:id="totalPrice" layoutX="265.0" layoutY="208.0" text="X" wrapText="true">
                <font>
                   <Font size="18.0" />
                </font>

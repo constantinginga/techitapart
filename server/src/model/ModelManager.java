@@ -201,10 +201,20 @@ public class ModelManager implements Model
     // how will this login method work in server client system?
     @Override
     public void addProductToCart (Product product, int quantity, String username) {
+        int quantityInDB = persistence.cartItemExists(Integer.parseInt(product.getId()), username);
+        if (quantityInDB != -1) {
+            if (quantityInDB + quantity > product.getTotal_quantity()) throw new IllegalArgumentException("Quantity exceeds stock");
+        }
         UserProfile userProfile = UserProfile.getInstance(username);
-
-        userProfile.addProductToCart(product, quantity);
         persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
+
+        for (CartItem cartItem: userProfile.getAllCartItem()){
+            if ((cartItem.getProduct()).getId().equals(product.getId())){
+                userProfile.updateCartItemQuantity(cartItem, cartItem.getQuantity() + quantity);
+                    return;
+            }
+        }
+        userProfile.addProductToCart(product, quantity);
     }
 
     @Override
@@ -217,7 +227,13 @@ public class ModelManager implements Model
     @Override
     public void updateCartItemQuantity(CartItem cartItem, int quantity, String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
-        userProfile.updateCartItemQuantity(cartItem, quantity);
+        try {
+            userProfile.updateCartItemQuantity(cartItem, quantity);
+            persistence.updateCartItemQuantity(Integer.parseInt(cartItem.getProduct().getId()), quantity, username);
+        }catch (Exception e){
+            throw new IllegalArgumentException (e.getMessage());
+        }
+
     }
 
 
@@ -225,6 +241,7 @@ public class ModelManager implements Model
     public void removeProductFromCart(CartItem cartItem, String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
         userProfile.removeCartItem(cartItem);
+        persistence.removeCartItem(Integer.parseInt(cartItem.getProduct().getId()), username);
     }
 
     // how will this login method work in server client system?

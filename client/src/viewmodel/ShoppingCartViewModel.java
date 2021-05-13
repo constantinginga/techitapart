@@ -1,5 +1,6 @@
 package viewmodel;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -18,11 +19,13 @@ public class ShoppingCartViewModel {
     private ViewState state;
     ObservableList<CartItem> items;
     private StringProperty totalItems;
+    private StringProperty totalPrice;
 
     public ShoppingCartViewModel(LocalModel model, ViewState state) {
         this.model = model;
         this.state = state;
         this.totalItems = new SimpleStringProperty();
+        this.totalPrice = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
         // this is temporary
 //        for (int i = 0; i < 20; i++) {
@@ -37,7 +40,11 @@ public class ShoppingCartViewModel {
         return totalItems;
     }
 
-    public int getItemIndex(String title) {
+    public StringProperty getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int removeItem(String title) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getProduct().getName().equals(title)) {
                 items.remove(i);
@@ -52,11 +59,23 @@ public class ShoppingCartViewModel {
     public void reset() {
         try {
             ArrayList<CartItem> cartItems = model.getProductsFromCart(state.getUserID());
-            if (cartItems != null) items.setAll(cartItems);
+            if (cartItems != null) {
+                items.setAll(cartItems);
+                updateTotalPrice();
+            }
             totalItems.set(String.valueOf(items.size()));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateTotalPrice() {
+        int tempPrice = 0;
+        for (CartItem c : items) {
+            tempPrice += c.getQuantity() * c.getProduct().getPrice();
+        }
+
+        totalPrice.set(String.valueOf(tempPrice));
     }
 
     public ObservableList<CartItem> getItems() {
@@ -71,5 +90,25 @@ public class ShoppingCartViewModel {
         }
 
         return null;
+    }
+
+    public void updateCartItemQuantity(CartItem cartItem,  int quantity){
+        try {
+            model.updateCartItemQuantity(cartItem, quantity, state.getUserID());
+            Platform.runLater(this::updateTotalPrice);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    public void removeCartItem(CartItem cartItem){
+        try {
+            model.removeProductFromCart(cartItem, state.getUserID());
+            Platform.runLater(this::updateTotalPrice);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }
