@@ -32,7 +32,6 @@ public class CartItemViewController {
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             img.setImage(image);
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("Cart: Could not load image");
         }
     }

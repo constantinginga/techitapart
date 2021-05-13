@@ -105,4 +105,19 @@ public class ShoppingCartViewModel {
             e.printStackTrace();
         }
     }
+
+    public void checkout() {
+        if (items.size() != 0) {
+            try {
+                model.buy(state.getUserID());
+                Platform.runLater(() -> {
+                    items.clear();
+                    updateTotalPrice();
+                    totalItems.set(String.valueOf(items.size()));
+                });
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

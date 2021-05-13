@@ -15,6 +15,7 @@ public class Order implements Serializable {
         this.username = username;
         this.date = LocalDate.parse(date);
     }
+
     public Order(String username){
         this.username = username;
         this.date = LocalDate.now();
@@ -22,11 +23,12 @@ public class Order implements Serializable {
 
     public Order(int order_id, String username){
         this.username = username;
+        this.order_id = order_id;
         this.date = LocalDate.now();
     }
 
     public void setOrder_id(String orderId) {
-        this.order_id = order_id;
+        this.order_id = Integer.parseInt(orderId);
     }
 
     public void setUser_id(String username) {

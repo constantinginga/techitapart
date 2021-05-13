@@ -1,6 +1,7 @@
 package model;
 
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import persistence.*;
 import utility.observer.listener.GeneralListener;
 import utility.observer.subject.PropertyChangeAction;
@@ -13,12 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ModelManager implements Model
-{
+public class ModelManager implements Model {
 
     private final Persistence persistence;
 
-   // private UserProfile userProfile;
+    // private UserProfile userProfile;
 
     private final PropertyChangeAction<String, Integer> property;
     private final ArrayList<String> categories;
@@ -52,7 +52,7 @@ public class ModelManager implements Model
         try {
             User user = persistence
                     .registerNewUserDB(fName, lName, email, username, password, role);
-           UserProfile userProfile = UserProfile.getInstance(user.getUserName().getName());
+            UserProfile userProfile = UserProfile.getInstance(user.getUserName().getName());
             Cart cart = new Cart();
             userProfile.setCart(cart);
             return userProfile;
@@ -67,7 +67,7 @@ public class ModelManager implements Model
 
         try {
             String role = persistence.loginDB(username, password);
-           UserProfile userProfile = UserProfile.getInstance(username);
+            UserProfile userProfile = UserProfile.getInstance(username);
             userProfile.setRole(role);
             Cart cart = new Cart();
             cart.setCartItems(persistence.getAllProductsInCart(username));
@@ -82,8 +82,6 @@ public class ModelManager implements Model
     }
 
 
-
-
     /**
      * Category
      **/
@@ -92,7 +90,8 @@ public class ModelManager implements Model
         return categories;
     }
 
-    @Override public ArrayList<Category> getAllCategories(){
+    @Override
+    public ArrayList<Category> getAllCategories() {
         ArrayList<Category> categories = new ArrayList<>();
         for (String key : map.keySet()) {
             categories.add(map.get(key));
@@ -101,8 +100,8 @@ public class ModelManager implements Model
         return categories;
     }
 
-    @Override public Category getCategory(String name)
-    {
+    @Override
+    public Category getCategory(String name) {
         return map.get(name);
     }
 
@@ -156,7 +155,7 @@ public class ModelManager implements Model
             file = Files.copy(file.toPath(), new File("server\\resources\\images\\" + file.getName()).toPath()).toFile();
             file.renameTo(new File("server\\resources\\images\\" + fileName));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -200,18 +199,19 @@ public class ModelManager implements Model
      **/
     // how will this login method work in server client system?
     @Override
-    public void addProductToCart (Product product, int quantity, String username) {
+    public void addProductToCart(Product product, int quantity, String username) {
         int quantityInDB = persistence.cartItemExists(Integer.parseInt(product.getId()), username);
         if (quantityInDB != -1) {
-            if (quantityInDB + quantity > product.getTotal_quantity()) throw new IllegalArgumentException("Quantity exceeds stock");
+            if (quantityInDB + quantity > product.getTotal_quantity())
+                throw new IllegalArgumentException("Quantity exceeds stock");
         }
         UserProfile userProfile = UserProfile.getInstance(username);
         persistence.addProductToCart(Integer.parseInt(product.getId()), quantity, userProfile.getUsername());
 
-        for (CartItem cartItem: userProfile.getAllCartItem()){
-            if ((cartItem.getProduct()).getId().equals(product.getId())){
+        for (CartItem cartItem : userProfile.getAllCartItem()) {
+            if ((cartItem.getProduct()).getId().equals(product.getId())) {
                 userProfile.updateCartItemQuantity(cartItem, cartItem.getQuantity() + quantity);
-                    return;
+                return;
             }
         }
         userProfile.addProductToCart(product, quantity);
@@ -230,8 +230,8 @@ public class ModelManager implements Model
         try {
             userProfile.updateCartItemQuantity(cartItem, quantity);
             persistence.updateCartItemQuantity(Integer.parseInt(cartItem.getProduct().getId()), quantity, username);
-        }catch (Exception e){
-            throw new IllegalArgumentException (e.getMessage());
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
 
     }
@@ -253,11 +253,10 @@ public class ModelManager implements Model
         persistence.setOrderId(order.getOrder_id(), username);
 
         for (CartItem cartItem : userProfile.getAllCartItem()) {
-
-            persistence
-                    .decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+            persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+            // TODO: decrease quantity from local model as well
+            // TODO: fix bug in database where it increases the quantity of an ordered item as well when adding it to the cart
         }
-
         userProfile.setCart(new Cart());
     }
 
@@ -278,15 +277,15 @@ public class ModelManager implements Model
         getCategory(categoryName).decreaseProductQuantity(product.getId(), quantity);
     }
 
-    @Override public boolean addListener(
-            GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean addListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.addListener(listener, propertyNames);
     }
 
-    @Override public boolean removeListener(
-            GeneralListener<String, Integer> listener, String... propertyNames)
-    {
+    @Override
+    public boolean removeListener(
+            GeneralListener<String, Integer> listener, String... propertyNames) {
         return property.removeListener(listener, propertyNames);
     }
 }

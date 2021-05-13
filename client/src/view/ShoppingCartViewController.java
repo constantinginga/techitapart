@@ -37,7 +37,8 @@ public class ShoppingCartViewController extends ViewController {
 
     @FXML
     private void handleCheckoutButton() {
-
+        super.getViewModelFactory().getShoppingCartViewModel().checkout();
+        grid.getChildren().clear();
     }
 
     @FXML

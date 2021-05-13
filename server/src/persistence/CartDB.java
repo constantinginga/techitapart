@@ -48,7 +48,7 @@ public class CartDB implements CartPersistence {
     @Override
     public int cartItemExists(int product_id, String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT quantity FROM CartItem WHERE product_id = ? AND username = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT quantity FROM CartItem WHERE product_id = ? AND username = ? AND order_id IS NULL");
             statement.setInt(1, product_id);
             statement.setString(2, username);
             ResultSet resultSet = statement.executeQuery();
@@ -144,7 +144,7 @@ public class CartDB implements CartPersistence {
     @Override
     public void setOrderId(int orderId, String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE CartItem SET order_id=? WHERE username = ? AND order_id IS NULL ");
+            PreparedStatement statement = connection.prepareStatement("UPDATE CartItem SET order_id=? WHERE username = ? AND order_id IS NULL");
             statement.setInt(1, orderId);
             statement.setString(2, username);
             statement.executeUpdate();

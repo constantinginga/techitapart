@@ -38,7 +38,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void updateProductQuantityDB(String productId, int quantity) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET total_quantity = ? WHERE product_id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Product SET total_quantity = ? WHERE product_id=?");
             statement.setInt(1, quantity);
             statement.setInt(2, Integer.parseInt(productId));
             statement.executeUpdate();
@@ -52,7 +52,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void decreaseProductQuantity(String productId, int quantity) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET total_quantity = total_quantity - ?  WHERE product_id =?  ");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Product SET total_quantity = total_quantity - ?  WHERE product_id = ?");
             statement.setInt(1, quantity);
             statement.setInt(2, Integer.parseInt(productId));
             statement.executeUpdate();
@@ -66,7 +66,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void updateProductImageDB(String productId, String image) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET image = ? WHERE product_id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Product SET image = ? WHERE product_id=?");
             statement.setString(1, image);
             statement.setInt(2, Integer.parseInt(productId));
             statement.executeUpdate();
@@ -80,7 +80,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void updateProductPriceDB(double price, String productId) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET price = ? WHERE product_id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Product SET price = ? WHERE product_id=?");
             statement.setDouble(1, price);
             statement.setInt(2, Integer.parseInt(productId));
             statement.executeUpdate();
@@ -94,7 +94,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void updateProductDescriptionDB(String description, String productId) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("UPDATE product SET description = ? WHERE product_id=?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Product SET description = ? WHERE product_id=?");
             statement.setString(1, description);
             statement.setInt(2, Integer.parseInt(productId));
             statement.executeUpdate();
@@ -108,7 +108,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public Product getProductByIdDB(String id) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE product_id =?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Product WHERE product_id =?");
             statement.setInt(1, Integer.parseInt(id));
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -133,7 +133,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public void removeProductByIdDB(String id) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM product WHERE product_id=?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Product WHERE product_id=?");
 
             statement.setInt(1, Integer.parseInt(id));
             statement.executeUpdate();
@@ -147,7 +147,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public ArrayList<Product> getAllProductDB(String categoryName) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE category_name = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Product WHERE category_name = ?");
             statement.setString(1, categoryName);
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Product> result = new ArrayList<>();
@@ -173,7 +173,7 @@ public class ProductDB implements ProductPersistence {
     @Override
     public ArrayList<Product> searchForProducts(String productName) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM product WHERE name ~* ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Product WHERE name ~* ?");
             statement.setString(1, ".*" + productName + ".*");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Product> result = new ArrayList<>();
