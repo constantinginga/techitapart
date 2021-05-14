@@ -58,7 +58,7 @@ public class ProductDB implements ProductPersistence {
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new IllegalArgumentException("DB issue with connection ");
+            throw new IllegalArgumentException("DB issue with connection");
         }
     }
 

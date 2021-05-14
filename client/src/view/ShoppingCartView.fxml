@@ -46,7 +46,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="117.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleCheckoutButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Checkout" textFill="WHITE">
+            <Button fx:id="checkoutButton" layoutX="117.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleCheckoutButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Checkout" textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font>
@@ -56,6 +56,11 @@
                   <Font name="Century Gothic" size="18.0" />
                </font>
             </Text>
+            <Label fx:id="errorLabel" layoutX="22.0" layoutY="394.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="67.0" layoutY="175.0" prefHeight="529.0" prefWidth="744.0" style="-fx-background: #fff; -fx-border-color: #fff;" vbarPolicy="NEVER">

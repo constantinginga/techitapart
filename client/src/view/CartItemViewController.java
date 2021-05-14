@@ -1,6 +1,5 @@
 package view;
 
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,15 +36,25 @@ public class CartItemViewController {
     }
 
     @FXML private void handleRemoveItem() {
-        Platform.runLater(() -> {
             ((ShoppingCartViewController) controller).removeCartItem(item);
             ((ShoppingCartViewController) controller).clearGrid(item.getProduct().getName());
-        });
     }
 
     @FXML private void decreaseQuantity() {
-        Platform.runLater(() -> {
-            try {
+        int currentPQuantity = ((ShoppingCartViewController) controller).getCurrentQuantity(item.getProduct().getId());
+        System.out.println("(BEFORE) SET NEW QUANTITY TO: " + currentPQuantity);
+        System.out.println("ITEM.GETQUANTITY() " + item.getQuantity());
+        if (item.getQuantity() > currentPQuantity) {
+            int previousQuantity = item.getQuantity();
+            item.setQuantity(currentPQuantity);
+            currentQuantity.setText(String.valueOf(currentPQuantity));
+            ((ShoppingCartViewController) controller).updateCartItemQuantity(item, -(previousQuantity - currentPQuantity));
+            ((ShoppingCartViewController) controller).setCheckoutDisabled(false);
+            ((ShoppingCartViewController) controller).setError("");
+            System.out.println("SET NEW QUANTITY TO: " + currentPQuantity);
+            return;
+        }
+        try {
                 ((ShoppingCartViewController) controller).updateCartItemQuantity(item, -1);
                 item.setQuantity(item.getQuantity() - 1);
                 currentQuantity.setText(String.valueOf(item.getQuantity()));
@@ -55,11 +64,10 @@ public class CartItemViewController {
                     decreaseButton.disableProperty().setValue(true);
                 }
             }
-        });
+
     }
 
     @FXML private void increaseQuantity() {
-        Platform.runLater(() -> {
             try {
                 ((ShoppingCartViewController) controller).updateCartItemQuantity(item, 1);
                 item.setQuantity(item.getQuantity() + 1);
@@ -69,18 +77,7 @@ public class CartItemViewController {
                 if (e.getMessage().contains("high")) {
                     increaseButton.disableProperty().setValue(true);
                 }
-
-                /*switch (e.getMessage()) {
-                    case "Quantity too low":
-                        decreaseButton.disableProperty().setValue(true);
-                        increaseButton.disableProperty().setValue(false);
-                        break;
-                    case "Quantity too high":
-                        decreaseButton.disableProperty().setValue(false);
-                        increaseButton.disableProperty().setValue();
-                }*/
             }
-        });
     }
 
 

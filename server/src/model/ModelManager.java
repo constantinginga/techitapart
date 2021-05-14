@@ -211,10 +211,12 @@ public class ModelManager implements Model {
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             if ((cartItem.getProduct()).getId().equals(product.getId())) {
                 userProfile.updateCartItemQuantity(cartItem, quantity);
+                System.out.println(product.getId() +"<<-------------------<<"+quantity);
                 return;
             }
         }
         userProfile.addProductToCart(product, quantity);
+        System.out.println(userProfile.getCart().getCartItems().toString());
     }
 
     @Override
@@ -246,10 +248,10 @@ public class ModelManager implements Model {
 
     @Override
     public void decreaseProductQuantity(String id, int quantity) {
-        // get list of all products in the system
-        ArrayList<Product> localProducts = getAllProducts();
-        for (Product p : localProducts) {
-            if (p.getId().equals(id)) p.decreaseQuantity(quantity);
+        for(String category: categories){
+            for (Product product: getCategory(category).getAllProduct()){
+                if (product.getId().equals(id)) product.decreaseQuantity(quantity);
+            }
         }
     }
 
@@ -257,17 +259,20 @@ public class ModelManager implements Model {
     @Override
     public void buy(String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
-        Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
-        userProfile.addOrder(order);
-        persistence.setOrderId(order.getOrder_id(), username);
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             // update product quantity in db
-            persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
-            // update product quantity locally (still not working)
-            decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
-            // TODO: fix bug in database where it increases the quantity of an ordered item as well when adding it to the cart (something with upsert) - FIXED DHFVDFIUVHRVIUDFHNVK
-            // TODO: fix bug when you add same item to cart, it doesn't show correct quantity (IT'S STILL HERE)
-            // TODO: quantity too high/too low bugged in detailed view?
+            try {
+                decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+                persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+                // update product quantity locally (still not working)
+                Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
+                userProfile.addOrder(order);
+                persistence.setOrderId(order.getOrder_id(), username);
+            } catch (IllegalArgumentException e) {
+                //String error = cartItem.getProduct().getName() + " out of stock. New quantity: " ;
+              //  System.out.println(cartItem.getProduct().getTotal_quantity());
+                throw new IllegalArgumentException(e.getMessage());
+            }
         }
         userProfile.setCart(new Cart());
     }

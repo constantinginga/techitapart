@@ -3,29 +3,28 @@ package view;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import model.CartItem;
-
 import java.io.IOException;
-import java.rmi.RemoteException;
 
 public class ShoppingCartViewController extends ViewController {
 
     @FXML private ScrollPane scroll;
     @FXML private GridPane grid;
-    @FXML private Label quantityOfItemsCart, quantityOfItemsOrder, totalPrice;
+    @FXML private Label quantityOfItemsCart, quantityOfItemsOrder, totalPrice, errorLabel;
+    @FXML private Button checkoutButton;
 
     @Override
     protected void init() throws InterruptedException {
         quantityOfItemsCart.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalItems());
         quantityOfItemsOrder.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalItems());
         totalPrice.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalPrice());
+        errorLabel.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getError());
         reset();
     }
 
@@ -33,12 +32,22 @@ public class ShoppingCartViewController extends ViewController {
     public void reset() throws InterruptedException {
         super.getViewModelFactory().getShoppingCartViewModel().reset();
         createGrid();
+        checkoutButton.setDisable(false);
     }
 
     @FXML
     private void handleCheckoutButton() {
-        super.getViewModelFactory().getShoppingCartViewModel().checkout();
-        grid.getChildren().clear();
+        try {
+            super.getViewModelFactory().getShoppingCartViewModel().checkout();
+            grid.getChildren().clear();
+            setError("");
+        } catch (IllegalArgumentException e) {
+            checkoutButton.setDisable(true);
+        }
+    }
+
+    public void setError(String errorMessage) {
+        super.getViewModelFactory().getShoppingCartViewModel().setError(errorMessage);
     }
 
     @FXML
@@ -48,6 +57,10 @@ public class ShoppingCartViewController extends ViewController {
 
     public void clearGrid(String name) {
         grid.getChildren().remove(super.getViewModelFactory().getShoppingCartViewModel().removeItem(name));
+    }
+
+    public void setCheckoutDisabled(boolean bool) {
+        checkoutButton.setDisable(bool);
     }
 
     private void createGrid() {
@@ -82,6 +95,10 @@ public class ShoppingCartViewController extends ViewController {
                 e.printStackTrace();
             }
         });
+    }
+
+    public int getCurrentQuantity(String product_id){
+     return super.getViewModelFactory().getShoppingCartViewModel().getCurrentQuantity(product_id);
     }
 
     public void updateCartItemQuantity(CartItem cartItem,  int quantity){

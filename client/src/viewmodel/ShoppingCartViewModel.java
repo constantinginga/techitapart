@@ -18,16 +18,20 @@ public class ShoppingCartViewModel {
     private LocalModel model;
     private ViewState state;
     ObservableList<CartItem> items;
-    private StringProperty totalItems;
-    private StringProperty totalPrice;
+    private StringProperty totalItems, totalPrice, error;
 
     public ShoppingCartViewModel(LocalModel model, ViewState state) {
         this.model = model;
         this.state = state;
         this.totalItems = new SimpleStringProperty();
         this.totalPrice = new SimpleStringProperty();
+        this.error = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
         reset();
+    }
+
+    public StringProperty getError() {
+        return error;
     }
 
     public StringProperty getTotalItems() {
@@ -51,6 +55,7 @@ public class ShoppingCartViewModel {
     }
 
     public void reset() {
+        error.set("");
         try {
             ArrayList<CartItem> cartItems = model.getProductsFromCart(state.getUserID());
             if (cartItems != null) {
@@ -72,6 +77,10 @@ public class ShoppingCartViewModel {
         totalPrice.set(String.valueOf(tempPrice));
     }
 
+    public void setError(String errorMessage) {
+        error.set(errorMessage);
+    }
+
     public ObservableList<CartItem> getItems() {
         return items;
     }
@@ -84,6 +93,19 @@ public class ShoppingCartViewModel {
         }
 
         return null;
+    }
+    public int getCurrentQuantity(String product_id){
+        int quantity = -1;
+        try {
+            ArrayList<Product> products = model.getAllProducts();
+            for (Product p : products) {
+                if (p.getId().equals(product_id)) quantity = p.getTotal_quantity();
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return quantity;
     }
 
     public void updateCartItemQuantity(CartItem cartItem,  int quantity){
@@ -117,6 +139,9 @@ public class ShoppingCartViewModel {
                 });
             } catch (RemoteException e) {
                 e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                error.set(e.getMessage());
+                throw new IllegalArgumentException(e.getMessage());
             }
         }
     }

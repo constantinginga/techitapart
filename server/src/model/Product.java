@@ -102,7 +102,7 @@ public class Product implements Serializable {
 
     public void decreaseQuantity(int quantity){
         if (quantity > total_quantity){
-            throw new IllegalArgumentException("quantity is not available in the stock");
+            throw new IllegalArgumentException(getName()+" out of stock, new quantity is: " + total_quantity);
         }
         total_quantity -= quantity;
     }
