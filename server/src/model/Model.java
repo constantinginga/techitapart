@@ -33,6 +33,7 @@ public interface Model extends LocalSubject<String, Integer>
     ArrayList<CartItem> getProductsFromCart(String username);
     void updateCartItemQuantity(CartItem cartItem, int quantity, String username);
     void removeProductFromCart(CartItem cartItem, String username);
+    void decreaseProductQuantity(String id, int quantity);
     void buy(String username);
 
     /** this method will be deleted after implementing the cart shop **/

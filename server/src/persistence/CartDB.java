@@ -64,7 +64,8 @@ public class CartDB implements CartPersistence {
     public void addProductToCart(int product_id, int quantity, String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             // add item to cart if it doesn't exist, otherwise increase its quantity
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?) ON CONFLICT (product_id, username) DO UPDATE SET quantity = EXCLUDED.quantity + CartItem.quantity");
+//            PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?) ON CONFLICT (product_id, username) DO UPDATE SET quantity = EXCLUDED.quantity + CartItem.quantity");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO CartItem(quantity, product_id, username) VALUES (?, ?, ?)");
             statement.setInt(1, quantity);
             statement.setInt(2, product_id);
             statement.setString(3, username);

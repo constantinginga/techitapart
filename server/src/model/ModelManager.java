@@ -139,7 +139,7 @@ public class ModelManager implements Model {
         ArrayList<Product> products = new ArrayList<>();
 
         for (String key : map.keySet()) {
-            products.addAll(map.get(key).getAllProduct());
+            if (!key.equals("General")) products.addAll(map.get(key).getAllProduct());
         }
         return products;
     }
@@ -210,7 +210,7 @@ public class ModelManager implements Model {
 
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             if ((cartItem.getProduct()).getId().equals(product.getId())) {
-                userProfile.updateCartItemQuantity(cartItem, cartItem.getQuantity() + quantity);
+                userProfile.updateCartItemQuantity(cartItem, quantity);
                 return;
             }
         }
@@ -244,6 +244,15 @@ public class ModelManager implements Model {
         persistence.removeCartItem(Integer.parseInt(cartItem.getProduct().getId()), username);
     }
 
+    @Override
+    public void decreaseProductQuantity(String id, int quantity) {
+        // get list of all products in the system
+        ArrayList<Product> localProducts = getAllProducts();
+        for (Product p : localProducts) {
+            if (p.getId().equals(id)) p.decreaseQuantity(quantity);
+        }
+    }
+
     // how will this login method work in server client system?
     @Override
     public void buy(String username) {
@@ -251,11 +260,14 @@ public class ModelManager implements Model {
         Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
         userProfile.addOrder(order);
         persistence.setOrderId(order.getOrder_id(), username);
-
         for (CartItem cartItem : userProfile.getAllCartItem()) {
+            // update product quantity in db
             persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
-            // TODO: decrease quantity from local model as well
-            // TODO: fix bug in database where it increases the quantity of an ordered item as well when adding it to the cart
+            // update product quantity locally (still not working)
+            decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
+            // TODO: fix bug in database where it increases the quantity of an ordered item as well when adding it to the cart (something with upsert) - FIXED DHFVDFIUVHRVIUDFHNVK
+            // TODO: fix bug when you add same item to cart, it doesn't show correct quantity (IT'S STILL HERE)
+            // TODO: quantity too high/too low bugged in detailed view?
         }
         userProfile.setCart(new Cart());
     }
