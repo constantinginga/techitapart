@@ -225,7 +225,6 @@ public class ModelManager implements Model {
         return (userProfile != null) ? userProfile.getAllCartItem() : null;
     }
 
-    // how will this login method work in server client system?
     @Override
     public void updateCartItemQuantity(CartItem cartItem, int quantity, String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
@@ -249,28 +248,25 @@ public class ModelManager implements Model {
     @Override
     public void decreaseProductQuantity(String id, int quantity) {
         for(String category: categories){
-            for (Product product: getCategory(category).getAllProduct()){
-                if (product.getId().equals(id)) product.decreaseQuantity(quantity);
+            if (!category.equals("General")) {
+                for (Product product: getCategory(category).getAllProduct()){
+                    if (product.getId().equals(id)) product.decreaseQuantity(quantity);
+                }
             }
         }
     }
 
-    // how will this login method work in server client system?
     @Override
     public void buy(String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
         for (CartItem cartItem : userProfile.getAllCartItem()) {
-            // update product quantity in db
             try {
                 decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
                 persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
-                // update product quantity locally (still not working)
                 Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
                 userProfile.addOrder(order);
                 persistence.setOrderId(order.getOrder_id(), username);
             } catch (IllegalArgumentException e) {
-                //String error = cartItem.getProduct().getName() + " out of stock. New quantity: " ;
-              //  System.out.println(cartItem.getProduct().getTotal_quantity());
                 throw new IllegalArgumentException(e.getMessage());
             }
         }

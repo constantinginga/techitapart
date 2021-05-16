@@ -153,9 +153,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer>
               .parseInt(productQuantity.getValue()), state.getUserID());
 
       System.out.println(UserProfile.getInstance(state.getUserID()).getAllCartItem().toString());
-
-
-
+      errorLabel.set("");
     }
     catch (RemoteException e)
     {

@@ -69,7 +69,10 @@ public class CartItemViewController {
 
     @FXML private void increaseQuantity() {
             try {
+                int currentPQuantity = ((ShoppingCartViewController) controller).getCurrentQuantity(item.getProduct().getId());
+                if (item.getQuantity() + 1 == currentPQuantity) increaseButton.disableProperty().setValue(true);
                 ((ShoppingCartViewController) controller).updateCartItemQuantity(item, 1);
+                System.out.println("item.getQuantity() increase: " + item.getQuantity());
                 item.setQuantity(item.getQuantity() + 1);
                 currentQuantity.setText(String.valueOf(item.getQuantity()));
                 if (decreaseButton.disableProperty().get()) decreaseButton.disableProperty().setValue(false);
