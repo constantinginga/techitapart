@@ -1,7 +1,7 @@
+/*
 package model;
 
 import org.junit.jupiter.api.AfterEach;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ModelManagerTest {
@@ -24,14 +24,17 @@ class ModelManagerTest {
         });
     }
 
-   /* @org.junit.jupiter.api.Test
+   */
+/* @org.junit.jupiter.api.Test
     void registerUSerSuccessfullOne() {
         UserProfile user = model
                 .registerUSer("Jakub", "Platzek", "jakub.platzek@gmail.com", "Kompera_SVK", "yoMamah69", Role.Consumer);
         assertEquals("Kompera_SVK", user.getUsername());
         assertEquals(0, user.getOrderList().getAllOrders().size());
-    }*/
-    /*
+    }*//*
+
+    */
+/*
         @org.junit.jupiter.api.Test
         void loginNull() {
             String user = model.login(null, null);
@@ -42,7 +45,8 @@ class ModelManagerTest {
             Boolean user = model.login("Kompera_SVK", "yoMamah69");
             assertEquals(true, user.booleanValue());
         }
-    */
+    *//*
+
     @org.junit.jupiter.api.Test
     void getAllCategoryMany() {
         assertEquals(4 , model.getAllCategory().size());
@@ -174,4 +178,4 @@ class ModelManagerTest {
         assertEquals(-1, model.getProduct(product.getId(), "SSD").getPrice());
 
     }
-}
+}*/
