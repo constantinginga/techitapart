@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CartItemViewController">
+   <children>
+      <ImageView fx:id="img" fitHeight="126.0" fitWidth="160.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="itemName" layoutX="198.0" layoutY="41.0" text="Label">
+         <font>
+            <Font name="Century Gothic" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="decreaseButton" layoutX="409.0" layoutY="43.0" mnemonicParsing="false" onAction="#decreaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&lt;" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="increaseButton" layoutX="469.0" layoutY="43.0" mnemonicParsing="false" onAction="#increaseQuantity" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="&gt;" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="currentQuantity" layoutX="449.0" layoutY="45.0" text="X">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="price" layoutX="531.0" layoutY="41.0" text="PRICE_HERE">
+         <font>
+            <Font name="Century Gothic" size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="696.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleRemoveItem" style="-fx-background-color: RED;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

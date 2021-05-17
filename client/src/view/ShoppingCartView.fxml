@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="810.0" maxWidth="1230.0" minHeight="810.0" minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ShoppingCartViewController">
+   <children>
+      <Text layoutX="68.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Shopping Cart">
+         <font>
+            <Font name="Century Gothic Bold" size="36.0" />
+         </font>
+      </Text>
+      <Label fx:id="quantityOfItemsCart" layoutX="690.0" layoutY="62.0" text="X">
+         <font>
+            <Font name="Century Gothic" size="30.0" />
+         </font>
+      </Label>
+      <Text layoutX="736.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+         <font>
+            <Font name="Century Gothic" size="30.0" />
+         </font>
+      </Text>
+      <Line endX="641.0" endY="-6.0" layoutX="169.0" layoutY="128.0" startX="-102.0" startY="-6.0" stroke="#00000040" />
+      <AnchorPane layoutX="863.0" prefHeight="810.0" prefWidth="367.0" style="-fx-background-color: #D3D3D3;">
+         <children>
+            <Text layoutX="23.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Summary">
+               <font>
+                  <Font name="Century Gothic Bold" size="36.0" />
+               </font>
+            </Text>
+            <Line endX="157.0" layoutX="186.0" layoutY="128.0" startX="-163.0" stroke="#00000040" />
+            <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ITEMS">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="quantityOfItemsOrder" layoutX="81.0" layoutY="158.0" text="X">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPrice" layoutX="265.0" layoutY="208.0" text="X" wrapText="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="checkoutButton" layoutX="117.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleCheckoutButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Checkout" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="24.0" />
+               </font>
+            </Button>
+            <Text layoutX="21.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL COST">
+               <font>
+                  <Font name="Century Gothic" size="18.0" />
+               </font>
+            </Text>
+            <Label fx:id="errorLabel" layoutX="12.0" layoutY="394.0" prefHeight="23.0" prefWidth="54.0" text="Label" textFill="RED">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="67.0" layoutY="175.0" prefHeight="529.0" prefWidth="744.0" style="-fx-background: #fff; -fx-border-color: #fff;" vbarPolicy="NEVER">
+         <content>
+            <GridPane fx:id="grid" prefHeight="3.0" prefWidth="63.0">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+               </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Text fill="#00000040" layoutX="68.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRODUCT DETAILS">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#00000040" layoutX="488.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUANTITY">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="#00000040" layoutX="625.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PRICE">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Text>
+      <Hyperlink layoutX="67.0" layoutY="717.0" onAction="#handleBackButton" text="Continue Shopping">
+         <font>
+            <Font name="Century Gothic" size="18.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</AnchorPane>

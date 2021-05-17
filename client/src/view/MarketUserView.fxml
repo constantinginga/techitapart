@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minWidth="1230.0" prefHeight="810.0" prefWidth="1230.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MarketUserViewController">
+    <children>
+        <BorderPane maxWidth="1188.0" minWidth="1155.0" prefHeight="810.0" prefWidth="1188.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <VBox prefHeight="200.0" prefWidth="435.0" styleClass="transparent" BorderPane.alignment="CENTER">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="110.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="CENTER" text="TechItApart">
+                                    <font>
+                                        <Font name="Century Gothic Bold" size="36.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="200.0" styleClass="search-box">
+                            <VBox.margin>
+                                <Insets left="30.0" right="30.0" />
+                            </VBox.margin>
+                            <children>
+                                <TextField fx:id="searchField" onKeyPressed="#searchEnter" prefHeight="40.0" prefWidth="245.0" promptText="Type  here to search" styleClass="search-box">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="Century Gothic" size="18.0" />
+                                    </font>
+                                </TextField>
+                                <Button mnemonicParsing="false" onAction="#searchButton" prefHeight="40.0" prefWidth="91.0" styleClass="search-buttton" text="Search" textFill="WHITE">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="Century Gothic" size="18.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <ScrollPane fx:id="categoryScroll" hbarPolicy="NEVER" prefHeight="626.0" prefWidth="435.0" stylesheets="@../stylesheets/market.css" vbarPolicy="NEVER">
+                            <content>
+                                <GridPane fx:id="categoryGrid" prefHeight="3.0" prefWidth="63.0">
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </content>
+                            <styleClass>
+                                <String fx:value="top-bar" />
+                                <String fx:value="scrollPane" />
+                            </styleClass>
+                            <padding>
+                                <Insets left="20.0" right="117.5" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="80.0" />
+                            </VBox.margin>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+            </left>
+            <center>
+                <VBox maxWidth="778.0" minWidth="739.0" prefHeight="810.0" prefWidth="778.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <HBox prefHeight="65.0" prefWidth="200.0">
+                            <VBox.margin>
+                                <Insets left="20.0" right="20.0" />
+                            </VBox.margin>
+                            <children>
+                                <Region prefHeight="65.0" prefWidth="338.0" />
+                                <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" styleClass="search-buttton" text="My Account" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic" size="18.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets right="20.0" top="20.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#handleCartButton" prefHeight="45.0" prefWidth="86.0" styleClass="search-buttton" text="Cart" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic" size="18.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets top="20.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#handleLogoutButton" prefHeight="45.0" prefWidth="93.0" styleClass="search-buttton" text="Logout" textFill="WHITE">
+                                    <font>
+                                        <Font name="Century Gothic" size="18.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="20.0" top="20.0" />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="43.0" prefWidth="720.0" />
+                        <HBox alignment="CENTER" prefHeight="702.0" prefWidth="711.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <ScrollPane fx:id="scroll" prefHeight="682.0" prefWidth="1280.0" styleClass="scrollPane">
+                                    <content>
+                                        <GridPane fx:id="grid" prefHeight="3.0" prefWidth="63.0">
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                            </rowConstraints>
+                                        </GridPane>
+                                    </content>
+                                    <HBox.margin>
+                                        <Insets bottom="10.0" right="11.0" top="10.0" />
+                                    </HBox.margin>
+                                    <styleClass>
+                                        <String fx:value="top-bar" />
+                                        <String fx:value="scrollPane" />
+                                    </styleClass>
+                                </ScrollPane>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
