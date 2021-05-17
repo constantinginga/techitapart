@@ -16,6 +16,14 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
 
     UserProfile login(String username, String password) throws RemoteException;
 
+//    UserProfile getUserProfile() throws RemoteException;
+
+    User getUser(String username) throws RemoteException;
+
+    void updateUser(User user) throws RemoteException;
+
+    ArrayList<String> getAllUsernames() throws RemoteException;
+
     /**
      * Category
      **/

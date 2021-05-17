@@ -46,6 +46,26 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         return server.login(username, password);
     }
 
+//    @Override public UserProfile getUserProfile() throws RemoteException
+//    {
+//        return server.getUserProfile();
+//    }
+
+    @Override public User getUser(String username) throws RemoteException
+    {
+        return server.getUser(username);
+    }
+
+    @Override public void updateUser(User user) throws RemoteException
+    {
+        server.updateUser(user);
+    }
+
+    @Override public ArrayList<String> getAllUsernames() throws RemoteException
+    {
+        return server.getAllUsernames();
+    }
+
     @Override
     public ArrayList<String> getAllCategory() throws RemoteException {
         return server.getAllCategory();

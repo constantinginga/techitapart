@@ -86,7 +86,7 @@
                                         <Insets right="20.0" top="20.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="144.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="My Account" textFill="WHITE">
+                                <Button mnemonicParsing="false" onAction="#handleMyAccountButton" prefHeight="79.0" prefWidth="144.0" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="My Account" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>

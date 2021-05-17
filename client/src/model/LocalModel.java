@@ -18,10 +18,18 @@ public interface LocalModel extends LocalSubject<String, Integer>
 
     UserProfile login(String username, String password) throws RemoteException;
 
+//    UserProfile getUserProfile() throws RemoteException;
+
+    User getUser(String username) throws RemoteException;
+
+    ArrayList<String> getAllUsernames() throws RemoteException;
+
     /**
      * Category
      **/
     ArrayList<String> getAllCategory() throws RemoteException;
+
+    void updateUser(User user) throws RemoteException;
 
     Category getCategory(String name) throws RemoteException;
 

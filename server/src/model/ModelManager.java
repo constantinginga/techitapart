@@ -50,8 +50,7 @@ public class ModelManager implements Model {
     @Override
     public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) {
         try {
-            User user = persistence
-                    .registerNewUserDB(fName, lName, email, username, password, role);
+            User user = persistence.registerNewUserDB(fName, lName, email, username, password, role);
             UserProfile userProfile = UserProfile.getInstance(user.getUserName().getName());
             Cart cart = new Cart();
             userProfile.setCart(cart);
@@ -79,6 +78,28 @@ public class ModelManager implements Model {
 
         }
         // return userProfile;
+    }
+
+//    @Override public UserProfile getUserProfile()
+//    {
+//        return UserProfile.getInstance(username);
+//    }
+
+    @Override public User getUser(String username)
+    {
+        return persistence.getUser(username);
+    }
+
+    @Override public void updateUser(User user)
+    {
+        persistence.updateDetails(user.getUserName().getName(),
+                user.getUserName().getName(), user.getPassword().getPassword(),
+                user.getfName(), user.getlName(), user.getEmail());
+    }
+
+    @Override public ArrayList<String> getAllUsernames()
+    {
+        return persistence.getAllUsernames();
     }
 
 

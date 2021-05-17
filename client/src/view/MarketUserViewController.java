@@ -25,10 +25,12 @@ import java.util.List;
 public class MarketUserViewController extends ViewController implements LocalListener<String, Integer> {
     @FXML
     private ScrollPane scroll;
-    @FXML private ScrollPane categoryScroll;
+    @FXML
+    private ScrollPane categoryScroll;
     @FXML
     private GridPane grid;
-    @FXML private GridPane categoryGrid;
+    @FXML
+    private GridPane categoryGrid;
     @FXML
     private Button photo;
     @FXML
@@ -114,18 +116,15 @@ public class MarketUserViewController extends ViewController implements LocalLis
         });
     }
 
-    public void createGridForCategory()
-    {
+    public void createGridForCategory() {
         Platform.runLater(() -> {
             categoryGrid.getChildren().clear();
             int column = 0;
             int row = 1;
-            try
-            {
+            try {
                 for (int i = 0;
                      i < super.getViewModelFactory().getMarketUserViewModel()
-                             .getCategories().size(); i++)
-                {
+                             .getCategories().size(); i++) {
                     super.getViewModelFactory().getViewState().setCategoryID("General");
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("CategoryView.fxml"));
@@ -137,8 +136,7 @@ public class MarketUserViewController extends ViewController implements LocalLis
                             super.getViewModelFactory().getMarketUserViewModel()
                                     .getCategories().get(i), this);
 
-                    if (column == 1)
-                    {
+                    if (column == 1) {
                         column = 0;
                         row++;
                     }
@@ -156,9 +154,7 @@ public class MarketUserViewController extends ViewController implements LocalLis
 
                     GridPane.setMargin(anchorPane, new Insets(10));
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
 
             }
@@ -182,15 +178,17 @@ public class MarketUserViewController extends ViewController implements LocalLis
         super.getViewHandler().openView("ShoppingCartView.fxml");
     }
 
+    public void handleMyAccountButton(ActionEvent actionEvent)
+            throws IOException {
+        super.getViewHandler().openView("UserView.fxml");
+    }
+
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         Platform.runLater(() -> {
-            try
-            {
+            try {
                 reset();
-            }
-            catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });

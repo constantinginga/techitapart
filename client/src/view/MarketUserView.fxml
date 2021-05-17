@@ -75,7 +75,7 @@
                             </VBox.margin>
                             <children>
                                 <Region prefHeight="65.0" prefWidth="338.0" />
-                                <Button mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" styleClass="search-buttton" text="My Account" textFill="WHITE">
+                                <Button mnemonicParsing="false" onAction="#handleMyAccountButton" prefHeight="66.0" prefWidth="144.0" styleClass="search-buttton" text="My Account" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>
