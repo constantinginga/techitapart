@@ -10,9 +10,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import model.CartItem;
+import utility.observer.event.ObserverEvent;
+import utility.observer.listener.LocalListener;
+
 import java.io.IOException;
 
-public class ShoppingCartViewController extends ViewController {
+public class ShoppingCartViewController extends ViewController implements LocalListener<String, Integer> {
 
     @FXML private ScrollPane scroll;
     @FXML private GridPane grid;
@@ -25,6 +28,7 @@ public class ShoppingCartViewController extends ViewController {
         quantityOfItemsOrder.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalItems());
         totalPrice.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getTotalPrice());
         errorLabel.textProperty().bind(super.getViewModelFactory().getShoppingCartViewModel().getError());
+        super.getViewModelFactory().getShoppingCartViewModel().addListener(this);
         reset();
     }
 
@@ -66,7 +70,6 @@ public class ShoppingCartViewController extends ViewController {
     private void createGrid() {
         Platform.runLater(() -> {
             grid.getChildren().clear();
-            grid.getChildren().removeAll();
             int rows = 1, columns = 0;
             try {
                 for (int i = 0; i < super.getViewModelFactory().getShoppingCartViewModel().getItems().size(); i++) {
@@ -109,4 +112,14 @@ public class ShoppingCartViewController extends ViewController {
         super.getViewModelFactory().getShoppingCartViewModel().removeCartItem(cartItem);
     }
 
+    @Override
+    public void propertyChange(ObserverEvent<String, Integer> event) {
+        Platform.runLater(() -> {
+            try {
+                reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

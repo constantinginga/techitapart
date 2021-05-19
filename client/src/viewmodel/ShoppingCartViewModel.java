@@ -1,5 +1,6 @@
 package viewmodel;
 
+import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,16 +9,24 @@ import javafx.collections.ObservableList;
 import model.CartItem;
 import model.LocalModel;
 import model.Product;
+import utility.observer.event.ObserverEvent;
+import utility.observer.listener.GeneralListener;
+import utility.observer.listener.LocalListener;
+import utility.observer.subject.LocalSubject;
+import utility.observer.subject.PropertyChangeAction;
+import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class ShoppingCartViewModel {
+public class ShoppingCartViewModel implements LocalListener<String, Integer>, LocalSubject<String, Integer> {
     private LocalModel model;
     private ViewState state;
     ObservableList<CartItem> items;
     private StringProperty totalItems, totalPrice, error;
+    private PropertyChangeAction<String, Integer> property;
+    private Gson gson;
 
     public ShoppingCartViewModel(LocalModel model, ViewState state) {
         this.model = model;
@@ -26,6 +35,9 @@ public class ShoppingCartViewModel {
         this.totalPrice = new SimpleStringProperty();
         this.error = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
+        property = new PropertyChangeProxy<>(this);
+        model.addListener(this);
+        gson = new Gson();
         reset();
     }
 
@@ -143,5 +155,36 @@ public class ShoppingCartViewModel {
                 throw new IllegalArgumentException(e.getMessage());
             }
         }
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Integer> event) {
+        Platform.runLater(() -> {
+            if (event.getPropertyName().contains("Product")) {
+                if (event.getPropertyName().equals("removeProduct")) {
+                    String id = event.getValue1();
+                    for (CartItem c : items) {
+                        if (c.getProduct().getId().equals(id)) {
+                            items.remove(c);
+                            removeCartItem(c);
+                            System.out.println("Cart item-------------> "+c.toString());
+                            break;
+                        }
+                    }
+                }
+
+                property.firePropertyChange(event);
+            }
+        });
+    }
+
+    @Override
+    public boolean addListener(GeneralListener<String, Integer> listener, String... propertyNames) {
+        return property.addListener(listener);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, Integer> listener, String... propertyNames) {
+        return property.removeListener(listener);
     }
 }
