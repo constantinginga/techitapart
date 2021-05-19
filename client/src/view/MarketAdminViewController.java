@@ -1,11 +1,9 @@
 package view;
 
-import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -17,12 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
-
 import java.io.IOException;
-import java.io.PipedReader;
 
-public class MarketAdminViewController extends ViewController implements
-        LocalListener<String, Integer> {
+
+public class MarketAdminViewController extends ViewController implements LocalListener<String, Integer> {
     @FXML
     private ScrollPane scroll;
 
@@ -44,6 +40,7 @@ public class MarketAdminViewController extends ViewController implements
     protected void init() throws InterruptedException {
         searchField.textProperty().bindBidirectional(super.getViewModelFactory().getMarketAdminViewModel().searchBarProperty());
         super.getViewModelFactory().getMarketAdminViewModel().reset();
+        super.getViewModelFactory().getMarketAdminViewModel().addListener(this);
         reset();
     }
 
@@ -58,16 +55,7 @@ public class MarketAdminViewController extends ViewController implements
         super.getViewHandler().openView("AddProductView.fxml");
     }
 
-    @Override
-    public void propertyChange(ObserverEvent<String, Integer> event) {
-        Platform.runLater(() -> {
-            try {
-                reset();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }
+
 
     public void searchButton(ActionEvent actionEvent) {
         super.getViewModelFactory().getMarketAdminViewModel().search();
@@ -184,5 +172,16 @@ public class MarketAdminViewController extends ViewController implements
     @FXML
     private void handleCartButton() throws IOException {
         super.getViewHandler().openView("ShoppingCartView.fxml");
+    }
+
+    @Override
+    public void propertyChange(ObserverEvent<String, Integer> event) {
+        Platform.runLater(() -> {
+            try {
+                reset();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

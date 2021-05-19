@@ -111,13 +111,13 @@ public class ModelManager implements Model {
 
     @Override
     public void addProduct(Product product, String categoryName) {
-        Product product1 = persistence
-                .addProductToCategoryDB(product, categoryName);
+        Product product1 = persistence.addProductToCategoryDB(product, categoryName);
         Gson gson = new Gson();
         String g1 = gson.toJson(product);
         System.out.println("AddProduct property change in ModelManager");
         getCategory(categoryName).addProduct(product1);
-        //property.firePropertyChange("addProduct", g1, null);
+        getCategory("General").addProduct(product1);
+        property.firePropertyChange("addProduct", g1, -1);
     }
 
 
@@ -169,8 +169,26 @@ public class ModelManager implements Model {
     @Override
     public void removeProduct(String id, String categoryName) {
         persistence.removeProductByIdDB(id);
-        //property.firePropertyChange("removeProduct", id, null);
+        String category = getProductCategory(id);
+        // removes from general
         getCategory(categoryName).removeProductById(id);
+        // removes from specific category
+        getCategory(category).removeProductById(id);
+        System.out.println("REMOVE FROM CATEGORY: " + category);
+        // ??????????
+        property.firePropertyChange("removeProduct", id, -1);
+    }
+
+    private String getProductCategory(String id) {
+        for (String key : map.keySet()) {
+            if (!key.equals("General")) {
+                for (Product p : map.get(key).getAllProduct()) {
+                    if (p.getId().equals(id)) return key;
+                }
+            }
+        }
+
+        return null;
     }
 
 

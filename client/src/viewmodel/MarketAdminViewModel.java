@@ -1,6 +1,7 @@
 package viewmodel;
 
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -31,11 +32,12 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     public MarketAdminViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
-        this.property = new PropertyChangeProxy<>(this);
         this.searchBar = new SimpleStringProperty();
         model.addListener(this);
         getData();
         gson = new Gson();
+        property = new PropertyChangeProxy<>(this);
+
     }
 
     public ObservableList<Product> getProducts() {
@@ -81,24 +83,32 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
 
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
-        getData();
-        property.firePropertyChange(event);
-        if (event.getPropertyName().equals("addProduct")){
-            Product product = gson.fromJson(event.getValue1(), Product.class);
-            products.add(product);
-        }
+
+        Platform.runLater(() -> {
+            if (event.getPropertyName().contains("Product")) {
+                if (event.getPropertyName().equals("addProduct")) {
+                    Product product = gson.fromJson(event.getValue1(), Product.class);
+                    products.add(product);
+                } else if (event.getPropertyName().equals("removeProduct")) {
+                    String id = event.getValue1();
+                    products.removeIf(p -> p.getId().equals(id));
+                }
+                getData();
+                property.firePropertyChange(event);
+            }
+        });
+
+    }
+
+
+    @Override
+    public boolean addListener(GeneralListener<String, Integer> listener, String... propertyNames) {
+        return property.addListener(listener);
     }
 
     @Override
-    public boolean addListener(
-            GeneralListener<String, Integer> listener, String... propertyNames) {
-        return property.addListener(listener, propertyNames);
-    }
-
-    @Override
-    public boolean removeListener(
-            GeneralListener<String, Integer> listener, String... propertyNames) {
-        return property.removeListener(listener, propertyNames);
+    public boolean removeListener(GeneralListener<String, Integer> listener, String... propertyNames) {
+        return property.removeListener(listener);
     }
 }
 

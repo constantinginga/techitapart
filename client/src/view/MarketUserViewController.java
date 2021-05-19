@@ -4,43 +4,30 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import model.Product;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MarketUserViewController extends ViewController implements LocalListener<String, Integer> {
-    @FXML
-    private ScrollPane scroll;
-    @FXML
-    private ScrollPane categoryScroll;
+
     @FXML
     private GridPane grid;
     @FXML
     private GridPane categoryGrid;
     @FXML
-    private Button photo;
-    @FXML
     private TextField searchField;
-
-    private List<Product> Products = new ArrayList<>();
 
     @Override
     protected void init() throws InterruptedException {
         searchField.textProperty().bindBidirectional(super.getViewModelFactory().getMarketUserViewModel().searchBarProperty());
+        super.getViewModelFactory().getMarketUserViewModel().addListener(this);
         reset();
     }
 
@@ -75,7 +62,8 @@ public class MarketUserViewController extends ViewController implements LocalLis
                     AnchorPane anchorPane = fxmlLoader.load();
 
                     ItemViewController itemController = fxmlLoader.getController();
-                    itemController.init(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i), this, super.getViewModelFactory().getMarketUserViewModel().getImage(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i).getImgSrc()));
+                    itemController.init(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i), this,
+                            super.getViewModelFactory().getMarketUserViewModel().getImage(super.getViewModelFactory().getMarketUserViewModel().getProducts().get(i).getImgSrc()));
 
 
                     if (column == 3) {

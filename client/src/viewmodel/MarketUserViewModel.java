@@ -1,5 +1,7 @@
 package viewmodel;
 
+import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -19,18 +21,20 @@ import java.rmi.RemoteException;
 public class MarketUserViewModel implements LocalSubject<String, Integer>, LocalListener<String, Integer> {
     private LocalModel model;
     private ViewState state;
-    private PropertyChangeAction<String, Integer> property;
     private StringProperty searchBar;
+    private Gson gson;
+    private PropertyChangeAction<String, Integer> property;
     ObservableList<Product> products = FXCollections.observableArrayList();
     ObservableList<Category> categories = FXCollections.observableArrayList();
 
     public MarketUserViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
-        this.property = new PropertyChangeProxy<>(this);
         this.searchBar = new SimpleStringProperty();
         model.addListener(this);
         getData();
+        gson = new Gson();
+        property = new PropertyChangeProxy<>(this);
     }
 
     public ObservableList<Product> getProducts() {
@@ -44,6 +48,7 @@ public class MarketUserViewModel implements LocalSubject<String, Integer>, Local
     public StringProperty searchBarProperty() {
         return searchBar;
     }
+
 
     public void reset() {
         System.out.println(state.getUserID());
@@ -76,17 +81,29 @@ public class MarketUserViewModel implements LocalSubject<String, Integer>, Local
 
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
-        getData();
-//        property.firePropertyChange(event);
+        Platform.runLater(() -> {
+            if (event.getPropertyName().contains("Product")) {
+                System.out.println("From Market->>>>>>>>>>>>>"+ event.getPropertyName());
+                if (event.getPropertyName().equals("addProduct")) {
+                    Product product = gson.fromJson(event.getValue1(), Product.class);
+                    products.add(product);
+                } else if (event.getPropertyName().equals("removeProduct")) {
+                    String id = event.getValue1();
+                    products.removeIf(p -> p.getId().equals(id));
+                }
+                getData();
+                property.firePropertyChange(event);
+            }
+        });
     }
 
     @Override
     public boolean addListener(GeneralListener<String, Integer> listener, String... propertyNames) {
-        return property.addListener(listener, propertyNames);
+        return property.addListener(listener);
     }
 
     @Override
     public boolean removeListener(GeneralListener<String, Integer> listener, String... propertyNames) {
-        return property.removeListener(listener, propertyNames);
+        return property.removeListener(listener);
     }
 }
