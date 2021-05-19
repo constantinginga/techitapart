@@ -1,6 +1,5 @@
 package view;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,20 +10,28 @@ import model.Order;
 
 import java.io.IOException;
 
-public class UserListViewController extends ViewController
-{
-    @FXML private TextField firstName;
-    @FXML private TextField lastName;
-    @FXML private TextField email;
-    @FXML private TextField username;
-    @FXML private TextField password;
-    @FXML private Label errorLabel;
-    @FXML private ListView<String> listView;
-    @FXML private Button editButton;
-    @FXML private ListView<Order> orderListView;
+public class UserListViewController extends ViewController {
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField password;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private ListView<String> listView;
+    @FXML
+    private Button editButton;
+    @FXML
+    private ListView<Order> orderListView;
 
-    @Override protected void init() throws InterruptedException
-    {
+    @Override
+    protected void init() throws InterruptedException {
         listView.itemsProperty()
                 .bind(super.getViewModelFactory().getUserListViewModel().getUsers());
         orderListView.itemsProperty()
@@ -51,40 +58,33 @@ public class UserListViewController extends ViewController
         super.getViewModelFactory().getUserListViewModel().getAllUsers();
     }
 
-    @Override public void reset() throws InterruptedException
-    {
+    @Override
+    public void reset() throws InterruptedException {
         super.getViewModelFactory().getUserListViewModel().reset();
         enablingOfTextFields(true);
     }
 
-    public void handleApplyButton(ActionEvent actionEvent) throws IOException
-    {
+    public void handleApplyButton(ActionEvent actionEvent) throws IOException {
         if (super.getViewModelFactory().getUserListViewModel().edit())
             enablingOfTextFields(true);
     }
 
-    public void handleBackButton(ActionEvent actionEvent)
-    {
-        try
-        {
+    public void handleBackButton(ActionEvent actionEvent) {
+        try {
             super.getViewHandler().openView("MarketAdminView.fxml");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void enablingOfTextFields(boolean disabled)
-    {
+    public void enablingOfTextFields(boolean disabled) {
         firstName.setDisable(disabled);
         lastName.setDisable(disabled);
         email.setDisable(disabled);
         password.setDisable(disabled);
     }
 
-    public void handleEditButton(ActionEvent actionEvent)
-    {
+    public void handleEditButton(ActionEvent actionEvent) {
         enablingOfTextFields(false);
     }
 }

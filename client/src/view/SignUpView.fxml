@@ -64,7 +64,7 @@
             <Font name="Century Gothic" size="14.0" />
          </font>
       </Text>
-      <Label fx:id="error" focusTraversable="false" layoutX="40.0" layoutY="560.0" textFill="RED">
+      <Label fx:id="error" focusTraversable="false" layoutX="40.0" layoutY="560.0" textFill="RED" wrapText="true">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>

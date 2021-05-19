@@ -141,7 +141,7 @@
                                         <Insets left="100.0" />
                                     </VBox.margin>
                                 </Label>
-                                <Button mnemonicParsing="false" onAction="#handleOrderButton" prefHeight="40.0" prefWidth="80.0" styleClass="search-buttton" text="Order" textFill="WHITE">
+                                <Button fx:id="orderButton" mnemonicParsing="false" onAction="#handleOrderButton" prefHeight="35.0" prefWidth="140.0" styleClass="search-buttton" text="Add to cart" textFill="WHITE">
                                     <font>
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>
@@ -154,7 +154,7 @@
                                         <Font name="Century Gothic" size="18.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="100.0" />
+                                        <Insets left="130.0" />
                                     </VBox.margin>
                                 </Button>
                             </children>

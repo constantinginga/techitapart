@@ -37,12 +37,12 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
 //    }
 
     @Override
-    public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException {
-        return server.registerUSer(fName, lName, email, username, password, role);
+    public User registerUSer(User user) throws RemoteException {
+        return server.registerUSer(user);
     }
 
     @Override
-    public UserProfile login(String username, String password) throws RemoteException {
+    public User login(String username, String password) throws RemoteException {
         return server.login(username, password);
     }
 
@@ -160,15 +160,7 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         server.buy(username);
     }
 
-    @Override
-    public void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException {
-        server.buyProduct(product, quantity, categoryName, userName);
-    }
 
-    @Override
-    public void addOrder() throws RemoteException {
-        server.addOrder();
-    }
 
     @Override
     public void close() throws NoSuchObjectException {

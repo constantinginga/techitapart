@@ -38,19 +38,6 @@ public class MarketUserViewController extends ViewController implements LocalLis
 
     private List<Product> Products = new ArrayList<>();
 
-//  private List<Product> getData(){
-//    List<Product> Products = new ArrayList<>();
-//    Product product;
-//
-//    for(int i = 0; i <= 20; i++)
-//    {
-//      product = new Product("Phone", "Iphone 12 256gb", 199, 100);
-//      product.setImgSrc("../default1.jpg");
-//      Products.add(product);
-//    }
-//    return Products;
-//  }
-
     @Override
     protected void init() throws InterruptedException {
         searchField.textProperty().bindBidirectional(super.getViewModelFactory().getMarketUserViewModel().searchBarProperty());

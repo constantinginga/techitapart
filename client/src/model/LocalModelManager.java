@@ -33,22 +33,16 @@ public class LocalModelManager
      * @return*/
     // how will this login method work in server client system?
     @Override
-    public UserProfile registerUSer(String fName, String lName,
-                                    String email, String username, String password, Role role)
+    public User registerUSer(User user)
             throws RemoteException {
-        return client.registerUSer(fName, lName, email, username, password, role);
+        return client.registerUSer(user);
     }
 
     @Override
-    public UserProfile login(String username, String password)
+    public User login(String username, String password)
             throws RemoteException {
         return client.login(username, password);
     }
-
-//    @Override public UserProfile getUserProfile() throws RemoteException
-//    {
-//        return client.getUserProfile();
-//    }
 
     @Override public User getUser(String username) throws RemoteException
     {
@@ -184,16 +178,6 @@ public class LocalModelManager
         client.buy(username);
     }
 
-    @Override
-    public void buyProduct(Product product, int quantity,
-                           String categoryName, String userName) throws RemoteException {
-        client.buyProduct(product, quantity, categoryName, userName);
-    }
-
-    @Override
-    public void addOrder() throws RemoteException {
-        client.addOrder();
-    }
 
     @Override
     public void close() throws NoSuchObjectException {

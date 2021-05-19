@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class LoginViewController extends ViewController {
 
@@ -42,10 +43,12 @@ public class LoginViewController extends ViewController {
 
     @FXML
     private void handleLoginButton() throws IOException {
-        if (super.getViewModelFactory().getSignInViewModel().login().equalsIgnoreCase("consumer")) {
-            super.getViewHandler().openView("MarketUserView.fxml");
-        } else if (super.getViewModelFactory().getSignInViewModel().login().equalsIgnoreCase("admin")) {
-            super.getViewHandler().openView("MarketAdminView.fxml");
+        String role = super.getViewModelFactory().getSignInViewModel().login();
+        if (role != null) {
+            switch (role.toLowerCase()) {
+                case "consumer" -> super.getViewHandler().openView("MarketUserView.fxml");
+                case "admin" -> super.getViewHandler().openView("MarketAdminView.fxml");
+            }
         }
     }
 

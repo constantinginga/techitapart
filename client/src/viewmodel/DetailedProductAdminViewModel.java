@@ -24,7 +24,7 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         this.state = viewState;
         productName = new SimpleStringProperty();
         productPrice = new SimpleStringProperty();
-        productQuantity = new SimpleStringProperty();
+        productQuantity = new SimpleStringProperty("1");
         errorLabel = new SimpleStringProperty();
         description = new SimpleStringProperty();
         totalQuantity = new SimpleStringProperty();
@@ -41,9 +41,9 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
             productName.set(product.getName());
             productPrice.set(String.valueOf(product.getPrice()));
             System.out.println("Client: " + product.getTotal_quantity());
-            productQuantity.set(Integer.toString(product.getTotal_quantity()));
             description.set(product.getDescription());
             totalQuantity.set(String.valueOf(product.getTotal_quantity()));
+            productQuantity.set(Integer.parseInt(totalQuantity.get()) == 0 ? "0" : "1");
             errorLabel.set("");
             if (product.getTotal_quantity() <= 0)
             {
@@ -123,12 +123,6 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    /*model.buyProduct(
-        model.getProduct(state.getProductID(), state.getCategoryName())
-            .getName(), Integer.parseInt(productQuantity.get()),
-        state.getCategoryName(), "Bob");
-    errorLabel.set("Item ordered... I think :D");*/
-
     }
 
 
@@ -169,11 +163,13 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
     {
         Platform.runLater(() -> {
             System.out.println("Fire property change in DetailedProductViewProperty");
-            if(event.getPropertyName().contains("quantity")){
-                //if(event.getValue2().equals(state.getProductID())){
-                productQuantity.set(Integer.toString(event.getValue2()));
-                totalQuantity.set(Integer.toString(event.getValue2()));
-                // }
+            if (event.getPropertyName().contains("quantity")) {
+                if (event.getValue1().equals(state.getProductID())) {
+                    if (Integer.parseInt(productQuantity.get()) == Integer.parseInt(totalQuantity.get()))
+                        productQuantity.set(Integer.toString(event.getValue2()));
+
+                    totalQuantity.set(Integer.toString(event.getValue2()));
+                }
             }
         });
 

@@ -12,10 +12,11 @@ public interface ClientModel extends LocalSubject<String, Integer> {
 
     /**
      * Account
-     **/
-    UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException;
+     *
+     * @param user*/
+    User registerUSer(User user) throws RemoteException;
 
-    UserProfile login(String username, String password) throws RemoteException;
+    User login(String username, String password) throws RemoteException;
 
 //    UserProfile getUserProfile() throws RemoteException;
 
@@ -70,20 +71,15 @@ public interface ClientModel extends LocalSubject<String, Integer> {
 
     void buy(String username) throws RemoteException;
 
-    /**
-     * this method will be deleted after implementing the cart shop
-     **/
-    void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException;
+
 
     /**
      * order
      **/
-    void addOrder() throws RemoteException;
+    ArrayList<Order> getAllOrdersByUsername(String username);
 
     /**
      * closing of window
      */
     void close() throws NoSuchObjectException;
-
-    ArrayList<Order> getAllOrdersByUsername(String username);
 }

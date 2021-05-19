@@ -1,10 +1,5 @@
 package persistence;
-
-import model.Password;
-import model.Role;
 import model.User;
-import model.UserName;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,50 +10,49 @@ public class AccountDB implements AccountPersistence {
 
 
     @Override
-    public User registerNewUserDB(String fName, String lName, String email, String username, String password, Role role) {
-        User user = null;
-        try {
-
-            user = new User(fName, lName, email, new UserName(username), new Password(password));
-
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
+    public User registerNewUserDB(User user) {
 
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO \"User\"(first_name, last_name, email, username, password) VALUES (?, ?, ?, ?, ?); ");
             statement.setString(1, user.getfName());
             statement.setString(2, user.getlName());
             statement.setString(3, user.getEmail());
-            statement.setString(4, user.getUserName().getName());
-            statement.setString(5, user.getPassword().getPassword());
-
+            statement.setString(4, user.getUsername());
+            statement.setString(5, user.getPassword());
             statement.executeUpdate();
-//           ResultSet keys = statement.getGeneratedKeys();
-//
-//           if (keys.next()) return user ;
-//           else throw new SQLException("No keys generated");
             return user;
-
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
         }
     }
 
+
+    private String errorMessage(String e){
+        if (e.contains("ERROR: new row for relation \"User\" violates check constraint \"User_username_check\""))
+            return  "Username must be at least 5 characters long";
+        else if (e.contains("ERROR: new row for relation \"User\" violates check constraint \"User_password_check\""))
+            return  "Password must be at least 6 characters long and contain at least one uppercase character, one number";
+        return null;
+    }
+
+
     @Override
     public String loginDB(String username, String password) {
-        try(Connection connection = ConnectionDB.getInstance().getConnection()) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement("SELECT  * from \"User\" WHERE username = ? AND password = ?");
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-            return (resultSet.next()) ? resultSet.getString("role") : null;
+            if (resultSet.next()) {
+                return resultSet.getString("role");
+            } else {
+                throw new IllegalArgumentException("Username or password is wrong, maybe you need to sign up first");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Username not exist, maybe you need to SignUp first");
         }
+        return null;
     }
 
 
@@ -69,22 +63,25 @@ public class AccountDB implements AccountPersistence {
             statement.setString(2, currentUsername);
             statement.setString(1, newUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
 
     @Override
     public void updateEmail(String currentUsername, String newEmail) {
-        try(Connection connection = ConnectionDB.getInstance().getConnection())  {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET email=? WHERE username=?");
             statement.setString(1, newEmail);
             statement.setString(2, currentUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
+
 
     @Override
     public void updatePassword(String currentUsername, String newPassword) {
@@ -93,20 +90,22 @@ public class AccountDB implements AccountPersistence {
             statement.setString(1, newPassword);
             statement.setString(2, currentUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
 
     @Override
     public void updateFName(String currentUsername, String newFName) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET first_name=? WHERE username=?");
             statement.setString(1, newFName);
             statement.setString(2, currentUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
 
@@ -117,14 +116,15 @@ public class AccountDB implements AccountPersistence {
             statement.setString(1, newLName);
             statement.setString(2, currentUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
 
     @Override
     public void updateDetails(String currentUsername, String newUsername, String newPassword, String newFName, String newLName, String newEmail) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE \"User\" SET (first_name, last_name, email, username, password) = (?, ?, ?, ?, ?) WHERE username = ?");
             statement.setString(1, newFName);
             statement.setString(2, newLName);
@@ -133,87 +133,62 @@ public class AccountDB implements AccountPersistence {
             statement.setString(5, newPassword);
             statement.setString(6, currentUsername);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+         throw new IllegalArgumentException(errorMessage(e.getMessage()));
+
         }
     }
 
-    @Override public User getUser(String username){
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+
+    @Override
+    public User getUser(String username) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM \"User\" WHERE username = ?");
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                UserName userName = new UserName(username);
+                String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
-                Password passWord = new Password(password);
                 String email = resultSet.getString("email");
-                User user = new User(firstName,lastName,email,userName,passWord);
+                User user = new User(firstName, lastName, email, userName, password);
                 return user;
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException(" connection issue");
 
             }
-        }
-        catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new IllegalArgumentException(" connection issue");
         }
     }
-    @Override public String getfName()
-    {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+
+    @Override
+    public String getfName() {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT first_name FROM \"User\" WHERE username = ?");
-            //statement.setString(1, );
             ResultSet resultSet = statement.executeQuery();
             String result = resultSet.getString("first_name");
             return result;
-        }
-        catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new IllegalArgumentException(" connection issue");
         }
     }
 
-    @Override public String getlName()
-    {
-        return null;
-    }
-
-    @Override public UserName getUsername()
-    {
-        return null;
-    }
-
-    @Override public Password getPassword()
-    {
-        return null;
-    }
-
-    @Override public String email()
-    {
-        return null;
-    }
-
-    @Override public ArrayList<String> getAllUsernames()
-    {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+    @Override
+    public ArrayList<String> getAllUsernames() {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT username FROM \"User\"");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<String> result = new ArrayList<>();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String username = resultSet.getString("username");
                 result.add(username);
             }
             return result;
-        }
-        catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new IllegalArgumentException(" connection issue");
         }

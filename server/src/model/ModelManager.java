@@ -1,7 +1,6 @@
 package model;
 
 import com.google.gson.Gson;
-import javafx.application.Platform;
 import persistence.*;
 import utility.observer.listener.GeneralListener;
 import utility.observer.subject.PropertyChangeAction;
@@ -17,9 +16,6 @@ import java.util.Map;
 public class ModelManager implements Model {
 
     private final Persistence persistence;
-
-    // private UserProfile userProfile;
-
     private final PropertyChangeAction<String, Integer> property;
     private final ArrayList<String> categories;
     private final Map<String, Category> map;
@@ -46,44 +42,34 @@ public class ModelManager implements Model {
     /**
      * Register And Login
      **/
-    // how will this login method work in server client system?
     @Override
-    public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) {
+    public User registerUSer(User user) {
         try {
-            User user = persistence.registerNewUserDB(fName, lName, email, username, password, role);
-            UserProfile userProfile = UserProfile.getInstance(user.getUserName().getName());
+            User user1 = persistence.registerNewUserDB(user);
+            UserProfile userProfile = UserProfile.getInstance(user.getUsername());
             Cart cart = new Cart();
             userProfile.setCart(cart);
-            return userProfile;
+            return user1;
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    // how will this login method work in server client system?
     @Override
-    public UserProfile login(String username, String password) {
+    public User login(String username, String password) {
 
         try {
             String role = persistence.loginDB(username, password);
             UserProfile userProfile = UserProfile.getInstance(username);
-            userProfile.setRole(role);
             Cart cart = new Cart();
             cart.setCartItems(persistence.getAllProductsInCart(username));
             userProfile.setCart(cart);
-            return userProfile;
-            //   return userProfile;
+            return new User(username, role);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Username not exist");
+            throw new IllegalArgumentException(e.getMessage());
 
         }
-        // return userProfile;
     }
-
-//    @Override public UserProfile getUserProfile()
-//    {
-//        return UserProfile.getInstance(username);
-//    }
 
     @Override
     public User getUser(String username) {
@@ -92,8 +78,8 @@ public class ModelManager implements Model {
 
     @Override
     public void updateUser(User user) {
-        persistence.updateDetails(user.getUserName().getName(),
-                user.getUserName().getName(), user.getPassword().getPassword(),
+        persistence.updateDetails(user.getUsername(),
+                user.getUsername(), user.getPassword(),
                 user.getfName(), user.getlName(), user.getEmail());
     }
 
@@ -103,9 +89,6 @@ public class ModelManager implements Model {
     }
 
 
-    /**
-     * Category
-     **/
     @Override
     public ArrayList<String> getAllCategory() {
         return categories;
@@ -126,9 +109,6 @@ public class ModelManager implements Model {
         return map.get(name);
     }
 
-    /**
-     * Product
-     **/
     @Override
     public void addProduct(Product product, String categoryName) {
         Product product1 = persistence
@@ -137,15 +117,13 @@ public class ModelManager implements Model {
         String g1 = gson.toJson(product);
         System.out.println("AddProduct property change in ModelManager");
         getCategory(categoryName).addProduct(product1);
-        property.firePropertyChange("addProduct", g1, null);
+        //property.firePropertyChange("addProduct", g1, null);
     }
 
 
     @Override
     public Product getProduct(String id, String categoryName) {
-        // System.out.println(persistence.getProductByIdDB(id).getTotal_quantity());
         return getCategory(categoryName).getProduct(id);
-        // Return persistence.getProductByIdDB(id);
     }
 
 
@@ -191,11 +169,7 @@ public class ModelManager implements Model {
     @Override
     public void removeProduct(String id, String categoryName) {
         persistence.removeProductByIdDB(id);
-        ///   categoryList.getCategory(categoryName).removeProduct(id);
-        // categoryList.removeProduct(id, categoryName);
-        System.out.println("Remove product property change in ModelManager");
-        property.firePropertyChange("removeProduct", id, null);
-
+        //property.firePropertyChange("removeProduct", id, null);
         getCategory(categoryName).removeProductById(id);
     }
 
@@ -203,7 +177,6 @@ public class ModelManager implements Model {
     @Override
     public void updateProductQuantity(String id, int quantity, String categoryName) {
         persistence.updateProductQuantityDB(id, quantity);
-        //categoryList.getCategory(categoryName).getProductByID(id).setTotal_quantity(quantity);
         getCategory(categoryName).updateProductQuantity(id, quantity);
     }
 
@@ -214,11 +187,6 @@ public class ModelManager implements Model {
         getCategory(categoryName).updateProductPrice(id, price);
     }
 
-
-    /**
-     * Cart shop
-     **/
-    // how will this login method work in server client system?
     @Override
     public void addProductToCart(Product product, int quantity, String username) {
         int quantityInDB = persistence.cartItemExists(Integer.parseInt(product.getId()), username);
@@ -232,12 +200,10 @@ public class ModelManager implements Model {
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             if ((cartItem.getProduct()).getId().equals(product.getId())) {
                 userProfile.updateCartItemQuantity(cartItem, quantity);
-                System.out.println(product.getId() + "<<-------------------<<" + quantity);
                 return;
             }
         }
         userProfile.addProductToCart(product, quantity);
-        System.out.println(userProfile.getCart().getCartItems().toString());
     }
 
     @Override
@@ -255,7 +221,6 @@ public class ModelManager implements Model {
         } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-
     }
 
 
@@ -280,24 +245,19 @@ public class ModelManager implements Model {
     @Override
     public void buy(String username) {
         UserProfile userProfile = UserProfile.getInstance(username);
+        Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             try {
                 decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
                 persistence.decreaseProductQuantity(cartItem.getProduct().getId(), cartItem.getQuantity());
-                Order order = new Order(persistence.addOrderDB(username), userProfile.getUsername());
-                userProfile.addOrder(order);
                 persistence.setOrderId(order.getOrder_id(), username);
+                property.firePropertyChange("quantity", cartItem.getProduct().getId(), cartItem.getProduct().getTotal_quantity() - cartItem.getQuantity());
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(e.getMessage());
             }
         }
+        userProfile.addOrder(order);
         userProfile.setCart(new Cart());
-    }
-
-
-    @Override
-    public void addOrder() {
-
     }
 
     @Override
@@ -305,16 +265,6 @@ public class ModelManager implements Model {
         return persistence.getAllOrderByUsername(username);
     }
 
-    ///TODO remove later
-    @Override
-    public void buyProduct(Product product, int quantity, String categoryName, String userName) {
-        //     persistense.registerNewUserDB("Farouk","user", "fdggrewf@dfgre.com","Bob","Comdnbd_12",Role.Consumer);
-        // persistense.loginDB("Bob", "Comdnbd_12");
-        // persistense.addOrderDB(userName);
-        property.firePropertyChange("quantity", product.getId(), product.getTotal_quantity() - quantity);
-        persistence.decreaseProductQuantity(product.getId(), quantity);
-        getCategory(categoryName).decreaseProductQuantity(product.getId(), quantity);
-    }
 
     @Override
     public boolean addListener(

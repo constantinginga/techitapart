@@ -14,8 +14,7 @@ import utility.observer.subject.PropertyChangeProxy;
 
 import java.io.File;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class MarketUserViewModel implements LocalSubject<String, Integer>, LocalListener<String, Integer> {
     private LocalModel model;
@@ -78,7 +77,7 @@ public class MarketUserViewModel implements LocalSubject<String, Integer>, Local
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         getData();
-        property.firePropertyChange(event);
+//        property.firePropertyChange(event);
     }
 
     @Override

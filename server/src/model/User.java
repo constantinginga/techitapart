@@ -8,36 +8,29 @@ public class User implements Serializable
 {
   private String fName;
   private String lName;
-  private UserName userName;
-  private Password password;
+  private String userName;
+  private String password;
   private String email;
-  private Role role;
-  private OrderList orderList;
+  private String role;
+
 
   private static final String regex = "^(.+)@(.+)$";
 
 
-  public User(String fName,String lName,String email, UserName userName, Password password)
+  public User(String fName,String lName,String email, String userName, String password)
   {
     setlName(lName);
     setfName(fName);
     setEmail(email);
     setPassword(password);
     setUserName(userName);
-    this.role = Role.Consumer;
-    orderList = new OrderList();
+    this.role = "consumer";
   }
 
-
-  public void addOrder(Order order){
-    orderList.addOrder(order);
+  public User(String userName, String role) {
+    this.userName = userName;
+    this.role = role;
   }
-
-  public Order getOrderById(int id){
-    return orderList.getOrder(id);
-  }
-
-
 
 
   public void setfName(String fName) {
@@ -55,14 +48,14 @@ public class User implements Serializable
     this.lName = lName;
   }
 
-  public void setUserName(UserName userName) {
+  public void setUserName(String userName) {
     if (userName == null){
       throw new IllegalArgumentException("username is null");
     }
     this.userName = userName;
   }
 
-  public void setPassword(Password password) {
+  public void setPassword(String password) {
     if (password == null){
       throw new IllegalArgumentException("password is null");
     }
@@ -83,12 +76,12 @@ public class User implements Serializable
     this.email = email;
   }
 
-  public void setRole(Role role){
+  public void setRole(String role){
     this.role = role;
   }
 
   public boolean isAdmin(){
-    return Role.Admin == role;
+    return role.equalsIgnoreCase("admin");
   }
 
   public String getlName() {
@@ -100,16 +93,16 @@ public class User implements Serializable
   }
 
 
-  public Role getRole() {
+  public String  getRole() {
     return role;
   }
 
-  public UserName getUserName()
+  public String getUsername()
   {
     return userName;
   }
 
-  public Password getPassword()
+  public String getPassword()
   {
     return password;
   }

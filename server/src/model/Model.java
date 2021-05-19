@@ -9,9 +9,8 @@ public interface Model extends LocalSubject<String, Integer>
 {
 
     /** Account **/
-    UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role);
-    UserProfile login(String username, String password);
-//    UserProfile getUserProfile();
+    User registerUSer(User user);
+    User login(String username, String password);
     User getUser(String username);
     void updateUser(User user);
     ArrayList<String> getAllUsernames();
@@ -41,10 +40,7 @@ public interface Model extends LocalSubject<String, Integer>
     void decreaseProductQuantity(String id, int quantity);
     void buy(String username);
 
-    /** this method will be deleted after implementing the cart shop **/
-    void buyProduct(Product product, int quantity, String categoryName, String userName);
 
     /** order **/
-    void addOrder();
     ArrayList<Order> getAllOrdersByUsername(String username);
 }

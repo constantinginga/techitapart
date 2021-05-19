@@ -96,8 +96,8 @@ public class UserListViewModel {
             firstName.set(user.getfName());
             lastName.set(user.getlName());
             email.set(user.getEmail());
-            username.set(user.getUserName().getName());
-            password.set(user.getPassword().getPassword());
+            username.set(user.getUsername());
+            password.set(user.getPassword());
             error.set("");
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -106,10 +106,8 @@ public class UserListViewModel {
 
     public boolean edit() {
         try {
-            UserName userName = new UserName(username.get());
-            Password passWord = new Password(password.get());
             User user = new User(firstName.get(), lastName.get(), email.get(),
-                    userName, passWord);
+                    username.get(), password.get());
             localModel.updateUser(user);
         } catch (IllegalArgumentException | RemoteException e) {
             error.set(e.getMessage());
@@ -125,8 +123,8 @@ public class UserListViewModel {
                 firstName.set(user.getfName());
                 lastName.set(user.getlName());
                 email.set(user.getEmail());
-                username.set(user.getUserName().getName());
-                password.set(user.getPassword().getPassword());
+                username.set(user.getUsername());
+                password.set(user.getPassword());
                 ObservableList<Order> temp = FXCollections.observableArrayList(localModel.getAllOrdersByUsername(selectedUserProperty.get()));
                 orders.set(temp);
             } catch (Exception e) {

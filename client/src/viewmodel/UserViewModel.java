@@ -3,14 +3,11 @@ package viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.LocalModel;
-import model.Password;
 import model.User;
-import model.UserName;
 
 import java.rmi.RemoteException;
 
-public class UserViewModel
-{
+public class UserViewModel {
     private LocalModel localModel;
     private ViewState state;
     private StringProperty firstName;
@@ -21,8 +18,7 @@ public class UserViewModel
     private StringProperty error;
 
     public UserViewModel(LocalModel localModel, ViewState viewState)
-            throws RemoteException
-    {
+            throws RemoteException {
         this.localModel = localModel;
         this.state = viewState;
         this.firstName = new SimpleStringProperty();
@@ -33,65 +29,50 @@ public class UserViewModel
         this.error = new SimpleStringProperty();
     }
 
-    public StringProperty firstNameProperty()
-    {
+    public StringProperty firstNameProperty() {
         return firstName;
     }
 
-    public StringProperty lastNameProperty()
-    {
+    public StringProperty lastNameProperty() {
         return lastName;
     }
 
-    public StringProperty emailProperty()
-    {
+    public StringProperty emailProperty() {
         return email;
     }
 
-    public StringProperty usernameProperty()
-    {
+    public StringProperty usernameProperty() {
         return username;
     }
 
-    public StringProperty passwordProperty()
-    {
+    public StringProperty passwordProperty() {
         return password;
     }
 
-    public StringProperty errorProperty()
-    {
+    public StringProperty errorProperty() {
         return error;
     }
 
-    public void reset()
-    {
-        try
-        {
+    public void reset() {
+        try {
             User user = localModel.getUser(state.getUserID());
             firstName.set(user.getfName());
             lastName.set(user.getlName());
             email.set(user.getEmail());
-            username.set(user.getUserName().getName());
-            password.set(user.getPassword().getPassword());
+            username.set(user.getUsername());
+            password.set(user.getPassword());
             error.set("");
-        }
-        catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean edit()
-    {
-        try
-        {
-            UserName userName = new UserName(username.get());
-            Password passWord = new Password(password.get());
-            User user = new User(firstName.get(), lastName.get(), email.get(), userName, passWord);
+    public boolean edit() {
+        try {
+            User user = new User(firstName.get(), lastName.get(), email.get(), username.get(), password.get());
             localModel.updateUser(user);
-        }
-        catch (IllegalArgumentException | RemoteException e)
-        {
+        } catch (IllegalArgumentException | RemoteException e) {
+            System.out.println(e.getMessage());
             error.set(e.getMessage());
             return false;
         }

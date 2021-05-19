@@ -3,7 +3,7 @@ package viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.LocalModel;
-import model.UserProfile;
+import model.User;
 
 import java.rmi.RemoteException;
 
@@ -42,9 +42,11 @@ public class LoginViewModel {
 
     public String login() {
         try {
-            UserProfile userProfile = model.login(username.get(), password.get());
+            User user = model.login(username.get(), password.get());
             state.setUserID(username.get());
-            return userProfile.getRole();
+            String role = user.getRole();
+            state.setRole(role);
+            return role;
         } catch (IllegalArgumentException e) {
             error.set(e.getMessage());
             return null;

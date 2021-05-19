@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import model.LocalModel;
 import model.Product;
-import model.UserProfile;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
 
@@ -26,7 +25,7 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         this.state = viewState;
         productName = new SimpleStringProperty();
         productPrice = new SimpleStringProperty();
-        productQuantity = new SimpleStringProperty();
+        productQuantity = new SimpleStringProperty("1");
         errorLabel = new SimpleStringProperty();
         description = new SimpleStringProperty();
         editableProperty = new SimpleBooleanProperty(true);
@@ -41,15 +40,11 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
             productName.set(product.getName());
             productPrice.set(String.valueOf(product.getPrice()));
             System.out.println("Client: " + product.getTotal_quantity());
-            productQuantity.set(Integer.toString(product.getTotal_quantity()));
             description.set(product.getDescription());
             totalQuantity.set(String.valueOf(product.getTotal_quantity()));
+            productQuantity.set(Integer.parseInt(totalQuantity.get()) == 0 ? "0" : "1");
             errorLabel.set("");
-            if (product.getTotal_quantity() <= 0) {
-                editableProperty.set(false);
-            } else {
-                editableProperty.set(true);
-            }
+            editableProperty.set(product.getTotal_quantity() != 0);
         } catch (RemoteException exception) {
             exception.printStackTrace();
         }
@@ -127,8 +122,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
             if (confirmation()) {
                 model.addProductToCart(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
                         .parseInt(productQuantity.getValue()), state.getUserID());
-
-                System.out.println(UserProfile.getInstance(state.getUserID()).getAllCartItem().toString());
                 errorLabel.set("");
             }
         } catch (RemoteException e) {
@@ -167,7 +160,9 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
             System.out.println("Fire property change in DetailedProductViewProperty");
             if (event.getPropertyName().contains("quantity")) {
                 if (event.getValue1().equals(state.getProductID())) {
-                    productQuantity.set(Integer.toString(event.getValue2()));
+                    if (Integer.parseInt(productQuantity.get()) == Integer.parseInt(totalQuantity.get()))
+                        productQuantity.set(Integer.toString(event.getValue2()));
+
                     totalQuantity.set(Integer.toString(event.getValue2()));
                 }
             }

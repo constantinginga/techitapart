@@ -3,8 +3,7 @@ package viewmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.LocalModel;
-import model.Role;
-import model.UserProfile;
+import model.User;
 
 import java.rmi.RemoteException;
 
@@ -59,8 +58,10 @@ public class SignUpViewModel {
 
     public boolean signUp() {
         try {
-            UserProfile user = model.registerUSer(firstName.get(), lastName.get(), email.get(), username.get(), password.get(), Role.Consumer);
+            User userCheck = new User(firstName.get(), lastName.get(), email.get(), username.get(), password.get());
+            User user = model.registerUSer(userCheck);
             state.setUserID(user.getUsername());
+            state.setRole("consumer");
         } catch (IllegalArgumentException e) {
             error.set(e.getMessage());
             return false;

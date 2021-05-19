@@ -1,5 +1,6 @@
 package viewmodel;
 
+import com.google.gson.Gson;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     private StringProperty searchBar;
     ObservableList<Product> products = FXCollections.observableArrayList();
     ObservableList<Category> categories = FXCollections.observableArrayList();
+    private Gson gson;
 
 
     public MarketAdminViewModel(LocalModel model, ViewState viewState) {
@@ -33,6 +35,7 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
         this.searchBar = new SimpleStringProperty();
         model.addListener(this);
         getData();
+        gson = new Gson();
     }
 
     public ObservableList<Product> getProducts() {
@@ -80,6 +83,10 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     public void propertyChange(ObserverEvent<String, Integer> event) {
         getData();
         property.firePropertyChange(event);
+        if (event.getPropertyName().equals("addProduct")){
+            Product product = gson.fromJson(event.getValue1(), Product.class);
+            products.add(product);
+        }
     }
 
     @Override

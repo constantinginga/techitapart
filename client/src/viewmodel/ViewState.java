@@ -1,58 +1,57 @@
 package viewmodel;
 
-public class ViewState
-{
-  String productID;
-  String categoryID;
-  String categoryName;
-  String userID;
+public class ViewState {
+    String productID;
+    String categoryID;
+    String categoryName;
+    String userID;
+    String role;
 
-  public ViewState()
-  {
-    productID = "0";
-    categoryID = "0";
-    categoryName ="General";
-    userID = "0";
+    public ViewState() {
+        productID = "0";
+        categoryID = "0";
+        categoryName = "General";
+        userID = "0";
+        role = "";
+    }
 
-  }
+    public String getRole() {
+        return role;
+    }
 
-  public String getProductID()
-  {
-    return productID;
-  }
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-  public void setProductID(String productID)
-  {
-    this.productID = productID;
-  }
+    public String getProductID() {
+        return productID;
+    }
 
-  public String getCategoryID()
-  {
-    return categoryID;
-  }
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
 
-  public void setCategoryID(String categoryID)
-  {
-    this.categoryID = categoryID;
-  }
+    public String getCategoryID() {
+        return categoryID;
+    }
 
-  public String getCategoryName()
-  {
-    return categoryName;
-  }
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
 
-  public void setCategoryName(String categoryName)
-  {
-    this.categoryName = categoryName;
-  }
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-  public String getUserID()
-  {
-    return userID;
-  }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-  public void setUserID(String userID)
-  {
-    this.userID = userID;
-  }
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 }

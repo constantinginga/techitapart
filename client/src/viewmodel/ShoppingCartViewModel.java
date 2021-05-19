@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import model.CartItem;
 import model.LocalModel;
 import model.Product;
-import model.UserProfile;
 
 import java.io.File;
 import java.rmi.RemoteException;

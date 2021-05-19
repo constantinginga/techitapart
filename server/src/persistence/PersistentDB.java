@@ -21,8 +21,8 @@ public class PersistentDB implements Persistence {
 
 
     @Override
-    public User registerNewUserDB(String fName, String lName, String email, String username, String password, Role role) {
-        return accountDB.registerNewUserDB(fName, lName, email, username, password, role);
+    public User registerNewUserDB(User user) {
+        return accountDB.registerNewUserDB(user);
     }
 
     @Override
@@ -67,27 +67,7 @@ public class PersistentDB implements Persistence {
 
     @Override
     public String getfName() {
-        return null;
-    }
-
-    @Override
-    public String getlName() {
-        return null;
-    }
-
-    @Override
-    public UserName getUsername() {
-        return null;
-    }
-
-    @Override
-    public Password getPassword() {
-        return null;
-    }
-
-    @Override
-    public String email() {
-        return null;
+        return accountDB.getfName();
     }
 
     @Override

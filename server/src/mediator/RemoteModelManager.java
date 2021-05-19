@@ -43,19 +43,14 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     }
 
     @Override
-    public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException {
-        return model.registerUSer(fName, lName, email, username, password, role);
+    public User registerUSer(User user) throws RemoteException {
+        return model.registerUSer(user);
     }
 
     @Override
-    public UserProfile login(String username, String password) throws RemoteException {
+    public User login(String username, String password) throws RemoteException {
         return model.login(username, password);
     }
-
-//    @Override
-//    public UserProfile getUserProfile() throws RemoteException {
-//        return model.getUserProfile();
-//    }
 
     @Override
     public User getUser(String username) throws RemoteException {
@@ -163,16 +158,6 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
         model.buy(username);
     }
 
-    @Override
-    public void buyProduct(Product product, int quantity, String categoryName, String userName) throws RemoteException {
-        model.buyProduct(product, quantity, categoryName, userName);
-        //model.updateProductQuantity(product.getId(), quantity, categoryName);
-    }
-
-    @Override
-    public void addOrder() throws RemoteException {
-        model.addOrder();
-    }
 
     @Override
     public ArrayList<Order> getAllOrdersByUsername(String username)

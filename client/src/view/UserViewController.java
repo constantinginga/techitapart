@@ -37,6 +37,7 @@ public class UserViewController extends ViewController
     @Override public void reset() throws InterruptedException
     {
         super.getViewModelFactory().getUserViewModel().reset();
+        //errorLabel.setText("");
         enablingOfTextFields(true);
     }
 
