@@ -88,6 +88,11 @@ public class LocalModelManager
         client.addProduct(product, categoryName);
     }
 
+    @Override public ArrayList<Order> getAllOrdersByUsername(String username)
+    {
+        return client.getAllOrdersByUsername(username);
+    }
+
     @Override
     public Product getProduct(String id, String categoryName)
             throws RemoteException {

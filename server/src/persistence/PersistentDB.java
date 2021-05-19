@@ -60,38 +60,38 @@ public class PersistentDB implements Persistence {
         accountDB.updateDetails(username, newUsername, newPassword, newFName, newLName, newEmail);
     }
 
-    @Override public User getUser(String username)
-    {
+    @Override
+    public User getUser(String username) {
         return accountDB.getUser(username);
     }
 
-    @Override public String getfName()
-    {
+    @Override
+    public String getfName() {
         return null;
     }
 
-    @Override public String getlName()
-    {
+    @Override
+    public String getlName() {
         return null;
     }
 
-    @Override public UserName getUsername()
-    {
+    @Override
+    public UserName getUsername() {
         return null;
     }
 
-    @Override public Password getPassword()
-    {
+    @Override
+    public Password getPassword() {
         return null;
     }
 
-    @Override public String email()
-    {
+    @Override
+    public String email() {
         return null;
     }
 
-    @Override public ArrayList<String> getAllUsernames()
-    {
+    @Override
+    public ArrayList<String> getAllUsernames() {
         return accountDB.getAllUsernames();
     }
 
@@ -153,6 +153,11 @@ public class PersistentDB implements Persistence {
     @Override
     public int addOrderDB(String username) {
         return orderDB.addOrderDB(username);
+    }
+
+    @Override
+    public ArrayList<Order> getAllOrderByUsername(String username) {
+        return orderDB.getAllOrderByUsername(username);
     }
 
     @Override

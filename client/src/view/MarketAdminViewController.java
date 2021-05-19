@@ -40,19 +40,6 @@ public class MarketAdminViewController extends ViewController implements
     @FXML
     private TextField searchField;
 
-    //  private List<Product> getData(){
-    //    List<Product> Products = new ArrayList<>();
-    //    Product product;
-    //
-    //    for(int i = 0; i <= 20; i++)
-    //    {
-    //      product = new Product("Phone", "Iphone 12 256gb", 199, 100);
-    //      product.setImgSrc("../default1.jpg");
-    //      Products.add(product);
-    //    }
-    //    return Products;
-    //  }
-
     @Override
     protected void init() throws InterruptedException {
         searchField.textProperty().bindBidirectional(super.getViewModelFactory().getMarketAdminViewModel().searchBarProperty());
@@ -132,18 +119,15 @@ public class MarketAdminViewController extends ViewController implements
         });
     }
 
-    public void createGridForCategory()
-    {
+    public void createGridForCategory() {
         Platform.runLater(() -> {
             categoryGrid.getChildren().clear();
             int column = 0;
             int row = 1;
-            try
-            {
+            try {
                 for (int i = 0;
                      i < super.getViewModelFactory().getMarketAdminViewModel()
-                             .getCategories().size(); i++)
-                {
+                             .getCategories().size(); i++) {
                     super.getViewModelFactory().getViewState().setCategoryID("General");
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(getClass().getResource("CategoryView.fxml"));
@@ -155,8 +139,7 @@ public class MarketAdminViewController extends ViewController implements
                             super.getViewModelFactory().getMarketAdminViewModel()
                                     .getCategories().get(i), this);
 
-                    if (column == 1)
-                    {
+                    if (column == 1) {
                         column = 0;
                         row++;
                     }
@@ -174,9 +157,7 @@ public class MarketAdminViewController extends ViewController implements
 
                     GridPane.setMargin(anchorPane, new Insets(10));
                 }
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
 
             }
@@ -184,7 +165,7 @@ public class MarketAdminViewController extends ViewController implements
     }
 
     public void searchEnter(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)){
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             super.getViewModelFactory().getMarketAdminViewModel().search();
             createGrid();
         }
@@ -196,8 +177,7 @@ public class MarketAdminViewController extends ViewController implements
     }
 
     public void handleMyAccountButton(ActionEvent actionEvent)
-            throws IOException
-    {
+            throws IOException {
         super.getViewHandler().openView("UserListView.fxml");
     }
 

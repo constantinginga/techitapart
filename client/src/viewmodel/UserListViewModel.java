@@ -7,17 +7,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.LocalModel;
-import model.Password;
-import model.User;
-import model.UserName;
+import model.*;
 
 
 import java.rmi.RemoteException;
 
-public class UserListViewModel
-{
+public class UserListViewModel {
     private ListProperty<String> users;
+    private ListProperty<Order> orders;
     private LocalModel localModel;
     private ViewState state;
     private StringProperty firstName;
@@ -29,8 +26,7 @@ public class UserListViewModel
     private SimpleStringProperty selectedUserProperty;
 
     public UserListViewModel(LocalModel localModel, ViewState viewState)
-            throws RemoteException
-    {
+            throws RemoteException {
         this.localModel = localModel;
         this.state = viewState;
         this.firstName = new SimpleStringProperty();
@@ -40,69 +36,61 @@ public class UserListViewModel
         this.password = new SimpleStringProperty();
         this.error = new SimpleStringProperty();
         this.users = new SimpleListProperty<>();
+        this.orders = new SimpleListProperty<>();
         selectedUserProperty = new SimpleStringProperty();
     }
 
-    public ListProperty<String> getUsers()
-    {
+    public ListProperty<Order> getOrders() {
+        return orders;
+    }
+
+    public ListProperty<String> getUsers() {
         return users;
     }
 
-    public StringProperty firstNameProperty()
-    {
+    public StringProperty firstNameProperty() {
         return firstName;
     }
 
-    public StringProperty lastNameProperty()
-    {
+    public StringProperty lastNameProperty() {
         return lastName;
     }
 
-    public StringProperty emailProperty()
-    {
+    public StringProperty emailProperty() {
         return email;
     }
 
-    public StringProperty usernameProperty()
-    {
+    public StringProperty usernameProperty() {
         return username;
     }
 
-    public StringProperty passwordProperty()
-    {
+    public StringProperty passwordProperty() {
         return password;
     }
 
-    public StringProperty errorProperty()
-    {
+    public StringProperty errorProperty() {
         return error;
     }
 
-    public void getAllUsers() throws InterruptedException
-    {
+    public void getAllUsers() throws InterruptedException {
         Platform.runLater(() -> {
-            try
-            {
+            try {
                 ObservableList<String> temp = FXCollections.observableArrayList();
+                System.out.println(localModel.getAllUsernames());
                 temp.setAll(localModel.getAllUsernames());
                 users.set(temp);
-            }
-            catch (RemoteException e)
-            {
+            } catch (RemoteException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public void setSelectedExerciseProperty(String selectedExerciseProperty)
-    {
+    public void setSelectedExerciseProperty(String selectedExerciseProperty) {
         this.selectedUserProperty.set(selectedExerciseProperty);
     }
 
-    public void reset()
-    {
-        try
-        {
+    public void reset() {
+        try {
 
             User user = localModel.getUser(state.getUserID());
             firstName.set(user.getfName());
@@ -111,46 +99,37 @@ public class UserListViewModel
             username.set(user.getUserName().getName());
             password.set(user.getPassword().getPassword());
             error.set("");
-        }
-        catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean edit()
-    {
-        try
-        {
+    public boolean edit() {
+        try {
             UserName userName = new UserName(username.get());
             Password passWord = new Password(password.get());
             User user = new User(firstName.get(), lastName.get(), email.get(),
                     userName, passWord);
             localModel.updateUser(user);
-        }
-        catch (IllegalArgumentException | RemoteException e)
-        {
+        } catch (IllegalArgumentException | RemoteException e) {
             error.set(e.getMessage());
             return false;
         }
         return true;
     }
 
-    public void updateDetails()
-    {
+    public void updateDetails() {
         Platform.runLater(() -> {
-            try
-            {
-                state.setUserID(selectedUserProperty.get());
-                User user = localModel.getUser(state.getUserID());
+            try {
+                User user = localModel.getUser(selectedUserProperty.get());
                 firstName.set(user.getfName());
                 lastName.set(user.getlName());
                 email.set(user.getEmail());
                 username.set(user.getUserName().getName());
                 password.set(user.getPassword().getPassword());
-            }
-            catch (Exception e)
-            {
+                ObservableList<Order> temp = FXCollections.observableArrayList(localModel.getAllOrdersByUsername(selectedUserProperty.get()));
+                orders.set(temp);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

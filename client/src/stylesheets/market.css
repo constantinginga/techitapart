@@ -1,5 +1,4 @@
 
-
 .root {
     -fx-background-color: #D3D3D3;
     -fx-font-family: 'Century Gothic';
@@ -33,10 +32,14 @@
     -fx-background-radius: 30;
 }
 
-.shadow{
-    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+.shadow {
+    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0, 0.0, 10.0);
 }
 
 .scrollPane {
     -fx-background: #D3D3D3;
+}
+
+.list-cell {
+    -fx-font: 18px 'Century Gothic';
 }

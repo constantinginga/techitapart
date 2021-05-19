@@ -85,4 +85,5 @@ public interface ClientModel extends LocalSubject<String, Integer> {
      */
     void close() throws NoSuchObjectException;
 
+    ArrayList<Order> getAllOrdersByUsername(String username);
 }

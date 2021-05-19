@@ -11,10 +11,9 @@ import java.util.ArrayList;
 public class OrderDB implements OrderPersistence {
 
 
-
     @Override
     public ArrayList<Order> getAllOrderDB() {
-        try  (Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT order_id, username, date FROM \"Order\" JOIN \"User\" USING (username)");
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Order> result = new ArrayList<>();
@@ -47,5 +46,29 @@ public class OrderDB implements OrderPersistence {
         }
 
         return -1;
+    }
+
+    @Override
+    public ArrayList<Order> getAllOrderByUsername(String username) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT order_id, username, date FROM \"Order\" WHERE username = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Order> result = new ArrayList<>();
+            while (resultSet.next()) {
+                String orderId = resultSet.getString("order_id");
+                String userName = resultSet.getString("username");
+                String time = resultSet.getString("date");
+                Order order = new Order(userName, time);
+                order.setOrder_id(orderId);
+                result.add(order);
+
+            }
+
+            return result;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new IllegalArgumentException("issue with connectivity");
+        }
     }
 }

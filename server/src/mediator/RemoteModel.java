@@ -78,4 +78,5 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
      **/
     void addOrder() throws RemoteException;
 
+    ArrayList<Order> getAllOrdersByUsername(String username) throws RemoteException;
 }

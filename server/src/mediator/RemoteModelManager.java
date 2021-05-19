@@ -175,6 +175,12 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
     }
 
     @Override
+    public ArrayList<Order> getAllOrdersByUsername(String username)
+            throws RemoteException {
+        return model.getAllOrdersByUsername(username);
+    }
+
+    @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         System.out.println("Fire property change in RemoteModelManager");
         property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());

@@ -51,18 +51,18 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
 //        return server.getUserProfile();
 //    }
 
-    @Override public User getUser(String username) throws RemoteException
-    {
+    @Override
+    public User getUser(String username) throws RemoteException {
         return server.getUser(username);
     }
 
-    @Override public void updateUser(User user) throws RemoteException
-    {
+    @Override
+    public void updateUser(User user) throws RemoteException {
         server.updateUser(user);
     }
 
-    @Override public ArrayList<String> getAllUsernames() throws RemoteException
-    {
+    @Override
+    public ArrayList<String> getAllUsernames() throws RemoteException {
         return server.getAllUsernames();
     }
 
@@ -71,14 +71,14 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         return server.getAllCategory();
     }
 
-    @Override public Category getCategory(String name) throws RemoteException
-    {
+    @Override
+    public Category getCategory(String name) throws RemoteException {
         return server.getCategory(name);
     }
 
-    @Override public ArrayList<Category> getAllCategories()
-            throws RemoteException
-    {
+    @Override
+    public ArrayList<Category> getAllCategories()
+            throws RemoteException {
         return server.getAllCategories();
     }
 
@@ -174,6 +174,11 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     public void close() throws NoSuchObjectException {
         property.close();
         UnicastRemoteObject.unexportObject(this, true);
+    }
+
+    @Override
+    public ArrayList<Order> getAllOrdersByUsername(String username) {
+        return server.getAllOrdersByUsername(username);
     }
 
     @Override

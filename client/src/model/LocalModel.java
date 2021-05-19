@@ -40,6 +40,8 @@ public interface LocalModel extends LocalSubject<String, Integer>
      **/
     void addProduct(Product product, String categoryName) throws RemoteException;
 
+    ArrayList<Order> getAllOrdersByUsername(String username);
+
     Product getProduct(String id, String categoryName) throws RemoteException;
 
     void removeProduct(String id, String categoryName) throws RemoteException;

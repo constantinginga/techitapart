@@ -29,7 +29,6 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
     public MarketAdminViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
-        System.out.println(state.getUserID());
         this.property = new PropertyChangeProxy<>(this);
         this.searchBar = new SimpleStringProperty();
         model.addListener(this);

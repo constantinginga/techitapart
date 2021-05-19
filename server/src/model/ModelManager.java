@@ -85,20 +85,20 @@ public class ModelManager implements Model {
 //        return UserProfile.getInstance(username);
 //    }
 
-    @Override public User getUser(String username)
-    {
+    @Override
+    public User getUser(String username) {
         return persistence.getUser(username);
     }
 
-    @Override public void updateUser(User user)
-    {
+    @Override
+    public void updateUser(User user) {
         persistence.updateDetails(user.getUserName().getName(),
                 user.getUserName().getName(), user.getPassword().getPassword(),
                 user.getfName(), user.getlName(), user.getEmail());
     }
 
-    @Override public ArrayList<String> getAllUsernames()
-    {
+    @Override
+    public ArrayList<String> getAllUsernames() {
         return persistence.getAllUsernames();
     }
 
@@ -232,7 +232,7 @@ public class ModelManager implements Model {
         for (CartItem cartItem : userProfile.getAllCartItem()) {
             if ((cartItem.getProduct()).getId().equals(product.getId())) {
                 userProfile.updateCartItemQuantity(cartItem, quantity);
-                System.out.println(product.getId() +"<<-------------------<<"+quantity);
+                System.out.println(product.getId() + "<<-------------------<<" + quantity);
                 return;
             }
         }
@@ -268,9 +268,9 @@ public class ModelManager implements Model {
 
     @Override
     public void decreaseProductQuantity(String id, int quantity) {
-        for(String category: categories){
+        for (String category : categories) {
             if (!category.equals("General")) {
-                for (Product product: getCategory(category).getAllProduct()){
+                for (Product product : getCategory(category).getAllProduct()) {
                     if (product.getId().equals(id)) product.decreaseQuantity(quantity);
                 }
             }
@@ -298,6 +298,11 @@ public class ModelManager implements Model {
     @Override
     public void addOrder() {
 
+    }
+
+    @Override
+    public ArrayList<Order> getAllOrdersByUsername(String username) {
+        return persistence.getAllOrderByUsername(username);
     }
 
     ///TODO remove later
