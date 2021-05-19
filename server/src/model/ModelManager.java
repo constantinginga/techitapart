@@ -20,7 +20,6 @@ public class ModelManager implements Model {
     private final ArrayList<String> categories;
     private final Map<String, Category> map;
 
-
     public ModelManager() {
         property = new PropertyChangeProxy<>(this, true);
         persistence = new PersistentDB();

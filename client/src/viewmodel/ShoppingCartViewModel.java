@@ -15,7 +15,6 @@ import utility.observer.listener.LocalListener;
 import utility.observer.subject.LocalSubject;
 import utility.observer.subject.PropertyChangeAction;
 import utility.observer.subject.PropertyChangeProxy;
-
 import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -167,7 +166,6 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
                         if (c.getProduct().getId().equals(id)) {
                             items.remove(c);
                             removeCartItem(c);
-                            System.out.println("Cart item-------------> "+c.toString());
                             break;
                         }
                     }
