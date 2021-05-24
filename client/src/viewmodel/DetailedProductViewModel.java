@@ -13,12 +13,22 @@ import java.io.File;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
+/**
+ * The  Detailed product view model.
+ */
 public class DetailedProductViewModel implements LocalListener<String, Integer> {
-    private LocalModel model;
-    private ViewState state;
-    private StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
-    private BooleanProperty editableProperty;
+    private final LocalModel model;
+    private final ViewState state;
+    private final StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
+    private final BooleanProperty editableProperty;
 
+    /**
+     * Instantiates a new Detailed product view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     * @throws RemoteException the remote exception
+     */
     public DetailedProductViewModel(LocalModel model, ViewState viewState)
             throws RemoteException {
         this.model = model;
@@ -33,13 +43,15 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         model.addListener(this);
     }
 
+    /**
+     * Resets the view.
+     */
     public void reset() {
         try {
             Product product = model
                     .getProduct(state.getProductID(), state.getCategoryName());
             productName.set(product.getName());
             productPrice.set(String.valueOf(product.getPrice()));
-            System.out.println("Client: " + product.getTotal_quantity());
             description.set(product.getDescription());
             totalQuantity.set(String.valueOf(product.getTotal_quantity()));
             productQuantity.set(Integer.parseInt(totalQuantity.get()) == 0 ? "0" : "1");
@@ -50,34 +62,72 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         }
     }
 
+    /**
+     * Gets products name.
+     *
+     * @return the product name
+     */
     public StringProperty getProductName() {
         return productName;
     }
 
+    /**
+     * Gets products price.
+     *
+     * @return the product price
+     */
     public StringProperty getProductPrice() {
         return productPrice;
     }
 
+    /**
+     * Gets products quantity.
+     *
+     * @return the product quantity
+     */
     public StringProperty getProductQuantity() {
         return productQuantity;
     }
 
+    /**
+     * Gets editable property.
+     *
+     * @return the editable property
+     */
     public BooleanProperty getEditableProperty() {
         return editableProperty;
     }
 
+    /**
+     * Gets error label.
+     *
+     * @return the error label
+     */
     public StringProperty getErrorLabel() {
         return errorLabel;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public StringProperty getDescription() {
         return description;
     }
 
+    /**
+     * Gets total quantity.
+     *
+     * @return the total quantity
+     */
     public StringProperty getTotalQuantity() {
         return totalQuantity;
     }
 
+    /**
+     * Add quantity.
+     */
     public void addQuantity() {
         try {
             if (Integer.parseInt(productQuantity.get()) >= model
@@ -96,7 +146,9 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         }
     }
 
-
+    /**
+     * Remove quantity .
+     */
     public void removeQuantity() {
         if (Integer.parseInt(productQuantity.get()) == 1) {
             productQuantity.set(String.valueOf(1));
@@ -108,6 +160,9 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         }
     }
 
+    /**
+     * Orders product with selected quantity.
+     */
     public void orderProduct() {
         try {
             if (model.getProduct(state.getProductID(), state.getCategoryID())
@@ -115,9 +170,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
                 editableProperty.set(false);
                 return;
             }
-
-            System.out.println(productQuantity.getValue()
-            );
 
             if (confirmation()) {
                 model.addProductToCart(model.getProduct(state.getProductID(), state.getCategoryName()), Integer
@@ -143,6 +195,11 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
         return (result.isPresent()) && (result.get() == ButtonType.OK);
     }
 
+    /**
+     * Gets image.
+     *
+     * @return the image
+     */
     public File getImage() {
         try {
             return model.getImage(
@@ -157,7 +214,6 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
         Platform.runLater(() -> {
-            System.out.println("Fire property change in DetailedProductViewProperty");
             if (event.getPropertyName().contains("quantity")) {
                 if (event.getValue1().equals(state.getProductID())) {
                     if (Integer.parseInt(productQuantity.get()) == Integer.parseInt(totalQuantity.get()))

@@ -7,16 +7,21 @@ import model.User;
 
 import java.rmi.RemoteException;
 
+/**
+ * The User view model.
+ */
 public class UserViewModel {
-    private LocalModel localModel;
-    private ViewState state;
-    private StringProperty firstName;
-    private StringProperty lastName;
-    private StringProperty email;
-    private StringProperty username;
-    private StringProperty password;
-    private StringProperty error;
+    private final LocalModel localModel;
+    private final ViewState state;
+    private final StringProperty firstName, lastName, email, username, password, error;
 
+    /**
+     * Instantiates a new User view model.
+     *
+     * @param localModel the local model
+     * @param viewState  the view state
+     * @throws RemoteException the remote exception
+     */
     public UserViewModel(LocalModel localModel, ViewState viewState)
             throws RemoteException {
         this.localModel = localModel;
@@ -29,30 +34,63 @@ public class UserViewModel {
         this.error = new SimpleStringProperty();
     }
 
+    /**
+     * First name property.
+     *
+     * @return the string property
+     */
     public StringProperty firstNameProperty() {
         return firstName;
     }
 
+    /**
+     * Last name property.
+     *
+     * @return the string property
+     */
     public StringProperty lastNameProperty() {
         return lastName;
     }
 
+    /**
+     * Email property.
+     *
+     * @return the string property
+     */
     public StringProperty emailProperty() {
         return email;
     }
 
+    /**
+     * Username property.
+     *
+     * @return the string property
+     */
     public StringProperty usernameProperty() {
         return username;
     }
 
+    /**
+     * Password property .
+     *
+     * @return the string property
+     */
     public StringProperty passwordProperty() {
         return password;
     }
 
+    /**
+     * Error property.
+     *
+     * @return the string property
+     */
     public StringProperty errorProperty() {
         return error;
     }
 
+    /**
+     * Reset the viewmodel.
+     */
     public void reset() {
         try {
             User user = localModel.getUser(state.getUserID());
@@ -67,12 +105,16 @@ public class UserViewModel {
         }
     }
 
+    /**
+     * Edit the user.
+     *
+     * @return the boolean
+     */
     public boolean edit() {
         try {
             User user = new User(firstName.get(), lastName.get(), email.get(), username.get(), password.get());
             localModel.updateUser(user);
         } catch (IllegalArgumentException | RemoteException e) {
-            System.out.println(e.getMessage());
             error.set(e.getMessage());
             return false;
         }

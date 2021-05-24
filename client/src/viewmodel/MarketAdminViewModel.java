@@ -19,16 +19,31 @@ import utility.observer.subject.PropertyChangeProxy;
 import java.io.File;
 import java.rmi.RemoteException;
 
+/**
+ * The  Market admin view model.
+ */
 public class MarketAdminViewModel implements LocalSubject<String, Integer>, LocalListener<String, Integer> {
-    private LocalModel model;
-    private ViewState state;
-    private PropertyChangeAction<String, Integer> property;
-    private StringProperty searchBar;
+    private final LocalModel model;
+    private final ViewState state;
+    private final PropertyChangeAction<String, Integer> property;
+    private final StringProperty searchBar;
+    /**
+     * The Products .
+     */
     ObservableList<Product> products = FXCollections.observableArrayList();
+    /**
+     * The Categories.
+     */
     ObservableList<Category> categories = FXCollections.observableArrayList();
-    private Gson gson;
+    private final Gson gson;
 
 
+    /**
+     * Instantiates a new Market admin view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     */
     public MarketAdminViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
@@ -40,22 +55,46 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
 
     }
 
+    /**
+     * Gets products.
+     *
+     * @return the products
+     */
     public ObservableList<Product> getProducts() {
         return products;
     }
 
+    /**
+     * Gets categories.
+     *
+     * @return the categories
+     */
     public ObservableList<Category> getCategories() {
         return categories;
     }
 
+    /**
+     * Search bar property string property.
+     *
+     * @return the string property
+     */
     public StringProperty searchBarProperty() {
         return searchBar;
     }
 
+    /**
+     * Resets the view.
+     */
     public void reset() {
         getData();
     }
 
+    /**
+     * Gets image .
+     *
+     * @param url the url of image
+     * @return the image
+     */
     public File getImage(String url) {
         try {
             return model.getImage(url);
@@ -66,8 +105,10 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
 
     }
 
+    /**
+     * Gets  all products and categories from model.
+     */
     public void getData() {
-        //Get all products and categories from model
         try {
             products = FXCollections.observableArrayList(model.getAllProductsInCategory(state.categoryName));
             categories = FXCollections.observableArrayList(model.getAllCategories());
@@ -76,7 +117,9 @@ public class MarketAdminViewModel implements LocalSubject<String, Integer>, Loca
         }
     }
 
-
+    /**
+     * Searches the product.
+     */
     public void search() {
         products = FXCollections.observableArrayList(model.searchForProducts(searchBar.get()));
     }

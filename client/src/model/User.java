@@ -6,12 +6,14 @@ import java.util.regex.Pattern;
 
 public class User implements Serializable
 {
+
   private String fName;
   private String lName;
   private String userName;
   private String password;
   private String email;
   private String role;
+
 
   private static final String regex = "^(.+)@(.+)$";
 
@@ -41,6 +43,7 @@ public class User implements Serializable
   }
 
 
+
   public void setlName(String lName) {
     if (lName == null || lName.equals("")){
       throw new IllegalArgumentException("Please enter last name");
@@ -48,12 +51,14 @@ public class User implements Serializable
     this.lName = lName;
   }
 
+
   public void setUserName(String userName) {
     if (userName == null){
       throw new IllegalArgumentException("Please enter username");
     }
     this.userName = userName;
   }
+
 
   public void setPassword(String password) {
     if (password == null){
@@ -76,6 +81,7 @@ public class User implements Serializable
     this.email = email;
   }
 
+
   public void setRole(String role){
     this.role = role;
   }
@@ -83,6 +89,7 @@ public class User implements Serializable
   public boolean isAdmin(){
     return role.equalsIgnoreCase("admin");
   }
+
 
   public String getlName() {
     return lName;
@@ -115,5 +122,7 @@ public class User implements Serializable
   {
     return userName + ", password = " + password + ", " ;
   }
+
+
 
 }

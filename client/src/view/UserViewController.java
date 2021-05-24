@@ -3,7 +3,6 @@ package view;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.AccessibleRole;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -24,7 +23,9 @@ public class UserViewController extends ViewController
 
 
     @Override protected void init() throws InterruptedException
+
     {
+
         firstName.textProperty().bindBidirectional(super.getViewModelFactory().getUserViewModel().firstNameProperty());
         lastName.textProperty().bindBidirectional(super.getViewModelFactory().getUserViewModel().lastNameProperty());
         email.textProperty().bindBidirectional(super.getViewModelFactory().getUserViewModel().emailProperty());
@@ -32,6 +33,7 @@ public class UserViewController extends ViewController
         password.textProperty().bindBidirectional(super.getViewModelFactory().getUserViewModel().passwordProperty());
         errorLabel.textProperty().bind(super.getViewModelFactory().getUserViewModel().errorProperty());
         enablingOfTextFields(true);
+
     }
 
     @Override public void reset() throws InterruptedException

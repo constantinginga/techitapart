@@ -10,16 +10,25 @@ import utility.observer.listener.LocalListener;
 import java.io.File;
 import java.rmi.RemoteException;
 
-public class DetailedProductAdminViewModel implements LocalListener<String, Integer>
-{
-    private LocalModel model;
-    private ViewState state;
-    private StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
-    private BooleanProperty editableProperty;
+/**
+ * The  Detailed product  view model for admin.
+ */
+public class DetailedProductAdminViewModel implements LocalListener<String, Integer> {
+    private final LocalModel model;
+    private final ViewState state;
+    private final StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
+    private final BooleanProperty editableProperty;
 
+
+    /**
+     * Instantiates a new Detailed product admin view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     * @throws RemoteException the remote exception
+     */
     public DetailedProductAdminViewModel(LocalModel model, ViewState viewState)
-        throws RemoteException
-    {
+            throws RemoteException {
         this.model = model;
         this.state = viewState;
         productName = new SimpleStringProperty();
@@ -32,90 +41,112 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         model.addListener(this);
     }
 
-    public void reset()
-    {
-        try
-        {
+    /**
+     * Resets the view.
+     */
+    public void reset() {
+        try {
             Product product = model
-                .getProduct(state.getProductID(), state.getCategoryName());
+                    .getProduct(state.getProductID(), state.getCategoryName());
             productName.set(product.getName());
             productPrice.set(String.valueOf(product.getPrice()));
-            System.out.println("Client: " + product.getTotal_quantity());
             description.set(product.getDescription());
             totalQuantity.set(String.valueOf(product.getTotal_quantity()));
             productQuantity.set(Integer.parseInt(totalQuantity.get()) == 0 ? "0" : "1");
             errorLabel.set("");
-            if (product.getTotal_quantity() <= 0)
-            {
-                editableProperty.set(false);
-            }
-            else
-            {
-                editableProperty.set(true);
-            }
-        }
-        catch (RemoteException exception)
-        {
+            editableProperty.set(product.getTotal_quantity() > 0);
+        } catch (RemoteException exception) {
             exception.printStackTrace();
         }
     }
 
-    public StringProperty getProductName()
-    {
+    /**
+     * Gets product name.
+     *
+     * @return the product name
+     */
+    public StringProperty getProductName() {
         return productName;
     }
 
-    public StringProperty getProductPrice()
-    {
+    /**
+     * Gets product price.
+     *
+     * @return the product price
+     */
+    public StringProperty getProductPrice() {
         return productPrice;
     }
 
-    public StringProperty getProductQuantity()
-    {
+    /**
+     * Gets product quantity.
+     *
+     * @return the product quantity
+     */
+    public StringProperty getProductQuantity() {
         return productQuantity;
     }
 
-    public BooleanProperty getEditableProperty()
-    {
+    /**
+     * Gets editable property.
+     *
+     * @return the editable property
+     */
+    public BooleanProperty getEditableProperty() {
         return editableProperty;
     }
 
-    public StringProperty getErrorLabel()
-    {
+    /**
+     * Gets error label.
+     *
+     * @return the error label
+     */
+    public StringProperty getErrorLabel() {
         return errorLabel;
     }
 
-    public StringProperty getDescription()
-    {
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
+    public StringProperty getDescription() {
         return description;
     }
 
-    public StringProperty getTotalQuantity() { return totalQuantity; }
+    /**
+     * Gets total quantity.
+     *
+     * @return the total quantity
+     */
+    public StringProperty getTotalQuantity() {
+        return totalQuantity;
+    }
 
-    public void addQuantity()
-    {
-        try
-        {
+    /**
+     * Add quantity for product.
+     */
+    public void addQuantity() {
+        try {
             if (Integer.parseInt(productQuantity.get()) >= model
-                .getProduct(state.getProductID(), state.getCategoryName())
-                .getTotal_quantity())
-            {
+                    .getProduct(state.getProductID(), state.getCategoryName())
+                    .getTotal_quantity()) {
                 productQuantity.set(String.valueOf(
-                    model.getProduct(state.getProductID(), state.getCategoryName())
-                        .getTotal_quantity()));
-            }
-            else
-            {
+                        model.getProduct(state.getProductID(), state.getCategoryName())
+                                .getTotal_quantity()));
+            } else {
                 productQuantity
-                    .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
+                        .set(String.valueOf(Integer.parseInt(productQuantity.get()) + 1));
             }
 
-        }
-        catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Remove product from system.
+     */
     public void removeProduct() {
         try {
 
@@ -125,44 +156,39 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         }
     }
 
-
-    public void removeQuantity()
-    {
-        if (Integer.parseInt(productQuantity.get()) == 1)
-        {
+    /**
+     * Remove quantity for product.
+     */
+    public void removeQuantity() {
+        if (Integer.parseInt(productQuantity.get()) == 1) {
             productQuantity.set(String.valueOf(1));
-        }
-        else if (Integer.parseInt(productQuantity.get()) == 0)
-        {
+        } else if (Integer.parseInt(productQuantity.get()) == 0) {
             productQuantity.set(String.valueOf(0));
-        }
-        else
-        {
+        } else {
             productQuantity
-                .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
+                    .set(String.valueOf(Integer.parseInt(productQuantity.get()) - 1));
         }
     }
 
-
-    public File getImage()
-    {
-        try
-        {
+    /**
+     * Gets image of product.
+     *
+     * @return the image
+     */
+    public File getImage() {
+        try {
             return model.getImage(
-                (model.getProduct(state.getProductID(), state.getCategoryName()))
-                    .getImgSrc());
-        }
-        catch (RemoteException e)
-        {
+                    (model.getProduct(state.getProductID(), state.getCategoryName()))
+                            .getImgSrc());
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @Override public void propertyChange(ObserverEvent<String, Integer> event)
-    {
+    @Override
+    public void propertyChange(ObserverEvent<String, Integer> event) {
         Platform.runLater(() -> {
-            System.out.println("Fire property change in DetailedProductViewProperty");
             if (event.getPropertyName().contains("quantity")) {
                 if (event.getValue1().equals(state.getProductID())) {
                     if (Integer.parseInt(productQuantity.get()) == Integer.parseInt(totalQuantity.get()))

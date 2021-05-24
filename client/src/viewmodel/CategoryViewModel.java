@@ -4,28 +4,43 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.LocalModel;
 
-public class CategoryViewModel
-{
-    private LocalModel model;
-    private ViewState state;
-    private StringProperty categoryName;
+/**
+ * The  Category view model.
+ */
+public class CategoryViewModel {
+    private final LocalModel model;
+    private final ViewState state;
+    private final StringProperty categoryName;
 
-    public CategoryViewModel(LocalModel model, ViewState viewState){
-        this.model= model;
+
+    /**
+     * Instantiates a new Category view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     */
+    public CategoryViewModel(LocalModel model, ViewState viewState) {
+        this.model = model;
         this.state = viewState;
-
         categoryName = new SimpleStringProperty();
     }
 
-    public StringProperty categoryNameProperty()
-    {
+    /**
+     * Getter for category name property.
+     *
+     * @return the string property
+     */
+    public StringProperty categoryNameProperty() {
         return categoryName;
     }
 
-    public void reset(){
-        try{
+    /**
+     * Resets the category view.
+     */
+    public void reset() {
+        try {
             categoryName.set(model.getCategory(state.getCategoryName()).getCategoryName());
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
