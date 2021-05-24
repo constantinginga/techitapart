@@ -20,6 +20,9 @@ import java.nio.file.Files;
 import java.rmi.RemoteException;
 import java.time.LocalTime;
 
+/**
+ * The  Add product view model.
+ */
 public class AddProductViewModel {
     private LocalModel model;
     private ViewState state;
@@ -34,6 +37,12 @@ public class AddProductViewModel {
     private StringProperty selectedCategory;
 
 
+    /**
+     * Instantiates a new Add product view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     */
     public AddProductViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
@@ -54,38 +63,81 @@ public class AddProductViewModel {
         categoryList.remove("General");
     }
 
+    /**
+     * Gets name of product.
+     *
+     * @return the name
+     */
     public StringProperty getName() {
         return name;
     }
 
+    /**
+     * Gets description  of product.
+     *
+     * @return the description
+     */
     public StringProperty getDescription() {
         return description;
     }
 
+    /**
+     * Gets error label.
+     *
+     * @return the error label
+     */
     public StringProperty getErrorLabel() {
         return errorLabel;
     }
 
+    /**
+     * Gets quantity  of product.
+     *
+     * @return the quantity
+     */
     public IntegerProperty getQuantity() {
         return quantity;
     }
 
+    /**
+     * Gets image property  of product.
+     *
+     * @return the image property
+     */
     public ObjectProperty<Image> getImageProperty() {
         return imageProperty;
     }
 
+    /**
+     * Gets category  for product .
+     *
+     * @return the category list
+     */
     public ObservableList<String> getCategoryList() {
         return categoryList;
     }
 
+    /**
+     * Gets price of product.
+     *
+     * @return the price
+     */
     public DoubleProperty getPrice() {
         return price;
     }
 
+    /**
+     * Update selected category  for product.
+     *
+     * @param newValue the new value
+     */
     public void updateSelectedCategory(String newValue) {
         selectedCategory.set(newValue);
     }
 
+    /**
+     * Reset the propertys.
+     */
     public void reset() {
         name.set("");
         description.set("");
@@ -96,6 +148,11 @@ public class AddProductViewModel {
 
     }
 
+    /**
+     * Choose image for product.
+     *
+     * @param stage the stage
+     */
     public void chooseImage(Stage stage) {
         fileChooser = new FileChooser();
         fileChooser.setTitle("Open image");
@@ -128,6 +185,11 @@ public class AddProductViewModel {
 
     }
 
+    /**
+     * Adds product.
+     *
+     * @return the success
+     */
     public boolean addProduct() {
 
         try {

@@ -18,15 +18,30 @@ import java.io.File;
 import java.rmi.RemoteException;
 
 
+/**
+ * The  Market user view model.
+ */
 public class MarketUserViewModel implements LocalSubject<String, Integer>, LocalListener<String, Integer> {
     private LocalModel model;
     private ViewState state;
     private StringProperty searchBar;
     private Gson gson;
     private PropertyChangeAction<String, Integer> property;
+    /**
+     * The Products.
+     */
     ObservableList<Product> products = FXCollections.observableArrayList();
+    /**
+     * The Categories.
+     */
     ObservableList<Category> categories = FXCollections.observableArrayList();
 
+    /**
+     * Instantiates a new Market user view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     */
     public MarketUserViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
@@ -37,28 +52,55 @@ public class MarketUserViewModel implements LocalSubject<String, Integer>, Local
         property = new PropertyChangeProxy<>(this);
     }
 
+    /**
+     * Gets products.
+     *
+     * @return the products
+     */
     public ObservableList<Product> getProducts() {
         return products;
     }
 
+    /**
+     * Gets categories.
+     *
+     * @return the categories
+     */
     public ObservableList<Category> getCategories() {
         return categories;
     }
 
+    /**
+     * Search bar property string property.
+     *
+     * @return the string property
+     */
     public StringProperty searchBarProperty() {
         return searchBar;
     }
 
 
+    /**
+     * Reset.
+     */
     public void reset() {
         System.out.println(state.getUserID());
         getData();
     }
 
+    /**
+     * Searches for the products.
+     */
     public void search() {
         products = FXCollections.observableArrayList(model.searchForProducts(searchBar.get()));
     }
 
+    /**
+     * Gets image.
+     *
+     * @param url the url
+     * @return the image
+     */
     public File getImage(String url) {
         try {
             return model.getImage(url);
@@ -69,6 +111,9 @@ public class MarketUserViewModel implements LocalSubject<String, Integer>, Local
 
     }
 
+    /**
+     * Gets Get all products and categories.
+     */
     public void getData() {
         //Get all products and categories from model
         try {

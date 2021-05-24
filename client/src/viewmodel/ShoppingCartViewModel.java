@@ -19,14 +19,24 @@ import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * The Shopping cart view model.
+ */
 public class ShoppingCartViewModel implements LocalListener<String, Integer>, LocalSubject<String, Integer> {
     private LocalModel model;
     private ViewState state;
+
     ObservableList<CartItem> items;
     private StringProperty totalItems, totalPrice, error;
     private PropertyChangeAction<String, Integer> property;
     private Gson gson;
 
+    /**
+     * Instantiates a new Shopping cart view model.
+     *
+     * @param model the model
+     * @param state the state
+     */
     public ShoppingCartViewModel(LocalModel model, ViewState state) {
         this.model = model;
         this.state = state;
@@ -40,18 +50,39 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         reset();
     }
 
+    /**
+     * Gets error.
+     *
+     * @return the error
+     */
     public StringProperty getError() {
         return error;
     }
 
+    /**
+     * Gets total items.
+     *
+     * @return the total items
+     */
     public StringProperty getTotalItems() {
         return totalItems;
     }
 
+    /**
+     * Gets total price.
+     *
+     * @return the total price
+     */
     public StringProperty getTotalPrice() {
         return totalPrice;
     }
 
+    /**
+     * Remove item int.
+     *
+     * @param title the title
+     * @return the int
+     */
     public int removeItem(String title) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getProduct().getName().equals(title)) {
@@ -64,6 +95,9 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         return -1;
     }
 
+    /**
+     * Resets the view.
+     */
     public void reset() {
         error.set("");
         try {
@@ -87,14 +121,30 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         totalPrice.set(String.valueOf(tempPrice));
     }
 
+    /**
+     * Sets error.
+     *
+     * @param errorMessage the error message
+     */
     public void setError(String errorMessage) {
         error.set(errorMessage);
     }
 
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
     public ObservableList<CartItem> getItems() {
         return items;
     }
 
+    /**
+     * Gets image.
+     *
+     * @param index the index of product
+     * @return the image
+     */
     public File getImage(int index) {
         try {
             return model.getImage(items.get(index).getProduct().getImgSrc());
@@ -104,12 +154,19 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
 
         return null;
     }
-    public int getCurrentQuantity(String product_id){
+
+    /**
+     * Get current quantity.
+     *
+     * @param productId the product id
+     * @return the int
+     */
+    public int getCurrentQuantity(String productId){
         int quantity = -1;
         try {
             ArrayList<Product> products = model.getAllProducts();
             for (Product p : products) {
-                if (p.getId().equals(product_id)) quantity = p.getTotal_quantity();
+                if (p.getId().equals(productId)) quantity = p.getTotal_quantity();
             }
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -118,6 +175,12 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         return quantity;
     }
 
+    /**
+     * Update cart items quantity.
+     *
+     * @param cartItem the cart item
+     * @param quantity the new quantity
+     */
     public void updateCartItemQuantity(CartItem cartItem,  int quantity){
         try {
             model.updateCartItemQuantity(cartItem, quantity, state.getUserID());
@@ -129,6 +192,11 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         }
     }
 
+    /**
+     * Remove cart item.
+     *
+     * @param cartItem the cart item
+     */
     public void removeCartItem(CartItem cartItem){
         try {
             model.removeProductFromCart(cartItem, state.getUserID());
@@ -138,6 +206,9 @@ public class ShoppingCartViewModel implements LocalListener<String, Integer>, Lo
         }
     }
 
+    /**
+     * Checkouts.
+     */
     public void checkout() {
         if (items.size() != 0) {
             try {

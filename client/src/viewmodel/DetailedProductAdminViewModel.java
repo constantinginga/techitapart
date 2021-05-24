@@ -10,6 +10,9 @@ import utility.observer.listener.LocalListener;
 import java.io.File;
 import java.rmi.RemoteException;
 
+/**
+ * The  Detailed product  view model for admin.
+ */
 public class DetailedProductAdminViewModel implements LocalListener<String, Integer>
 {
     private LocalModel model;
@@ -17,6 +20,13 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
     private StringProperty productName, productPrice, productQuantity, errorLabel, description, totalQuantity;
     private BooleanProperty editableProperty;
 
+    /**
+     * Instantiates a new Detailed product admin view model.
+     *
+     * @param model     the model
+     * @param viewState the view state
+     * @throws RemoteException the remote exception
+     */
     public DetailedProductAdminViewModel(LocalModel model, ViewState viewState)
         throws RemoteException
     {
@@ -32,6 +42,9 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         model.addListener(this);
     }
 
+    /**
+     * Resets the view.
+     */
     public void reset()
     {
         try
@@ -60,38 +73,76 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
         }
     }
 
+    /**
+     * Gets product name.
+     *
+     * @return the product name
+     */
     public StringProperty getProductName()
     {
         return productName;
     }
 
+    /**
+     * Gets product price.
+     *
+     * @return the product price
+     */
     public StringProperty getProductPrice()
     {
         return productPrice;
     }
 
+    /**
+     * Gets product quantity.
+     *
+     * @return the product quantity
+     */
     public StringProperty getProductQuantity()
     {
         return productQuantity;
     }
 
+    /**
+     * Gets editable property.
+     *
+     * @return the editable property
+     */
     public BooleanProperty getEditableProperty()
     {
         return editableProperty;
     }
 
+    /**
+     * Gets error label.
+     *
+     * @return the error label
+     */
     public StringProperty getErrorLabel()
     {
         return errorLabel;
     }
 
+    /**
+     * Gets description.
+     *
+     * @return the description
+     */
     public StringProperty getDescription()
     {
         return description;
     }
 
+    /**
+     * Gets total quantity.
+     *
+     * @return the total quantity
+     */
     public StringProperty getTotalQuantity() { return totalQuantity; }
 
+    /**
+     * Add quantity for product.
+     */
     public void addQuantity()
     {
         try
@@ -116,6 +167,10 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
             e.printStackTrace();
         }
     }
+
+    /**
+     * Remove product from system.
+     */
     public void removeProduct() {
         try {
 
@@ -126,6 +181,9 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
     }
 
 
+    /**
+     * Remove quantity for product.
+     */
     public void removeQuantity()
     {
         if (Integer.parseInt(productQuantity.get()) == 1)
@@ -144,6 +202,11 @@ public class DetailedProductAdminViewModel implements LocalListener<String, Inte
     }
 
 
+    /**
+     * Gets image of product.
+     *
+     * @return the image
+     */
     public File getImage()
     {
         try

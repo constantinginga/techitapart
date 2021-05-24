@@ -12,6 +12,9 @@ import model.*;
 
 import java.rmi.RemoteException;
 
+/**
+ * The User list view model.
+ */
 public class UserListViewModel {
     private ListProperty<String> users;
     private ListProperty<Order> orders;
@@ -25,6 +28,13 @@ public class UserListViewModel {
     private StringProperty error;
     private SimpleStringProperty selectedUserProperty;
 
+    /**
+     * Instantiates a new User list view model.
+     *
+     * @param localModel the local model
+     * @param viewState  the view state
+     * @throws RemoteException the remote exception
+     */
     public UserListViewModel(LocalModel localModel, ViewState viewState)
             throws RemoteException {
         this.localModel = localModel;
@@ -40,38 +50,83 @@ public class UserListViewModel {
         selectedUserProperty = new SimpleStringProperty();
     }
 
+    /**
+     * Gets orders.
+     *
+     * @return the orders
+     */
     public ListProperty<Order> getOrders() {
         return orders;
     }
 
+    /**
+     * Gets users.
+     *
+     * @return the users
+     */
     public ListProperty<String> getUsers() {
         return users;
     }
 
+    /**
+     * First name property string property.
+     *
+     * @return the string property
+     */
     public StringProperty firstNameProperty() {
         return firstName;
     }
 
+    /**
+     * Last name property string property.
+     *
+     * @return the string property
+     */
     public StringProperty lastNameProperty() {
         return lastName;
     }
 
+    /**
+     * Email property string property.
+     *
+     * @return the string property
+     */
     public StringProperty emailProperty() {
         return email;
     }
 
+    /**
+     * Username property string property.
+     *
+     * @return the string property
+     */
     public StringProperty usernameProperty() {
         return username;
     }
 
+    /**
+     * Password property string property.
+     *
+     * @return the string property
+     */
     public StringProperty passwordProperty() {
         return password;
     }
 
+    /**
+     * Error property string property.
+     *
+     * @return the string property
+     */
     public StringProperty errorProperty() {
         return error;
     }
 
+    /**
+     * Gets all users.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void getAllUsers() throws InterruptedException {
         Platform.runLater(() -> {
             try {
@@ -85,10 +140,18 @@ public class UserListViewModel {
         });
     }
 
+    /**
+     * Sets selected exercise property.
+     *
+     * @param selectedExerciseProperty the selected exercise property
+     */
     public void setSelectedExerciseProperty(String selectedExerciseProperty) {
         this.selectedUserProperty.set(selectedExerciseProperty);
     }
 
+    /**
+     * Reset the viewmodel.
+     */
     public void reset() {
         try {
 
@@ -104,6 +167,11 @@ public class UserListViewModel {
         }
     }
 
+    /**
+     * Edit .
+     *
+     * @return the success
+     */
     public boolean edit() {
         try {
             User user = new User(firstName.get(), lastName.get(), email.get(),
@@ -116,6 +184,9 @@ public class UserListViewModel {
         return true;
     }
 
+    /**
+     * Update details for selected user.
+     */
     public void updateDetails() {
         Platform.runLater(() -> {
             try {
