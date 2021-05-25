@@ -1,7 +1,12 @@
-/*
+
 package model;
 
 import org.junit.jupiter.api.AfterEach;
+
+
+import java.sql.Time;
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ModelManagerTest {
@@ -14,52 +19,67 @@ class ModelManagerTest {
         model = new ModelManager();
     }
 
-    @AfterEach void tearDown(){
+    @AfterEach
+    void tearDown() {
         System.out.println("<-- tearDown()");
     }
+
     @org.junit.jupiter.api.Test
     void registerUSerSuccessfullNull() {
         assertThrows(IllegalArgumentException.class, () -> {
-            model.registerUSer(null, null, null, null, null, null);
+            model.registerUSer(new User(null, null, null, null, null));
         });
     }
 
-   */
-/* @org.junit.jupiter.api.Test
-    void registerUSerSuccessfullOne() {
-        UserProfile user = model
-                .registerUSer("Jakub", "Platzek", "jakub.platzek@gmail.com", "Kompera_SVK", "yoMamah69", Role.Consumer);
-        assertEquals("Kompera_SVK", user.getUsername());
-        assertEquals(0, user.getOrderList().getAllOrders().size());
-    }*//*
 
-    */
-/*
-        @org.junit.jupiter.api.Test
-        void loginNull() {
-            String user = model.login(null, null);
-            assertEquals(false, user.booleanValue());
+    @org.junit.jupiter.api.Test
+    void registerUSerSuccessfullOne() {
+        //throws exception if already created account
+
+        try {
+
+            model.registerUSer(new User("Jakubs", "Platzek", "jakub.platzek@gmail.com", "Kompera_SVK", "yoMamah69"));
+        } catch (Exception e) {
+            System.out.println("Account already exists");
         }
-        @org.junit.jupiter.api.Test
-        void loginSuccesfull() {
-            Boolean user = model.login("Kompera_SVK", "yoMamah69");
-            assertEquals(true, user.booleanValue());
-        }
-    *//*
+        User user = model.getUser("Kompera_SVK");
+        assertEquals("Kompera_SVK", user.getUsername());
+        assertEquals(0, model.getAllOrdersByUsername(user.getUsername()).size());
+    }
+
+
+    @org.junit.jupiter.api.Test
+    void loginNull() {
+        assertThrows(IllegalArgumentException.class, () -> {
+
+            User user = model.login(null, null);
+        });
+    }
+
+    @org.junit.jupiter.api.Test
+    void loginSuccesfull() {
+        User user = model.login("Kompera_SVK", "yoMamah69");
+        assertEquals("Kompera_SVK", user.getUsername());
+    }
+
 
     @org.junit.jupiter.api.Test
     void getAllCategoryMany() {
-        assertEquals(4 , model.getAllCategory().size());
+        //hard to test
+        assertEquals(4, model.getAllCategory().size());
     }
 
     @org.junit.jupiter.api.Test
     void addProductZero() {
-        assertEquals(0, model.getAllProductsInCategory("Headphones").size());
-        assertEquals(0, model.getAllProducts().size());
+        assertThrows(NullPointerException.class, () -> {
+            assertEquals(0, model.getAllProductsInCategory("Headphones").size());
+            assertEquals(0, model.getAllProducts().size());
+        });
     }
 
     @org.junit.jupiter.api.Test
     void addProductOne() {
+        //can throw error if test already run before
         model.addProduct(new Product("Marshall", "Marshall headphone"), "Headphones");
         assertEquals(1, model.getAllProductsInCategory("Headphones").size());
         assertEquals(1, model.getAllProducts().size());
@@ -67,6 +87,7 @@ class ModelManagerTest {
 
     @org.junit.jupiter.api.Test
     void addProductMany() {
+        //Hard to run this test again and again because maybe the products exist already
         model.addProduct(new Product("Niva", "Niva headphone"), "Headphones");
         model.addProduct(new Product("SDX", "SDX headphone"), "Headphones");
         assertEquals(3, model.getAllProductsInCategory("Headphones").size());
@@ -75,8 +96,9 @@ class ModelManagerTest {
 
     @org.junit.jupiter.api.Test
     void addProductTooMany() {
-        for(int i = 0; i < 997; i++){
-            model.addProduct(new Product("Debil" +i, "Debilak" +i), "Headphones");
+        // error if the products already exist
+        for (int i = 0; i < 997; i++) {
+            model.addProduct(new Product("Debil" + i, "Debilak" + i), "Headphones");
         }
         assertEquals(1000, model.getAllProductsInCategory("Headphones").size());
         assertEquals(1000, model.getAllProducts().size());
@@ -84,21 +106,19 @@ class ModelManagerTest {
 
     @org.junit.jupiter.api.Test
     void getProductNull() {
-        Product product = model.getProduct(null, "Headphones");
-        assertEquals(null, product);
+        assertThrows(NullPointerException.class, () -> {
+            Product product = model.getProduct(null, "Headphones");
+        });
     }
 
     @org.junit.jupiter.api.Test
     void getProductCategoryNameEqualsGeneralButProductIsNull() {
-        Product product = model.getProduct(null, "general");
-        assertEquals(null, product);
+        assertThrows(NullPointerException.class, () -> {
+
+            Product product = model.getProduct(null, "general");
+        });
     }
 
-    @org.junit.jupiter.api.Test
-    void getProductCategoryNameEqualsGeneral() {
-        Product product = model.getProduct("25", "general");
-        assertEquals("Debil21", product.getName());
-    }
 
     @org.junit.jupiter.api.Test
     void getProductCategoryNameEqualsNull() {
@@ -109,16 +129,12 @@ class ModelManagerTest {
 
     @org.junit.jupiter.api.Test
     void getProductOne() {
+        //also can throw a errro if product never added
         Product product = model.getProduct("25", "Headphones");
         assertEquals("Debil21", product.getName());
     }
 
 
-    @org.junit.jupiter.api.Test
-    void getAllProducts() {
-        model.getAllProducts();
-        assertEquals(1000, model.getAllProducts().size());
-    }
     @org.junit.jupiter.api.Test
     void getImage() {
 
@@ -178,4 +194,88 @@ class ModelManagerTest {
         assertEquals(-1, model.getProduct(product.getId(), "SSD").getPrice());
 
     }
-}*/
+
+
+    /// White box testing
+    @org.junit.jupiter.api.Test
+    void registerUserWhiteBox() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User(null, "bob", "kkasdasd@gmasd.com", String.valueOf(LocalTime.now().getNano()), "sdfsdffFF4324FF"));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User("Test", null, "kkasdasd@gmasd.com", String.valueOf(LocalTime.now().getNano()), "sdfsdffFF4324FF"));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User("Test", "bob", null, String.valueOf(LocalTime.now().getNano()), "sdfsdffFF4324FF"));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User("TEST", "bob", "kkasdasd", String.valueOf(LocalTime.now().getNano()), "sdfsdffFF4324FF"));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User("TEST", "bob", "kkasdasd@gmasd.com", null, "sdfsdffFF4324FF"));
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.registerUSer(new User("TEST", "bob", "kkasdasd@gmasd.com", String.valueOf(LocalTime.now().getNano()), null));
+        });
+        User user = model.registerUSer(new User("TEST", "bob", "kkasdasd@gmasd.com", String.valueOf(LocalTime.now().getNano()), "dsfsdf"));
+        assertEquals("TEST", user.getfName());
+    }
+
+    @org.junit.jupiter.api.Test
+    void loginWhiteBox() {
+        //loging in sets only username and password?
+        final String username = String.valueOf(LocalTime.now().getNano());
+        User user = model.registerUSer(new User("TEST", "bob", "kkasdasd@gmasd.com", username, "dsfsdf"));
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.login(String.valueOf(LocalTime.now().getNano()), null);
+        });
+        assertEquals(true, user.getUsername().equals(model.login(username, "dsfsdf").getUsername()));
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateUserWhiteBox() {
+        final String username = String.valueOf(LocalTime.now().getNano());
+        model.registerUSer(new User("TEST", "bob", "kkasdasd@gmasd.com", username, "dsfsdf"));
+        User user = model.getUser(username);
+        assertThrows(IllegalArgumentException.class, () -> {
+            user.setfName(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            user.setlName(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            user.setEmail(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            user.setEmail("asdad");
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            user.setPassword(null);
+        });
+        user.setfName("fname");
+        user.setlName("lname");
+        user.setEmail("tester@gsdg.com");
+        user.setPassword("password123");
+        model.updateUser(user);
+        User user1 = model.getUser(username);
+        assertEquals("fname", user1.getfName());
+        assertEquals("lname", user1.getlName());
+        assertEquals("tester@gsdg.com", user1.getEmail());
+        assertEquals("password123", user1.getPassword());
+
+    }
+    @org.junit.jupiter.api.Test
+    void addProductWhiteBox() {
+        //TODO finish this test(Klaus)
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Product("","d");
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Product("asd","");
+        });
+//        assertThrows(IllegalArgumentException.class, () -> {
+//             model.addProduct();
+//        });
+    }
+
+}
