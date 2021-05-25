@@ -10,6 +10,8 @@ import java.util.ArrayList;
  */
 public interface Model extends LocalSubject<String, Integer> {
 
+
+
     /**
      * Account  @param user to register user
      *

@@ -37,7 +37,6 @@ public class ModelManager implements Model {
         map.get("General").getAllProduct().addAll(getAllProducts());
     }
 
-
     /**
      * Register And Login
      **/
@@ -113,7 +112,6 @@ public class ModelManager implements Model {
         Product product1 = persistence.addProductToCategoryDB(product, categoryName);
         Gson gson = new Gson();
         String g1 = gson.toJson(product);
-        System.out.println("AddProduct property change in ModelManager");
         getCategory(categoryName).addProduct(product1);
         getCategory("General").addProduct(product1);
         property.firePropertyChange("addProduct", g1, -1);
@@ -173,8 +171,6 @@ public class ModelManager implements Model {
         getCategory(categoryName).removeProductById(id);
         // removes from specific category
         getCategory(category).removeProductById(id);
-        System.out.println("REMOVE FROM CATEGORY: " + category);
-        // ??????????
         property.firePropertyChange("removeProduct", id, -1);
     }
 
@@ -186,7 +182,6 @@ public class ModelManager implements Model {
                 }
             }
         }
-
         return null;
     }
 

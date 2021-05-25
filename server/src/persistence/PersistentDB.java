@@ -2,6 +2,10 @@ package persistence;
 
 import model.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PersistentDB implements Persistence {
@@ -18,7 +22,6 @@ public class PersistentDB implements Persistence {
         orderDB = new OrderDB();
         productDB = new ProductDB();
     }
-
 
     @Override
     public User registerNewUserDB(User user) {
