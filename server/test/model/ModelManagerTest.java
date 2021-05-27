@@ -318,16 +318,12 @@ class ModelManagerTest
 
   @org.junit.jupiter.api.Test void addProductWhiteBox()
   {
-    //TODO finish this test(Klaus)
     assertThrows(IllegalArgumentException.class, () -> {
       new Product("", "d");
     });
     assertThrows(IllegalArgumentException.class, () -> {
       new Product("asd", "");
     });
-    //        assertThrows(IllegalArgumentException.class, () -> {
-    //             model.addProduct();
-    //        });
   }
 
   @Test void addProductToCartWhiteBox()
