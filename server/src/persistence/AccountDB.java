@@ -22,6 +22,7 @@ public class AccountDB implements AccountPersistence {
             statement.executeUpdate();
             return user;
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new IllegalArgumentException(errorMessage(e.getMessage()));
         }
     }
@@ -32,6 +33,8 @@ public class AccountDB implements AccountPersistence {
             return  "Username must be at least 5 characters long";
         else if (e.contains("ERROR: new row for relation \"User\" violates check constraint \"User_password_check\""))
             return  "Password must be at least 6 characters long and contain at least one uppercase character, one number";
+        else if (e.contains("ERROR: duplicate key value violates unique constraint \"User_pkey\""))
+            return "Username already exists";
         return null;
     }
 
