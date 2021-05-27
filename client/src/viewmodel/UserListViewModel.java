@@ -7,6 +7,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Order;
+import model.User;
 import model.*;
 
 
@@ -135,12 +137,12 @@ public class UserListViewModel {
     }
 
     /**
-     * Sets selected exercise property.
+     * Sets selected user property.
      *
-     * @param selectedExerciseProperty the selected exercise property
+     * @param selectedUserProperty the selected user property
      */
-    public void setSelectedExerciseProperty(String selectedExerciseProperty) {
-        this.selectedUserProperty.set(selectedExerciseProperty);
+    public void setSelectedUserProperty(String selectedUserProperty) {
+        this.selectedUserProperty.set(selectedUserProperty);
     }
 
     /**

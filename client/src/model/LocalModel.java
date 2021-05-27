@@ -20,8 +20,6 @@ public interface LocalModel extends LocalSubject<String, Integer>
 
     User login(String username, String password) throws RemoteException;
 
-//    UserProfile getUserProfile() throws RemoteException;
-
     User getUser(String username) throws RemoteException;
 
     ArrayList<String> getAllUsernames() throws RemoteException;
@@ -59,6 +57,7 @@ public interface LocalModel extends LocalSubject<String, Integer>
     File getImage(String url) throws RemoteException;
 
     void uploadImage(File file, String url);
+
     ArrayList<Product> searchForProducts(String productName);
 
     /**

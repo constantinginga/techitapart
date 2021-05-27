@@ -2,48 +2,79 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
+/**
+ * Category object that holds  list of products.
+ */
 public class Category implements Serializable {
-    private ArrayList<Product> productList;
-    private String categoryName;
+    private final ArrayList<Product> productList;
+    private final String categoryName;
 
-
-    public Category(String newCategoryName){
+    /**
+     * Constructor a new Category.
+     *
+     * @param newCategoryName the new category name
+     */
+    public Category(String newCategoryName) {
         productList = new ArrayList<>();
         categoryName = newCategoryName;
     }
 
+    /**
+     * Returns the name of category.
+     *
+     * @return the category name
+     */
     public String getCategoryName() {
         return categoryName;
     }
 
-    public ArrayList<Product> getAllProduct(){
+    /**
+     * gets  all product from this catagory.
+     *
+     * @return the array list
+     */
+    public ArrayList<Product> getAllProduct() {
         return productList;
     }
 
-
-    public void addProduct(Product newProduct){
-       productList.add(newProduct);
+    /**
+     * Adds product to category.
+     *
+     * @param newProduct the new product to be added
+     */
+    public void addProduct(Product newProduct) {
+        productList.add(newProduct);
     }
 
-    public void removeProduct(Product newProduct){
-        productList.remove(newProduct);
+    /**
+     * Removes  product from this category.
+     *
+     * @param product the product to remove
+     */
+    public void removeProduct(Product product) {
+        productList.remove(product);
     }
 
-    public void removeProductById(String id){
+    /**
+     * Remove product by id from catagory
+     *
+     * @param id the id of prodcut
+     */
+    public void removeProductById(String id) {
 
         productList.removeIf(product -> product.getId().equals(id));
     }
 
-    public ArrayList<Product> getAllProductComponentsForCategory() {
-        return productList;
-    }
+    /**
+     * Get product product by id.
+     *
+     * @param id the id of product
+     * @return the product
+     */
+    public Product getProduct(String id) {
 
-
-    public Product getProduct(String id){
-
-        for (Product product: productList){
+        for (Product product : productList) {
             if (product.getId().equals(id))
                 return product;
         }
@@ -51,43 +82,43 @@ public class Category implements Serializable {
         return null;
     }
 
+    /**
+     * Update products quantity.
+     *
+     * @param id       the id of product
+     * @param quantity the new quantity of product
+     */
+    public void updateProductQuantity(String id, int quantity) {
 
-    public void updateProductQuantity(String id, int quantity){
-
-        for (Product product: productList){
+        for (Product product : productList) {
             if (product.getId().equals(id))
                 product.setTotal_quantity(quantity);
         }
     }
 
-    public void updateProductPrice(String id, double price){
-        for (Product product: productList){
+    /**
+     * Update products price.
+     *
+     * @param id    the id of product
+     * @param price the new price
+     */
+    public void updateProductPrice(String id, double price) {
+        for (Product product : productList) {
             if (product.getId().equals(id))
                 product.setPrice(price);
         }
     }
 
-    public void decreaseProductQuantity(String id, int quantity){
-        for (Product product: productList){
-            if (product.getId().equals(id))
-                product.decreaseQuantity(quantity);
-        }
-    }
-
-
     @Override
     public String toString() {
-        String s = " ";
+        StringBuilder s = new StringBuilder(" ");
 
-        Iterator productIteraor = productList.iterator();
-
-        while (productIteraor.hasNext()){
-            Product productString = (Product) productIteraor.next();
-            s += productString +">>> \n";
+        for (Product productString : productList) {
+            s.append(productString).append(">>> \n");
         }
 
         return "Category{" +
-                            s +
+                s +
                 '}';
     }
 }
