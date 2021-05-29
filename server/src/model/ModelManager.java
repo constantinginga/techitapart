@@ -19,6 +19,7 @@ public class ModelManager implements Model {
     private final PropertyChangeAction<String, Integer> property;
     private final ArrayList<String> categories;
     private final Map<String, Category> map;
+    private final String ALL_PRODUCTS = "General";
 
     public ModelManager() {
         property = new PropertyChangeProxy<>(this, true);
@@ -33,8 +34,8 @@ public class ModelManager implements Model {
             }
             map.put(s, category);
         }
-        map.put("General", new Category("General"));
-        map.get("General").getAllProduct().addAll(getAllProducts());
+        map.put(ALL_PRODUCTS, new Category(ALL_PRODUCTS));
+        map.get(ALL_PRODUCTS).getAllProduct().addAll(getAllProducts());
     }
 
     @Override
@@ -110,7 +111,7 @@ public class ModelManager implements Model {
         Gson gson = new Gson();
         String g1 = gson.toJson(product);
         getCategory(categoryName).addProduct(product1);
-        getCategory("General").addProduct(product1);
+        getCategory(ALL_PRODUCTS).addProduct(product1);
         property.firePropertyChange("addProduct", g1, -1);
     }
 
@@ -123,7 +124,7 @@ public class ModelManager implements Model {
 
     @Override
     public ArrayList<Product> getAllProductsInCategory(String categoryName) {
-        return (categoryName.equals("General")) ? getAllProducts() : map.get(categoryName).getAllProduct();
+        return (categoryName.equals(ALL_PRODUCTS)) ? getAllProducts() : map.get(categoryName).getAllProduct();
     }
 
 
@@ -132,7 +133,7 @@ public class ModelManager implements Model {
         ArrayList<Product> products = new ArrayList<>();
 
         for (String key : map.keySet()) {
-            if (!key.equals("General")) products.addAll(map.get(key).getAllProduct());
+            if (!key.equals(ALL_PRODUCTS)) products.addAll(map.get(key).getAllProduct());
         }
         return products;
     }
@@ -173,7 +174,7 @@ public class ModelManager implements Model {
 
     private String getProductCategory(String id) {
         for (String key : map.keySet()) {
-            if (!key.equals("General")) {
+            if (!key.equals(ALL_PRODUCTS)) {
                 for (Product p : map.get(key).getAllProduct()) {
                     if (p.getId().equals(id)) return key;
                 }
@@ -242,7 +243,7 @@ public class ModelManager implements Model {
     @Override
     public void decreaseProductQuantity(String id, int quantity) {
         for (String category : categories) {
-            if (!category.equals("General")) {
+            if (!category.equals(ALL_PRODUCTS)) {
                 for (Product product : getCategory(category).getAllProduct()) {
                     if (product.getId().equals(id)) product.decreaseQuantity(quantity);
                 }
