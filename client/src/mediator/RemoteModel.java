@@ -1,11 +1,9 @@
 package mediator;
 
 import model.*;
-import utility.observer.listener.RemoteListener;
 import utility.observer.subject.RemoteSubject;
 
 import java.io.File;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -17,8 +15,6 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
     User registerUSer(User user) throws RemoteException;
 
     User login(String username, String password) throws RemoteException;
-
-//    UserProfile getUserProfile() throws RemoteException;
 
     User getUser(String username) throws RemoteException;
 
@@ -70,7 +66,6 @@ public interface RemoteModel extends RemoteSubject<String, Integer> {
     void buy(String username) throws RemoteException;
 
     ArrayList<CartItem> getProductsFromCart(String username) throws RemoteException;
-
 
     /**
      * order

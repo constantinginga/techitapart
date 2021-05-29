@@ -13,12 +13,11 @@ public interface ClientModel extends LocalSubject<String, Integer> {
     /**
      * Account
      *
-     * @param user*/
+     * @param user
+     */
     User registerUSer(User user) throws RemoteException;
 
     User login(String username, String password) throws RemoteException;
-
-//    UserProfile getUserProfile() throws RemoteException;
 
     User getUser(String username) throws RemoteException;
 
@@ -70,7 +69,6 @@ public interface ClientModel extends LocalSubject<String, Integer> {
     void removeProductFromCart(CartItem cartItem, String username) throws RemoteException;
 
     void buy(String username) throws RemoteException;
-
 
 
     /**

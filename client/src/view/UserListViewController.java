@@ -52,7 +52,7 @@ public class UserListViewController extends ViewController {
         listView.getSelectionModel().selectedItemProperty()
                 .addListener((obs, oldVal, newVal) -> {
                     super.getViewModelFactory().getUserListViewModel()
-                            .setSelectedExerciseProperty(newVal);
+                            .setSelectedUserProperty(newVal);
                     super.getViewModelFactory().getUserListViewModel().updateDetails();
                 });
         super.getViewModelFactory().getUserListViewModel().getAllUsers();

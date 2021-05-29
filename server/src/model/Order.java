@@ -1,8 +1,5 @@
 package model;
 
-import persistence.CartDB;
-import persistence.OrderDB;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -35,7 +32,6 @@ public class Order implements Serializable {
         this.username = username;
     }
 
-
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -51,7 +47,6 @@ public class Order implements Serializable {
     public LocalDate getDate() {
         return date;
     }
-
 
     @Override
     public String toString() {

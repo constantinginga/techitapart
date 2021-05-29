@@ -30,7 +30,7 @@ public class Category implements Serializable {
     }
 
     /**
-     * gets  all product from this catagory.
+     * gets  all product from this category.
      *
      * @return the array list
      */

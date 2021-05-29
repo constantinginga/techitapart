@@ -135,12 +135,12 @@ public class UserListViewModel {
     }
 
     /**
-     * Sets selected exercise property.
+     * Sets selected user property.
      *
-     * @param selectedExerciseProperty the selected exercise property
+     * @param selectedUserProperty the selected user property
      */
-    public void setSelectedExerciseProperty(String selectedExerciseProperty) {
-        this.selectedUserProperty.set(selectedExerciseProperty);
+    public void setSelectedUserProperty(String selectedUserProperty) {
+        this.selectedUserProperty.set(selectedUserProperty);
     }
 
     /**

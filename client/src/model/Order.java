@@ -20,17 +20,17 @@ public class Order implements Serializable {
 
     public Order(int order_id, String username) {
         this.username = username;
+        this.order_id = order_id;
         this.date = LocalDate.now();
     }
 
     public void setOrder_id(String orderId) {
-        this.order_id = order_id;
+        this.order_id = Integer.parseInt(orderId);
     }
 
     public void setUser_id(String username) {
         this.username = username;
     }
-
 
     public void setDate(LocalDate date) {
         this.date = date;
@@ -47,7 +47,6 @@ public class Order implements Serializable {
     public LocalDate getDate() {
         return date;
     }
-
 
     @Override
     public String toString() {

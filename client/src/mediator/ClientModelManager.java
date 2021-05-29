@@ -17,9 +17,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class ClientModelManager implements ClientModel, RemoteListener<String, Integer> {
-    private RemoteModel server;
+    private final RemoteModel server;
     private String username;
-    private PropertyChangeAction<String, Integer> property;
+    private final PropertyChangeAction<String, Integer> property;
     private LocalModel model;
 
 
@@ -31,11 +31,6 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
         property = new PropertyChangeProxy<>(this, true);
     }
 
-//    @Override
-//    public UserProfile registerUSer(String fName, String lName, String email, String username, String password, Role role) throws RemoteException {
-//        return server.registerUSer(fName, lName, email, username, password, role);
-//    }
-
     @Override
     public User registerUSer(User user) throws RemoteException {
         return server.registerUSer(user);
@@ -45,11 +40,6 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     public User login(String username, String password) throws RemoteException {
         return server.login(username, password);
     }
-
-//    @Override public UserProfile getUserProfile() throws RemoteException
-//    {
-//        return server.getUserProfile();
-//    }
 
     @Override
     public User getUser(String username) throws RemoteException {
@@ -159,7 +149,6 @@ public class ClientModelManager implements ClientModel, RemoteListener<String, I
     public void buy(String username) throws RemoteException {
         server.buy(username);
     }
-
 
 
     @Override

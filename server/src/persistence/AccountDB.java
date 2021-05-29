@@ -1,5 +1,7 @@
 package persistence;
+
 import model.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,9 +13,10 @@ public class AccountDB implements AccountPersistence {
 
     @Override
     public User registerNewUserDB(User user) {
-
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO \"User\"(first_name, last_name, email, username, password) VALUES (?, ?, ?, ?, ?); ");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO \"User\"" +
+                    "(first_name, last_name, email, username, password) " +
+                    "VALUES (?, ?, ?, ?, ?); ");
             statement.setString(1, user.getfName());
             statement.setString(2, user.getlName());
             statement.setString(3, user.getEmail());
@@ -22,19 +25,19 @@ public class AccountDB implements AccountPersistence {
             statement.executeUpdate();
             return user;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new IllegalArgumentException(errorMessage(e.getMessage()));
         }
     }
 
 
-    private String errorMessage(String e){
+    private String errorMessage(String e) {
         if (e.contains("ERROR: new row for relation \"User\" violates check constraint \"User_username_check\""))
-            return  "Username must be at least 5 characters long";
+            return "Username must be at least 5 characters long";
         else if (e.contains("ERROR: new row for relation \"User\" violates check constraint \"User_password_check\""))
-            return  "Password must be at least 6 characters long and contain at least one uppercase character, one number";
+            return "Password must be at least 6 characters long and contain at least one uppercase character, one number";
         else if (e.contains("ERROR: duplicate key value violates unique constraint \"User_pkey\""))
             return "Username already exists";
+
         return null;
     }
 
@@ -137,7 +140,7 @@ public class AccountDB implements AccountPersistence {
             statement.setString(6, currentUsername);
             statement.executeUpdate();
         } catch (SQLException e) {
-         throw new IllegalArgumentException(errorMessage(e.getMessage()));
+            throw new IllegalArgumentException(errorMessage(e.getMessage()));
 
         }
     }

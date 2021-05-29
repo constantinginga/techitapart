@@ -115,7 +115,9 @@ public class CartDB implements CartPersistence {
     @Override
     public ArrayList<CartItem> getAllProductsInCart(String username) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM CartItem JOIN Product USING (product_id) WHERE username = ? AND order_id IS NULL");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM CartItem " +
+                    "JOIN Product USING (product_id) " +
+                    "WHERE username = ? AND order_id IS NULL");
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             ArrayList<CartItem> result = new ArrayList<>();
