@@ -7,15 +7,14 @@ import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public interface LocalModel extends LocalSubject<String, Integer>
-{
+public interface LocalModel extends LocalSubject<String, Integer> {
 
     /**
      * Account
      *
-     *
      * @param user
-     * @return*/
+     * @return
+     */
     User registerUSer(User user) throws RemoteException;
 
     User login(String username, String password) throws RemoteException;
@@ -72,7 +71,6 @@ public interface LocalModel extends LocalSubject<String, Integer>
     void removeProductFromCart(CartItem cartItem, String username) throws RemoteException;
 
     void buy(String username) throws RemoteException;
-
 
 
     /**

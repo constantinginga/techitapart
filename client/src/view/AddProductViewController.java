@@ -1,19 +1,15 @@
 package view;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
+
 
 public class AddProductViewController extends ViewController {
 
@@ -45,14 +41,7 @@ public class AddProductViewController extends ViewController {
                 super.getViewModelFactory().getAddProductViewModel().getPrice(), new NumberStringConverter());
         quantityTextfield.textProperty().bindBidirectional(
                 super.getViewModelFactory().getAddProductViewModel().getQuantity(), new NumberStringConverter());
-
         categoryChoicebox.setItems(super.getViewModelFactory().getAddProductViewModel().getCategoryList());
-//        categoryChoicebox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//               AddProductViewController.super.getViewModelFactory().getAddProductViewModel().updateSelectedCategory(newValue);
-//            }
-//        });
         categoryChoicebox.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> obs, String oldValue, String newValue) -> {
             super.getViewModelFactory().getAddProductViewModel().updateSelectedCategory(newValue);
         });
@@ -61,21 +50,14 @@ public class AddProductViewController extends ViewController {
                 super.getViewModelFactory().getAddProductViewModel().getDescription());
         Bindings.bindBidirectional(this.image.imageProperty(), super.getViewModelFactory().getAddProductViewModel().getImageProperty());
         errorLabel.textProperty().bind(super.getViewModelFactory().getAddProductViewModel().getErrorLabel());
-        priceTextfield.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,7}([\\.]\\d{0,10})?")) {
-                    priceTextfield.setText(oldValue);
-                }
+        priceTextfield.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,7}([\\.]\\d{0,10})?")) {
+                priceTextfield.setText(oldValue);
             }
         });
-        quantityTextfield.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    quantityTextfield.setText(newValue.replaceAll("[^\\d]", ""));
-                }
+        quantityTextfield.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                quantityTextfield.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
 
@@ -92,7 +74,7 @@ public class AddProductViewController extends ViewController {
     }
 
     public void addPhotoButton() {
-        Stage stage = (Stage) ((Node) this.getRoot()).getScene().getWindow();
+        Stage stage = (Stage) this.getRoot().getScene().getWindow();
         super.getViewModelFactory().getAddProductViewModel().chooseImage(stage);
     }
 

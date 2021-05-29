@@ -17,10 +17,14 @@ import java.io.IOException;
 
 public class ShoppingCartViewController extends ViewController implements LocalListener<String, Integer> {
 
-    @FXML private ScrollPane scroll;
-    @FXML private GridPane grid;
-    @FXML private Label quantityOfItemsCart, quantityOfItemsOrder, totalPrice, errorLabel;
-    @FXML private Button checkoutButton;
+    @FXML
+    private ScrollPane scroll;
+    @FXML
+    private GridPane grid;
+    @FXML
+    private Label quantityOfItemsCart, quantityOfItemsOrder, totalPrice, errorLabel;
+    @FXML
+    private Button checkoutButton;
 
     @Override
     protected void init() throws InterruptedException {
@@ -100,15 +104,15 @@ public class ShoppingCartViewController extends ViewController implements LocalL
         });
     }
 
-    public int getCurrentQuantity(String product_id){
-     return super.getViewModelFactory().getShoppingCartViewModel().getCurrentQuantity(product_id);
+    public int getCurrentQuantity(String product_id) {
+        return super.getViewModelFactory().getShoppingCartViewModel().getCurrentQuantity(product_id);
     }
 
-    public void updateCartItemQuantity(CartItem cartItem,  int quantity){
-        super.getViewModelFactory().getShoppingCartViewModel().updateCartItemQuantity(cartItem,quantity);
+    public void updateCartItemQuantity(CartItem cartItem, int quantity) {
+        super.getViewModelFactory().getShoppingCartViewModel().updateCartItemQuantity(cartItem, quantity);
     }
 
-    public void removeCartItem(CartItem cartItem){
+    public void removeCartItem(CartItem cartItem) {
         super.getViewModelFactory().getShoppingCartViewModel().removeCartItem(cartItem);
     }
 

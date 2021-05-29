@@ -1,4 +1,5 @@
 package persistence;
+
 import model.User;
 
 
@@ -9,7 +10,6 @@ public interface AccountPersistence {
 
     String loginDB(String username, String password);
 
-    // Edit
     void updateUserName(String currentUsername, String newUsername);
 
     void updateEmail(String userName, String newEmail);
@@ -22,9 +22,9 @@ public interface AccountPersistence {
 
     void updateDetails(String username, String newUsername, String newPassword, String newFName, String newLName, String newEmail);
 
-
-    // Get
     User getUser(String username);
+
     String getfName();
+
     ArrayList<String> getAllUsernames();
 }

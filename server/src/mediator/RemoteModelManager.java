@@ -16,8 +16,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class RemoteModelManager implements RemoteModel, LocalListener<String, Integer> {
-    private Model model;
-    private PropertyChangeProxy<String, Integer> property;
+    private final Model model;
+    private final PropertyChangeProxy<String, Integer> property;
 
     public RemoteModelManager(Model model) throws RemoteException, MalformedURLException {
         startRegistry();
@@ -134,7 +134,6 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
 
     @Override
     public void addProductToCart(Product product, int quantity, String username) throws RemoteException {
-        System.out.println("FROM REMOTE SERVER");
         model.addProductToCart(product, quantity, username);
     }
 
@@ -167,7 +166,6 @@ public class RemoteModelManager implements RemoteModel, LocalListener<String, In
 
     @Override
     public void propertyChange(ObserverEvent<String, Integer> event) {
-        System.out.println("Fire property change in RemoteModelManager");
         property.firePropertyChange(event.getPropertyName(), event.getValue1(), event.getValue2());
     }
 

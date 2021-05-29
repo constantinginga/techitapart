@@ -12,12 +12,11 @@ import java.util.ArrayList;
 public class CartDB implements CartPersistence {
 
 
-
     @Override
     public ArrayList<CartItem> getOrderedProducts(int orderId) {
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
 
-          PreparedStatement  statement = connection.prepareStatement("SELECT * FROM CartItem JOIN Product USING (product_id) WHERE order_id = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM CartItem JOIN Product USING (product_id) WHERE order_id = ?");
             statement.setInt(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             ArrayList<CartItem> result = new ArrayList<>();
@@ -91,7 +90,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public void removeCartItem(int product_id, String username) {
-        try  (Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM CartItem WHERE product_id = ? AND username = ?");
             statement.setInt(1, product_id);
             statement.setString(2, username);
@@ -114,7 +113,7 @@ public class CartDB implements CartPersistence {
 
     @Override
     public ArrayList<CartItem> getAllProductsInCart(String username) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()){
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM CartItem " +
                     "JOIN Product USING (product_id) " +
                     "WHERE username = ? AND order_id IS NULL");

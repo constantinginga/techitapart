@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserProfile implements Serializable {
-    private static Map<String, UserProfile> map = new HashMap<>();
+    private static final Map<String, UserProfile> map = new HashMap<>();
     private String username;
     private OrderList orderList;
     private Cart cart;
@@ -32,8 +32,6 @@ public class UserProfile implements Serializable {
         }
         return instance;
     }
-
-
 
 
     public void addProductToCart(Product product, int quantity) {

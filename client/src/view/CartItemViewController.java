@@ -17,9 +17,12 @@ public class CartItemViewController {
 
     private CartItem item;
     private ViewController controller;
-    @FXML private ImageView img;
-    @FXML private Label itemName, currentQuantity, price;
-    @FXML private Button decreaseButton, increaseButton;
+    @FXML
+    private ImageView img;
+    @FXML
+    private Label itemName, currentQuantity, price;
+    @FXML
+    private Button decreaseButton, increaseButton;
 
 
     protected void init(CartItem item, ViewController controller, File fileImage) {
@@ -38,13 +41,15 @@ public class CartItemViewController {
     }
 
 
-    @FXML private void handleRemoveItem() {
-            ((ShoppingCartViewController) controller).removeCartItem(item);
-            ((ShoppingCartViewController) controller).clearGrid(item.getProduct().getName());
+    @FXML
+    private void handleRemoveItem() {
+        ((ShoppingCartViewController) controller).removeCartItem(item);
+        ((ShoppingCartViewController) controller).clearGrid(item.getProduct().getName());
     }
 
 
-    @FXML private void decreaseQuantity() {
+    @FXML
+    private void decreaseQuantity() {
         int currentPQuantity = ((ShoppingCartViewController) controller).getCurrentQuantity(item.getProduct().getId());
         if (item.getQuantity() > currentPQuantity) {
             int previousQuantity = item.getQuantity();
@@ -56,31 +61,32 @@ public class CartItemViewController {
             return;
         }
         try {
-                ((ShoppingCartViewController) controller).updateCartItemQuantity(item, -1);
-                item.setQuantity(item.getQuantity() - 1);
-                currentQuantity.setText(String.valueOf(item.getQuantity()));
-                if (increaseButton.disableProperty().get()) increaseButton.disableProperty().setValue(false);
-            } catch (IllegalArgumentException e) {
-                if (e.getMessage().contains("low")) {
-                    decreaseButton.disableProperty().setValue(true);
-                }
+            ((ShoppingCartViewController) controller).updateCartItemQuantity(item, -1);
+            item.setQuantity(item.getQuantity() - 1);
+            currentQuantity.setText(String.valueOf(item.getQuantity()));
+            if (increaseButton.disableProperty().get()) increaseButton.disableProperty().setValue(false);
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().contains("low")) {
+                decreaseButton.disableProperty().setValue(true);
             }
+        }
     }
 
 
-    @FXML private void increaseQuantity() {
-            try {
-                int currentPQuantity = ((ShoppingCartViewController) controller).getCurrentQuantity(item.getProduct().getId());
-                if (item.getQuantity() + 1 == currentPQuantity) increaseButton.disableProperty().setValue(true);
-                ((ShoppingCartViewController) controller).updateCartItemQuantity(item, 1);
-                item.setQuantity(item.getQuantity() + 1);
-                currentQuantity.setText(String.valueOf(item.getQuantity()));
-                if (decreaseButton.disableProperty().get()) decreaseButton.disableProperty().setValue(false);
-            } catch (IllegalArgumentException e) {
-                if (e.getMessage().contains("high")) {
-                    increaseButton.disableProperty().setValue(true);
-                }
+    @FXML
+    private void increaseQuantity() {
+        try {
+            int currentPQuantity = ((ShoppingCartViewController) controller).getCurrentQuantity(item.getProduct().getId());
+            if (item.getQuantity() + 1 == currentPQuantity) increaseButton.disableProperty().setValue(true);
+            ((ShoppingCartViewController) controller).updateCartItemQuantity(item, 1);
+            item.setQuantity(item.getQuantity() + 1);
+            currentQuantity.setText(String.valueOf(item.getQuantity()));
+            if (decreaseButton.disableProperty().get()) decreaseButton.disableProperty().setValue(false);
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().contains("high")) {
+                increaseButton.disableProperty().setValue(true);
             }
+        }
     }
 
 

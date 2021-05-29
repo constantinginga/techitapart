@@ -22,11 +22,9 @@ import java.time.LocalTime;
  */
 public class AddProductViewModel {
     private final LocalModel model;
-    private ViewState state;
     private final StringProperty name, description, errorLabel;
     private final IntegerProperty quantity;
     private final DoubleProperty price;
-    private FileChooser fileChooser;
     private File filePath;
     private String fileName;
     private final ObjectProperty<javafx.scene.image.Image> imageProperty;
@@ -41,7 +39,6 @@ public class AddProductViewModel {
      */
     public AddProductViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
-        this.state = viewState;
         this.name = new SimpleStringProperty();
         this.description = new SimpleStringProperty();
         this.quantity = new SimpleIntegerProperty();
@@ -149,7 +146,7 @@ public class AddProductViewModel {
      * @param stage the stage
      */
     public void chooseImage(Stage stage) {
-        fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open image");
         filePath = fileChooser.showOpenDialog(stage);
         String extension = "";

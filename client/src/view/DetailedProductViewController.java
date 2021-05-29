@@ -29,7 +29,8 @@ public class DetailedProductViewController extends ViewController {
     private TextArea descriptionTextArea;
     @FXML
     private Label totalQuantity;
-    @FXML private Button orderButton;
+    @FXML
+    private Button orderButton;
 
     @Override
     protected void init() throws InterruptedException {
@@ -42,7 +43,7 @@ public class DetailedProductViewController extends ViewController {
                 productImageView.setImage(image);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         });
         productName.textProperty().bind(super.getViewModelFactory().getDetailedProductViewModel().getProductName());
@@ -71,7 +72,7 @@ public class DetailedProductViewController extends ViewController {
                 }));
 
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         });
     }

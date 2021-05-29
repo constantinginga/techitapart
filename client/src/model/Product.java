@@ -100,7 +100,7 @@ public class Product implements Serializable {
         }
         total_quantity -= quantity;
     }
-    
+
     @Override
     public String toString() {
         return "ProductId: " + getId() + ", Product name: " + getName() + ", Description: " + getDescription() + ", Price: " + getPrice() + ", total quantity: " + total_quantity;

@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
+
 import java.io.IOException;
 
 public class MarketUserViewController extends ViewController implements LocalListener<String, Integer> {
@@ -38,7 +39,7 @@ public class MarketUserViewController extends ViewController implements LocalLis
         createGridForCategory();
     }
 
-    public void searchButton(ActionEvent actionEvent) {
+    public void searchButton() {
         super.getViewModelFactory().getMarketUserViewModel().search();
         createGrid();
         createGridForCategory();

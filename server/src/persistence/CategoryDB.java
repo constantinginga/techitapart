@@ -1,7 +1,5 @@
 package persistence;
 
-import model.Category;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

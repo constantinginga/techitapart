@@ -6,16 +6,23 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
 import java.io.IOException;
 
 public class SignUpViewController extends ViewController {
 
-    @FXML private TextField firstName;
-    @FXML private TextField lastName;
-    @FXML private TextField email;
-    @FXML private TextField username;
-    @FXML private PasswordField password;
-    @FXML private Label error;
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private Label error;
 
     @Override
     protected void init() throws InterruptedException {
@@ -44,7 +51,8 @@ public class SignUpViewController extends ViewController {
 
     @FXML
     private void handleSignUpButton() throws IOException {
-        if (super.getViewModelFactory().getSignUpViewModel().signUp()) super.getViewHandler().openView("MarketUserView.fxml");
+        if (super.getViewModelFactory().getSignUpViewModel().signUp())
+            super.getViewHandler().openView("MarketUserView.fxml");
     }
 
     @FXML

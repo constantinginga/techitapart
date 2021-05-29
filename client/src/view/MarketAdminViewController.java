@@ -1,7 +1,6 @@
 package view;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import utility.observer.event.ObserverEvent;
 import utility.observer.listener.LocalListener;
+
 import java.io.IOException;
 
 
@@ -51,13 +51,12 @@ public class MarketAdminViewController extends ViewController implements LocalLi
         createGridForCategory();
     }
 
-    public void addProduct(ActionEvent actionEvent) throws IOException {
+    public void addProduct() throws IOException {
         super.getViewHandler().openView("AddProductView.fxml");
     }
 
 
-
-    public void searchButton(ActionEvent actionEvent) {
+    public void searchButton() {
         super.getViewModelFactory().getMarketAdminViewModel().search();
         createGrid();
     }
@@ -164,14 +163,9 @@ public class MarketAdminViewController extends ViewController implements LocalLi
         super.getViewHandler().openView("EntryView.fxml");
     }
 
-    public void handleMyAccountButton(ActionEvent actionEvent)
+    public void handleMyAccountButton()
             throws IOException {
         super.getViewHandler().openView("UserListView.fxml");
-    }
-
-    @FXML
-    private void handleCartButton() throws IOException {
-        super.getViewHandler().openView("ShoppingCartView.fxml");
     }
 
     @Override

@@ -27,10 +27,8 @@ public class DetailedProductViewModel implements LocalListener<String, Integer> 
      *
      * @param model     the model
      * @param viewState the view state
-     * @throws RemoteException the remote exception
      */
-    public DetailedProductViewModel(LocalModel model, ViewState viewState)
-            throws RemoteException {
+    public DetailedProductViewModel(LocalModel model, ViewState viewState) {
         this.model = model;
         this.state = viewState;
         productName = new SimpleStringProperty();

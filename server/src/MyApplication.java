@@ -5,12 +5,12 @@ import mediator.RemoteModelManager;
 import model.Model;
 import model.ModelManager;
 
-public class MyApplication extends Application
-{
-  private RemoteModel server;
-  @Override public void start(Stage stage) throws Exception
-  {
-    Model model = new ModelManager();
-    server = new RemoteModelManager(model);
-  }
+public class MyApplication extends Application {
+    private RemoteModel server;
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Model model = new ModelManager();
+        server = new RemoteModelManager(model);
+    }
 }

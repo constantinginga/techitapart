@@ -18,13 +18,10 @@ import java.util.ArrayList;
 
 public class ClientModelManager implements ClientModel, RemoteListener<String, Integer> {
     private final RemoteModel server;
-    private String username;
     private final PropertyChangeAction<String, Integer> property;
-    private LocalModel model;
 
 
     public ClientModelManager(LocalModel model) throws RemoteException, NotBoundException, MalformedURLException {
-        this.model = model;
         this.server = (RemoteModel) Naming.lookup("rmi://localhost:1099/shop");
         UnicastRemoteObject.exportObject(this, 0);
         server.addListener(this);

@@ -18,7 +18,7 @@ public class ConnectionDB {
     private final static String SCHEMA_NAME = "techitapart";
     private final static String USERNAME = "xorpblocnixrey";
     private final static String PASSWORD = "7f8b2ffb33886cbe57fdb0c360df3186e636ea082374d6b7bebdc1d33d075930";
-    
+
 
     private ConnectionDB() throws SQLException {
         DriverManager.registerDriver(new org.postgresql.Driver());
@@ -42,8 +42,6 @@ public class ConnectionDB {
         return DriverManager.getConnection(url + schemaName, username, password);
 
     }
-
-
 
 
 }

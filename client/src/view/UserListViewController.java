@@ -64,12 +64,12 @@ public class UserListViewController extends ViewController {
         enablingOfTextFields(true);
     }
 
-    public void handleApplyButton(ActionEvent actionEvent) throws IOException {
+    public void handleApplyButton() {
         if (super.getViewModelFactory().getUserListViewModel().edit())
             enablingOfTextFields(true);
     }
 
-    public void handleBackButton(ActionEvent actionEvent) {
+    public void handleBackButton() {
         try {
             super.getViewHandler().openView("MarketAdminView.fxml");
         } catch (IOException e) {
@@ -84,7 +84,7 @@ public class UserListViewController extends ViewController {
         password.setDisable(disabled);
     }
 
-    public void handleEditButton(ActionEvent actionEvent) {
+    public void handleEditButton() {
         enablingOfTextFields(false);
     }
 }

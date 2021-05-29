@@ -20,10 +20,8 @@ public class UserViewModel {
      *
      * @param localModel the local model
      * @param viewState  the view state
-     * @throws RemoteException the remote exception
      */
-    public UserViewModel(LocalModel localModel, ViewState viewState)
-            throws RemoteException {
+    public UserViewModel(LocalModel localModel, ViewState viewState) {
         this.localModel = localModel;
         this.state = viewState;
         this.firstName = new SimpleStringProperty();

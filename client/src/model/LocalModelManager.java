@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class LocalModelManager
         implements LocalModel, LocalListener<String, Integer> {
 
-    private ClientModelManager client;
-    private PropertyChangeAction<String, Integer> property;
+    private final ClientModelManager client;
+    private final PropertyChangeAction<String, Integer> property;
 
     public LocalModelManager()
-            throws IOException, InterruptedException, NotBoundException {
+            throws IOException, NotBoundException {
         this.client = new ClientModelManager(this);
         this.property = new PropertyChangeProxy<>(this, true);
         client.addListener(this);
@@ -30,7 +30,8 @@ public class LocalModelManager
     /**
      * Register And Login
      *
-     * @return*/
+     * @return
+     */
     // how will this login method work in server client system?
     @Override
     public User registerUSer(User user)
@@ -44,13 +45,13 @@ public class LocalModelManager
         return client.login(username, password);
     }
 
-    @Override public User getUser(String username) throws RemoteException
-    {
+    @Override
+    public User getUser(String username) throws RemoteException {
         return client.getUser(username);
     }
 
-    @Override public ArrayList<String> getAllUsernames() throws RemoteException
-    {
+    @Override
+    public ArrayList<String> getAllUsernames() throws RemoteException {
         return client.getAllUsernames();
     }
 
@@ -59,19 +60,19 @@ public class LocalModelManager
         return client.getAllCategory();
     }
 
-    @Override public void updateUser(User user) throws RemoteException
-    {
+    @Override
+    public void updateUser(User user) throws RemoteException {
         client.updateUser(user);
     }
 
-    @Override public Category getCategory(String name) throws RemoteException
-    {
+    @Override
+    public Category getCategory(String name) throws RemoteException {
         return client.getCategory(name);
     }
 
-    @Override public ArrayList<Category> getAllCategories()
-            throws RemoteException
-    {
+    @Override
+    public ArrayList<Category> getAllCategories()
+            throws RemoteException {
         return client.getAllCategories();
     }
 
@@ -82,8 +83,8 @@ public class LocalModelManager
         client.addProduct(product, categoryName);
     }
 
-    @Override public ArrayList<Order> getAllOrdersByUsername(String username)
-    {
+    @Override
+    public ArrayList<Order> getAllOrdersByUsername(String username) {
         return client.getAllOrdersByUsername(username);
     }
 

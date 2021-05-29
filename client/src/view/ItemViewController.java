@@ -49,7 +49,7 @@ public class ItemViewController {
 
     }
 
-    public void clicked(MouseEvent mouseEvent) {
+    public void clicked() {
         Platform.runLater(() -> {
             try {
                 if (viewController.getViewHandler().getTitle().equals("MarketAdminView.fxml")) {

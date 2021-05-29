@@ -1,6 +1,6 @@
 package persistence;
 
 
-public interface Persistence extends AccountPersistence, CartPersistence, CategoryPersistence, OrderPersistence, ProductPersistence{
+public interface Persistence extends AccountPersistence, CartPersistence, CategoryPersistence, OrderPersistence, ProductPersistence {
 
 }
