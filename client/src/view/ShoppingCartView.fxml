@@ -52,9 +52,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="checkoutButton" layoutX="117.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleCheckoutButton" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Checkout" textFill="WHITE">
+            <Button fx:id="checkoutButton" layoutX="117.0" layoutY="306.0" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" onAction="#handleCheckoutButton" prefHeight="35.0" style="-fx-background-color: #4ba34b;" styleClass="search-buttton" stylesheets="@../stylesheets/market.css" text="Checkout" textFill="WHITE">
                <font>
-                  <Font name="Century Gothic" size="24.0" />
+                  <Font name="Century Gothic" size="18.0" />
                </font>
             </Button>
             <Text layoutX="21.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL COST">
@@ -95,7 +95,7 @@
       </Text>
       <Hyperlink layoutX="67.0" layoutY="717.0" onAction="#handleBackButton" text="Continue Shopping">
          <font>
-            <Font name="Century Gothic" size="18.0" />
+            <Font name="Century Gothic Italic" size="14.0" />
          </font>
       </Hyperlink>
    </children>

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="errorLabel" maxHeight="650.0" maxWidth="500.0" minHeight="650.0" minWidth="500.0" prefHeight="650.0" prefWidth="500.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignUpViewController">
+<AnchorPane fx:id="errorLabel" maxHeight="650.0" maxWidth="500.0" minHeight="557.0" minWidth="500.0" prefHeight="592.0" prefWidth="500.0" stylesheets="@../stylesheets/market.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignUpViewController">
    <children>
       <HBox alignment="CENTER" layoutX="147.0" prefHeight="63.0" prefWidth="200.0">
          <children>
@@ -59,12 +65,12 @@
             <Font name="Century Gothic Italic" size="14.0" />
          </font>
       </Hyperlink>
-      <Text layoutX="119.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your account to start shopping">
+      <Text layoutX="116.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your account to start shopping">
          <font>
             <Font name="Century Gothic" size="14.0" />
          </font>
       </Text>
-      <Label fx:id="error" focusTraversable="false" layoutX="40.0" layoutY="560.0" textFill="RED" wrapText="true">
+      <Label fx:id="error" focusTraversable="false" layoutX="40.0" layoutY="417.0" prefHeight="20.0" prefWidth="420.0" textFill="RED" wrapText="true">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
