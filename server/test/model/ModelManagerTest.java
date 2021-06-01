@@ -59,7 +59,7 @@ class ModelManagerTest
         System.out.println("<-- tearDown()");
     }
 
-    
+
 
     @org.junit.jupiter.api.Test void registerUSerSuccessfullNull()
     {
@@ -86,6 +86,7 @@ class ModelManagerTest
         assertEquals(0, model.getAllOrdersByUsername(user.getUsername()).size());
     }
 
+
     @org.junit.jupiter.api.Test void loginNull()
     {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -103,7 +104,7 @@ class ModelManagerTest
 
     @org.junit.jupiter.api.Test void addProductZero()
     {
-        assertEquals(0, model.getAllProductsInCategory("SSD").size());
+        assertEquals(0, model.getAllProductsInCategory("RAM").size());
         assertEquals(0, model.getAllProducts().size());
     }
 
@@ -111,16 +112,16 @@ class ModelManagerTest
     {
 
         model.addProduct(new Product("Marshall", "Marshall headphone"),
-                "SSD");
-        assertEquals(1, model.getAllProductsInCategory("SSD").size());
+                "RAM");
+        assertEquals(1, model.getAllProductsInCategory("RAM").size());
         assertEquals(1, model.getAllProducts().size());
     }
 
     @org.junit.jupiter.api.Test void addProductMany()
     {
-        model.addProduct(new Product("Niva", "Niva headphone"), "SSD");
-        model.addProduct(new Product("SDX", "SDX headphone"), "SSD");
-        assertEquals(2, model.getAllProductsInCategory("SSD").size());
+        model.addProduct(new Product("Niva", "Niva headphone"), "RAM");
+        model.addProduct(new Product("SDX", "SDX headphone"), "RAM");
+        assertEquals(2, model.getAllProductsInCategory("RAM").size());
         assertEquals(2, model.getAllProducts().size());
     }
 
@@ -130,19 +131,13 @@ class ModelManagerTest
         // error if the products already exist
         for (int i = 0; i < 997; i++)
         {
-            model.addProduct(new Product("Debil" + i, "Debilak" + i), "SSD");
+            model.addProduct(new Product("Debil" + i, "Debilak" + i), "RAM");
         }
-        assertEquals(997, model.getAllProductsInCategory("SSD").size());
+        assertEquals(997, model.getAllProductsInCategory("RAM").size());
         assertEquals(997, model.getAllProducts().size());
     }
 
-
-    @org.junit.jupiter.api.Test void getProductNull()
-    {
-        assertThrows(NullPointerException.class, () -> {
-            Product product = model.getProduct(null, "Headphones");
-        });
-    }
+    
 
     @org.junit.jupiter.api.Test void getProductCategoryNameEqualsGeneralButProductIsNull()
     {
@@ -168,7 +163,7 @@ class ModelManagerTest
 
     @org.junit.jupiter.api.Test void removeProduct()
     {
-        model.addProduct(new Product("Product1", "Idk", 123, 23), "SSD");
+        model.addProduct(new Product("Product1", "Idk", 123, 23), "RAM");
         Product product = new Product("Product1", "Idk", 123, 23);
         for (Product product1 : model.getAllProducts())
         {
@@ -178,14 +173,14 @@ class ModelManagerTest
             }
         }
         int currentSize = model.getAllProducts().size();
-        model.removeProduct(product.getId(), "SSD");
+        model.removeProduct(product.getId(), "RAM");
         assertEquals(currentSize - 1, model.getAllProducts().size());
 
     }
 
     @org.junit.jupiter.api.Test void updateProductQuantity()
     {
-        model.addProduct(new Product("Product1", "Idk", 123, 232), "SSD");
+        model.addProduct(new Product("Product1", "Idk", 123, 232), "RAM");
         Product product = new Product("Product1", "Idk", 123, 232);
         for (Product product1 : model.getAllProducts())
         {
@@ -195,12 +190,12 @@ class ModelManagerTest
             }
         }
         //        product.setTotal_quantity(1);
-        model.updateProductQuantity(product.getId(), 12, "SSD");
+        model.updateProductQuantity(product.getId(), 12, "RAM");
         assertEquals(12,
-                model.getProduct(product.getId(), "SSD").getTotal_quantity());
+                model.getProduct(product.getId(), "RAM").getTotal_quantity());
         Product finalProduct = product;
         assertThrows(Exception.class, () -> {
-            model.updateProductQuantity(finalProduct.getId(), -1, "SSD");
+            model.updateProductQuantity(finalProduct.getId(), -1, "RAM");
 
         });
 
@@ -209,7 +204,7 @@ class ModelManagerTest
     @org.junit.jupiter.api.Test void updateProductPrice()
     {
         Product product = new Product("Product1", "Idk", 123, 232);
-        model.addProduct(new Product("Product1", "Idk", 123, 232), "SSD");
+        model.addProduct(new Product("Product1", "Idk", 123, 232), "RAM");
 
         for (Product product1 : model.getAllProducts())
         {
@@ -218,13 +213,13 @@ class ModelManagerTest
                 product = product1;
             }
         }
-        assertEquals(232.0, model.getProduct(product.getId(), "SSD").getPrice());
-        model.updateProductPrice(product.getId(), 1, "SSD");
-        assertEquals(1, model.getProduct(product.getId(), "SSD").getPrice());
+        assertEquals(232.0, model.getProduct(product.getId(), "RAM").getPrice());
+        model.updateProductPrice(product.getId(), 1, "RAM");
+        assertEquals(1, model.getProduct(product.getId(), "RAM").getPrice());
 
         Product finalProduct = product;
         assertThrows(IllegalArgumentException.class, ()->{
-            model.updateProductPrice(finalProduct.getId(), -1, "SSD");
+            model.updateProductPrice(finalProduct.getId(), -1, "RAM");
         });
 
     }
@@ -321,7 +316,7 @@ class ModelManagerTest
     @Test void addProductToCartWhiteBox()
     {
         Product product = new Product("SSD1", "T", 26, 69);
-        model.addProduct(product, "SSD");
+        model.addProduct(product, "RAM");
         Product product1 = model.getAllProducts().get(0);
         model.registerUSer(
                 new User("Jakub", "Platzek", "jakub.platzek@gmail.com", "Jakuba",
@@ -331,16 +326,16 @@ class ModelManagerTest
       model.addProductToCart(product1, 27, "Jakuba");
     });*/
         model.addProductToCart(product1, 26, "Jakuba");
-        assertEquals(26 , model.getProduct(product1.getId(), "SSD").getTotal_quantity());
+        assertEquals(26 , model.getProduct(product1.getId(), "RAM").getTotal_quantity());
         model.buy("Jakuba");
-        assertEquals(0 , model.getProduct(product1.getId(), "SSD").getTotal_quantity());
+        assertEquals(0 , model.getProduct(product1.getId(), "RAM").getTotal_quantity());
     }
 
 
 //
     @Test void updateCartItemQuantityWhiteBox(){
         Product product = new Product("SSD1", "T", 26, 69);
-        model.addProduct(product, "SSD");
+        model.addProduct(product, "RAM");
         Product product1 = model.getAllProducts().get(0);
         model.registerUSer(
                 new User("Jakub", "Platzek", "jakub.platzek@gmail.com", "Jakuba",
@@ -359,7 +354,7 @@ class ModelManagerTest
 
     @Test void removeProductFromCartWhiteBox(){
         Product product = new Product("SSD1", "T", 26, 69);
-        model.addProduct(product, "SSD");
+        model.addProduct(product, "RAM");
         Product product1 = model.getAllProducts().get(0);
         model.registerUSer(
                 new User("Jakub", "Platzek", "jakub.platzek@gmail.com", "Jakuba",
@@ -367,14 +362,11 @@ class ModelManagerTest
         CartItem cartItem = new CartItem(product1, 26);
         model.addProductToCart(product1, 26, "Jakuba");
         model.removeProductFromCart(cartItem, "Jakuba");
-      /*  assertThrows(NullPointerException.class, ()->{
-            model.removeProductFromCart(cartItem,  "Jakuba");
-        });*/
     }
 
     @Test void decreaseProductQuantityWhiteBox(){
         Product product = new Product("SSD1", "T", 26, 69);
-        model.addProduct(product, "SSD");
+        model.addProduct(product, "RAM");
         Product product1 = model.getAllProducts().get(0);
         model.decreaseProductQuantity(product1.getId(), 1);
         assertEquals(25, product1.getTotal_quantity());
@@ -389,7 +381,7 @@ class ModelManagerTest
 
     @Test void buyWhiteBox(){
         Product product = new Product("SSD1", "T", 26, 69);
-        model.addProduct(product, "SSD");
+        model.addProduct(product, "RAM");
         Product product1 = model.getAllProducts().get(0);
         model.registerUSer(
                 new User("Jakub", "Platzek", "jakub.platzek@gmail.com", "Jakuba",
